@@ -55,7 +55,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: /users/current
+  - URL: /api/users/current
   - Body: none
 
 - Successful Response
@@ -71,7 +71,9 @@ Returns the information about the current user that is logged in.
       "firstName": "John",
       "lastName": "Smith",
       "email": "john.smith@gmail.com",
-      "username": "JohnSmith"
+      "profileName": "JohnSmith",
+      "biography": "I'm really cool",
+      "previewImage": null
     }
     ```
 
@@ -84,14 +86,14 @@ information.
 - Request
 
   - Method: POST
-  - URL: /login
+  - URL: /api/login
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "email": "john.smith@gmail.com",
+      "credential": "john.smith@gmail.com",
       "password": "secret password"
     }
     ```
@@ -140,7 +142,7 @@ information.
       "message": "Validation error",
       "statusCode": 400,
       "errors": {
-        "email": "Email is required",
+        "credential": "Email or username is required",
         "password": "Password is required"
       }
     }
@@ -155,7 +157,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /signup
+  - URL: /api/signup
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -164,7 +166,7 @@ user's information.
     {
       "firstName": "John",
       "lastName": "Smith",
-      "username": "JohnSmith",
+      "profileName": "JohnSmith",
       "email": "john.smith@gmail.com",
       "password": "secret password"
     }
@@ -182,7 +184,7 @@ user's information.
       "id": 1,
       "firstName": "John",
       "lastName": "Smith",
-      "username": "JohnSmith",
+      "profileName": "JohnSmith",
       "email": "john.smith@gmail.com",
       "token": ""
     }
@@ -205,7 +207,7 @@ user's information.
     }
     ```
 
-- Error response: User already exists with the specified username
+- Error response: User already exists with the specified profile name
 
   - Status Code: 403
   - Headers:
@@ -217,7 +219,7 @@ user's information.
       "message": "User already exists",
       "statusCode": 403,
       "errors": {
-        "username": "User with that username already exists"
+        "profileName": "User with that profile name already exists"
       }
     }
     ```
@@ -235,7 +237,7 @@ user's information.
       "statusCode": 400,
       "errors": {
         "email": "Invalid email",
-        "username": "Username is required",
+        "profileName": "Profile name is required",
         "firstName": "First Name is required",
         "lastName": "Last Name is required"
       }
@@ -252,7 +254,7 @@ Returns all the posts.
 - Request
 
   - Method: GET
-  - URL: /posts
+  - URL: /api/posts
   - Body: none
 
 - Successful Response
@@ -268,15 +270,73 @@ Returns all the posts.
         {
           "id": 1,
           "userId": 1,
-          "mediaId": 1,
           "caption": "Yesterday",
           "location": "San Francisco",
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36"
+        },
+        "Media": [
+        {
+        "id": 1,
+        "type": "Image",
+        "mediaFile": "image url"
+        },
+        {
+        "id": 2,
+        "type": "Video",
+        "mediaFile": "image url"
         }
+        ]
       ]
     }
     ```
+
+### Get all Posts of Users Followed by Current User
+
+Returns all the posts of the users that the current user follows.
+
+- Require Authentication: false
+- Request
+
+  - Method: GET
+  - URL: /api/users/current/followers/posts
+  - Body: none
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "Posts": [
+        {
+          "id": 1,
+          "userId": 1,
+          "caption": "Yesterday",
+          "location": "San Francisco",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36"
+        },
+        "Media": [
+        {
+        "id": 1,
+        "type": "Image",
+        "mediaFile": "image url"
+        },
+        {
+        "id": 2,
+        "type": "Video",
+        "mediaFile": "image url"
+        }
+        ]
+      ]
+    }
+    ```
+
+
 
 ### Get all Posts created by the Current User
 
