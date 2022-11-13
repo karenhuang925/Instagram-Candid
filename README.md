@@ -318,25 +318,28 @@ Returns all the posts of the users that the current user follows.
           "caption": "Yesterday",
           "location": "San Francisco",
           "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        },
-        "Media": [
-        {
-        "id": 1,
-        "type": "Image",
-        "mediaFile": "image url"
-        },
-        {
-        "id": 2,
-        "type": "Video",
-        "mediaFile": "image url"
+          "updatedAt": "2021-11-19 20:39:36",
+          "Media": [
+            {
+              "id": 1,
+              "type": "Image",
+              "mediaFile": "image url"
+            },
+            {
+              "id": 2,
+              "type": "Video",
+              "mediaFile": "image url"
+            }
+          ],
+          "Owner": {
+            "id": 1,
+            "profileName": "JohnSmith",
+            "previewImage": "image url"
+          }
         }
-        ]
       ]
     }
     ```
-
-
 
 ### Get all Posts created by the Current User
 
@@ -346,7 +349,7 @@ Returns all the posts created by the current user.
 - Request
 
   - Method: GET
-  - URL: /users/current/posts
+  - URL: /api/users/current/posts
   - Body: none
 
 - Successful Response
@@ -362,11 +365,22 @@ Returns all the posts created by the current user.
         {
           "id": 1,
           "userId": 1,
-          "mediaId": 1,
           "caption": "Yesterday",
           "location": "San Francisco",
           "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
+          "updatedAt": "2021-11-19 20:39:36",
+          "Media": [
+            {
+              "id": 1,
+              "type": "Image",
+              "mediaFile": "image url"
+            },
+            {
+              "id": 2,
+              "type": "Video",
+              "mediaFile": "image url"
+            }
+          ]
         }
       ]
     }
@@ -380,7 +394,7 @@ Returns the details of a post specified by its id.
 - Request
 
   - Method: GET
-  - URL: /posts/:postId
+  - URL: /api/posts/:postId
   - Body: none
 
 - Successful Response
@@ -394,21 +408,26 @@ Returns the details of a post specified by its id.
     {
       "id": 1,
       "userId": 1,
-      "mediaId": 1,
       "caption": "Yesterday",
       "location": "San Francisco",
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36",
-      "User": {
+      "Media": [
+        {
+          "id": 1,
+          "type": "Image",
+          "mediaFile": "image url"
+        },
+        {
+          "id": 2,
+          "type": "Video",
+          "mediaFile": "image url"
+        }
+      ],
+      "Owner": {
         "id": 1,
-        "username": "JohnSmith",
+        "profileName": "JohnSmith",
         "previewImage": "image url"
-        //I think a preview image on the user would be easier
-      },
-      "Media": {
-        "id": 1,
-        "type": "Time",
-        "mediaFile": "image url"
       }
     }
     ```
@@ -435,14 +454,13 @@ Creates and returns a new post.
 - Request
 
   - Method: POST
-  - URL: /posts
+  - URL: /api/posts
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "meiaId": 1,
       "caption": "Time",
       "location": "New York City"
     }
@@ -459,7 +477,6 @@ Creates and returns a new post.
     {
       "id": 1,
       "userId": 1,
-      "mediaId": 1,
       "caption": "Time",
       "location": "New York City",
       "createdAt": "2021-11-19 20:39:36",
@@ -485,94 +502,16 @@ Creates and returns a new post.
             }
             ```
 
-        <!-- ### Create a Song for an Album based on the Album's id
-
-    <!--
-    Creates and returns a new song.
-
-- Require Authentication: true
-- Require proper authorization: Album must belong to the current user
-- Request
-
-  - Method: POST
-  - URL: /albums/:albumId/songs
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "title": "Yesterday",
-      "description": "A song about the past.",
-      "url": "audio url",
-      "imageUrl": "image url"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 201
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "albumId": 1,
-      "title": "Yesterday",
-      "description": "A song about the past.",
-      "url": "audio url",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36",
-      "previewImage": "image url"
-    }
-    ```
-
-- Error Response: Body validation error
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Validation Error",
-      "statusCode": 400,
-      "errors": {
-        "title": "Song title is required",
-        "url": "Audio is required"
-      }
-    }
-    ```
-
-- Error response: Couldn't find an Album with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ````json
-    {
-      "message": "Album couldn't be found",
-      "statusCode": 404
-    }
-    ``` -->
-    ````
-
 ### Edit a Post
 
-Updates and returns an existing song.
+Updates and returns an existing post.
 
 - Require Authentication: true
-- Require proper authorization: Song must belong to the current user
+- Require proper authorization: Post must belong to the current user
 - Request
 
   - Method: PUT
-  - URL: /posts/:postId
+  - URL: /api/posts/:postId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -595,7 +534,6 @@ Updates and returns an existing song.
     {
       "id": 1,
       "userId": 1,
-      "mediaId": 1,
       "caption": "Yesterday",
       "location": "San Francisco",
       "createdAt": "2021-11-19 20:39:36",
@@ -644,7 +582,7 @@ Deletes an existing post.
 - Request
 
   - Method: DELETE
-  - URL: /posts/:postId
+  - URL: /api/posts/:postId
   - Body: none
 
 - Successful Response
@@ -675,308 +613,7 @@ Deletes an existing post.
     }
     ```
 
-## FEATURE 2: ALBUMS FEATURE
-
-### Get all Albums
-
-Returns all the Albums.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: /albums
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Albums": [
-        {
-          "id": 1,
-          "userId": 1,
-          "title": "Time",
-          "description": "An album about time.",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "previewImage": "image url"
-        }
-      ]
-    }
-    ```
-
-### Get all Albums created by the Current User
-
-Returns all the Albums created by the current user.
-
-- Require Authentication: true
-- Request
-
-  - Method: GET
-  - URL: /users/current/albums
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Albums": [
-        {
-          "id": 1,
-          "userId": 1,
-          "title": "Time",
-          "description": "An album about time.",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "previewImage": "image url"
-        }
-      ]
-    }
-    ```
-
-### Get details of an Album from an id
-
-Returns the details of an album specified by its id.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: /albums/:albumId
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "title": "Time",
-      "description": "An album about time.",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36",
-      "previewImage": "image url",
-      "Artist": {
-        "id": 1,
-        "username": "JohnSmith",
-        "previewImage": "image url"
-      },
-      "Songs": [
-        {
-          "id": 1,
-          "userId": 1,
-          "albumId": 1,
-          "title": "Yesterday",
-          "description": "A song about the past.",
-          "url": "audio url",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "previewImage": "image url"
-        }
-      ]
-    }
-    ```
-
-- Error response: Couldn't find an Album with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Album couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Create an Album
-
-Creates and returns a new album.
-
-- Require Authentication: true
-- Request
-
-  - Method: POST
-  - URL: /albums
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "title": "Time",
-      "description": "An album about time.",
-      "imageUrl": "image url"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 201
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "title": "Time",
-      "description": "An album about time.",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36",
-      "previewImage": "image url"
-    }
-    ```
-
-- Error Response: Body validation error
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Validation Error",
-      "statusCode": 400,
-      "errors": {
-        "title": "Album title is required"
-      }
-    }
-    ```
-
-### Edit an Album
-
-Updates and returns an existing album.
-
-- Require Authentication: true
-- Require proper authorization: Album must belong to the current user
-- Request
-
-  - Method: PUT
-  - URL: /albums/:albumId
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "title": "Time",
-      "description": "An album about time.",
-      "imageUrl": "image url"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "title": "Time",
-      "description": "An album about time.",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 20:00:00",
-      "previewImage": "image url"
-    }
-    ```
-
-- Error Response: Body validation error
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Validation Error",
-      "statusCode": 400,
-      "errors": {
-        "title": "Album title is required"
-      }
-    }
-    ```
-
-- Error response: Couldn't find an Album with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Album couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Delete an Album
-
-Deletes an existing album.
-
-- Require Authentication: true
-- Require proper authorization: Album must belong to the current user
-- Request
-
-  - Method: DELETE
-  - URL: /albums/:albumId
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Successfully deleted",
-      "statusCode": 200
-    }
-    ```
-
-- Error response: Couldn't find an Album with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Album couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-## FEATURE 3: COMMENTS FEATURE
+## FEATURE 2: COMMENTS FEATURE
 
 ### Get all Comments by a Post's id
 
@@ -986,7 +623,7 @@ Returns all the comments that belong to a post specified by id.
 - Request
 
   - Method: GET
-  - URL: /posts/:postId/comments
+  - URL: /api/posts/:postId/comments
   - Body: none
 
 - Successful Response
@@ -1004,19 +641,30 @@ Returns all the comments that belong to a post specified by id.
               "userId": 1,
               "postId": 1,
               "comment": "I love this post!",
-              //body?
               "createdAt": "2021-11-19 20:39:36",
               "updatedAt": "2021-11-19 20:39:36",
               "User": {
                 "id": 1,
                 "username": "JohnSmith"
-              }
+              },
+              //likes
+              "Replies": [
+                {
+                "id": 1,
+                "userId": 1,
+                "commentId": 1,
+                "reply": "I love this comment!",
+                "createdAt": "2021-11-19 20:39:37",
+                "updatedAt": "2021-11-19 20:39:37",
+                "User": {
+                  "id": 1,
+                  "username": "JohnSmith"
+                  }
+              ]
             }
           ]
         }
         ```
-
-    <!-- include replies -->
 
 - Error response: Couldn't find a Post with the specified id
 
@@ -1040,15 +688,14 @@ Create and return a new comment for a post specified by id.
 - Request
 
   - Method: POST
-  - URL: /posts/:postId/comments
+  - URL: /api/posts/:postId/comments
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "comment": "I love this song!"
-      //body?
+      "comment": "I love this post!"
     }
     ```
 
@@ -1064,8 +711,7 @@ Create and return a new comment for a post specified by id.
       "id": 1,
       "userId": 1,
       "postId": 1,
-      "comment": "I love this song!",
-      //body?
+      "comment": "I love this post!",
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36"
     }
@@ -1111,7 +757,7 @@ Update and return an existing comment.
 - Request
 
   - Method: PUT
-  - URL: /comments/:commentId
+  - URL: /api/comments/:commentId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1135,7 +781,6 @@ Update and return an existing comment.
       "userId": 1,
       "postId": 1,
       "comment": "I love this post!",
-      //body?
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-20 20:00:00"
     }
@@ -1181,7 +826,7 @@ Delete an existing comment.
 - Request
 
   - Method: DELETE
-  - URL: /comments/:commentId
+  - URL: /api/comments/:commentId
   - Body: none
 
 - Successful Response
@@ -1212,7 +857,7 @@ Delete an existing comment.
     }
     ```
 
-## FEATURE 4: FOLLOWERS FEATURE
+## FEATURE 3: FOLLOWERS FEATURE
 
 ### Get details of a Follower from an id
 
@@ -1222,7 +867,7 @@ Returns the details of a follower specified by their id.
 - Request
 
   - Method: GET
-  - URL: /followers/:followerId
+  - URL: /api/followers/:followerId
   - Body: none
 
 - Successful Response
@@ -1262,7 +907,7 @@ Returns all the followers following the specified user.
 - Request
 
   - Method: GET
-  - URL: /users/:userId/followers
+  - URL: /api/users/:userId/followers
   - Body: none
 
 - Successful Response
@@ -1308,7 +953,7 @@ Follow a user specified by id.
 - Request
 
   - Method: POST
-  - URL: /users/:userId/followers
+  - URL: /api/users/:userId/followers
   - Body: none
 
 - Successful Response
@@ -1361,7 +1006,7 @@ Change the status of a follower of a user specified by id.
 - Request
 
   - Method: PUT
-  - URL: /users/:userId/followers/:followerId
+  - URL: /api/users/:userId/followers/:followerId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1441,7 +1086,7 @@ Returns all the playlists created by the specified artist.
 - Request
 
   - Method: GET
-  - URL: /artists/:artistId/playlists
+  - URL: /api/artists/:artistId/playlists
   - Body: none
 
 - Successful Response
@@ -1488,7 +1133,7 @@ Creates and returns a new playlist.
 - Request
 
   - Method: POST
-  - URL: /playlists
+  - URL: /api/playlists
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1544,7 +1189,7 @@ Add a song to a playlist specified by the playlist's id.
 - Request
 
   - Method: POST
-  - URL: /playlists/:playlistId/songs
+  - URL: /api/playlists/:playlistId/songs
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1606,7 +1251,7 @@ Returns the details of a playlist specified by its id.
 - Request
 
   - Method: GET
-  - URL: /playlists/:playlistId
+  - URL: /api/playlists/:playlistId
   - Body: none
 
 - Successful Response
@@ -1733,7 +1378,7 @@ Deletes an existing playlist.
 - Request
 
   - Method: DELETE
-  - URL: /playlists/:playlistId
+  - URL: /api/playlists/:playlistId
   - Body: none
 
 - Successful Response
@@ -1772,7 +1417,7 @@ Returns all the playlists created by the current user.
 - Request
 
   - Method: GET
-  - URL: /users/current/playlists
+  - URL: /api/users/current/playlists
   - Body: none
 
 - Successful Response
@@ -1807,7 +1452,7 @@ Create and return new media for a post specified by id.
 - Request
 
   - Method: POST
-  - URL: /posts/:postId/media
+  - URL: /api/posts/:postId/media
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1860,7 +1505,7 @@ Deletes existing media.
 - Request
 
   - Method: DELETE
-  - URL: /media/:mediaId
+  - URL: /api/media/:mediaId
   - Body: none
 
 - Successful Response
@@ -1901,7 +1546,7 @@ Create and return new likes for a post specified by id.
 - Request
 
   - Method: POST
-  - URL: /posts/:postId/likes
+  - URL: /api/posts/:postId/likes
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -1953,7 +1598,7 @@ Create and return new likes for a comment specified by id.
 - Request
 
   - Method: POST
-  - URL: /comments/:commentId/likes
+  - URL: /api/comments/:commentId/likes
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2005,7 +1650,7 @@ Create and return new likes for a reply specified by id.
 - Request
 
   - Method: POST
-  - URL: /replies/:replyId/likes
+  - URL: /api/replies/:replyId/likes
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2058,7 +1703,7 @@ Updates and returns an existing like.
 - Request
 
   - Method: PUT
-  - URL: /likes/:likeId
+  - URL: /api/likes/:likeId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2112,7 +1757,7 @@ Change the status of a like of a post specified by id.
 - Request
 
   - Method: PUT
-  - URL: /posts/:postId/likes/:likeId
+  - URL: /api/posts/:postId/likes/:likeId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2195,7 +1840,7 @@ Change the status of a like of a comment specified by id.
 - Request
 
   - Method: PUT
-  - URL: /comments/:commentId/likes/:likeId
+  - URL: /api/comments/:commentId/likes/:likeId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2278,7 +1923,7 @@ Change the status of a like of a reply specified by id.
 - Request
 
   - Method: PUT
-  - URL: /replies/:replyId/likes/:likeId
+  - URL: /api/replies/:replyId/likes/:likeId
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -2360,7 +2005,7 @@ Return posts filtered by query parameters.
 - Request
 
   - Method: GET
-  - URL: /posts
+  - URL: /api/posts
   - Query Parameters
     - page: integer, minimum: 0, maximum: 10, default: 0
     - size: integer, minimum: 0, maximum: 20, default: 20
