@@ -6,6 +6,13 @@
 
 ## API Documentation
 
+[feature 0 User](https://github.com/karenhuang925/Instagram-Candid#feature-0-user-authorization)
+[feature 1 Post](https://github.com/karenhuang925/Instagram-Candid#feature-1-posts-feature)
+[feature 2 Comment](https://github.com/karenhuang925/Instagram-Candid#feature-2-comments-feature)
+[feature 3 Follower](https://github.com/karenhuang925/Instagram-Candid#feature-3-followers-feature)
+[feature 4 Media](https://github.com/karenhuang925/Instagram-Candid#feature-4-media-feature)
+[feature 5 Like](https://github.com/karenhuang925/Instagram-Candid#feature-5-likes-feature)
+
 ## FEATURE 0: USER AUTHORIZATION
 
 ### All endpoints that require authentication
