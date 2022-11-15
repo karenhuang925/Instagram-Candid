@@ -12,6 +12,7 @@
 - [feature 3 Follower](https://github.com/karenhuang925/Instagram-Candid#feature-3-followers-feature)
 - [feature 4 Media](https://github.com/karenhuang925/Instagram-Candid#feature-4-media-feature)
 - [feature 5 Like](https://github.com/karenhuang925/Instagram-Candid#feature-5-likes-feature)
+- [feature 6 Reply](https://github.com/karenhuang925/Instagram-Candid#feature-6-replies)
 
 ## FEATURE 0: USER AUTHORIZATION
 
@@ -1643,6 +1644,211 @@ Change the status of a like of a reply specified by id.
         ```
 
     <!-- wrong status -->
+
+## FEATURE 6: REPLIES
+
+### Get all replies under the comments
+
+Returns all the all replies under the comments.
+
+- Require Authentication: false
+- Request
+
+  - Method: GET
+  - URL: /api/comments/:commentid/replies
+  - Body: none
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "Replies": [
+        {
+          "id": 1,
+          "comment_id": 1,
+          "user_id":1,
+          "reply": "@Abc thank you for your comments"
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "Owner": {
+            "id": 1,
+            "profileName": "JohnSmith",
+            "previewImage": "image url"
+          }
+        }
+      ]
+    }
+    ```
+### Create a Reply under the comment
+
+Creates and returns a new reply.
+
+- Require Authentication: true
+- Request
+
+  - Method: POST
+  - URL: /api/comments/:commentid/replies
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "reply": "@Abc thank you for your comments",
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 201
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+          "id": 1,
+          "comment_id": 1,
+          "user_id":1,
+          "reply": "@Abc thank you for your comments"
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "Owner": {
+            "id": 1,
+            "profileName": "JohnSmith",
+            "previewImage": "image url"
+          }
+    }
+    ```
+
+- Error Response: Body validation error
+
+  - Status Code: 400
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+            ```json
+            {
+              "message": "Validation Error",
+              "statusCode": 400,
+              "errors": {
+                "reply": "reply is required",
+              }
+            }
+            ```
+### Edit a reply
+
+Updates and returns an existing reply.
+
+- Require Authentication: true
+- Require proper authorization: Reply must belong to the current user
+- Request
+
+  - Method: PUT
+  - URL: /api/replies/:replyid
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "reply": "@Abc I love your comment"
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1,
+      "comment_id": 1,
+      "userId": 1,
+      "reply": "@Abc I love your comment"
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-20 20:40:40"
+    }
+    ```
+
+- Error Response: Body validation error
+
+  - Status Code: 400
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+            {
+              "message": "Validation Error",
+              "statusCode": 400,
+              "errors": {
+                "reply": "reply is required",
+              }
+            }
+    ```
+
+- Error response: Couldn't find a reply with the specified id
+
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Reply couldn't be found",
+      "statusCode": 404
+    }
+    ```
+### Delete a reply
+
+Deletes an existing reply.
+
+- Require Authentication: true
+- Require proper authorization: Reply must belong to the current user
+- Request
+
+  - Method: DELETE
+  - URL: /api/replies/:replyid
+  - Body: none
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Successfully deleted",
+      "statusCode": 200
+    }
+    ```
+
+- Error response: Couldn't find a reply with the specified id
+
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Reply couldn't be found",
+      "statusCode": 404
+    }
+    ```
 
 ### Add Query Filters to Get All Posts
 
