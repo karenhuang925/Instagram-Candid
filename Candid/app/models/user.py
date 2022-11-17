@@ -10,9 +10,21 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
-    hashed_password = db.Column(db.String(255), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    #change to profile name everywhere
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    hashed_password = db.Column(db.String(256), nullable=False)
+    preview_image=db.Column(db.String(256), nullable=False)
+    createdAt = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updatedAt = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+
+    posts = db.relationship('Post', back_populates='user')
+    medias = db.relationship('Media', back_populates='user')
+    comments = db.relationship('Comment', back_populates='user')
+    replies = db.relationship('Reply', back_populates='user')
+    likes = db.relationship('Like', back_populates='user')
 
     @property
     def password(self):
