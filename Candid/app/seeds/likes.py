@@ -2,11 +2,10 @@ from app.models import db, Post, environment, SCHEMA
 
 
 def seed_posts():
-  one = Post(
-    user_id = 1, caption = 'caption 1', location = 'Australia')
-  two = Post(
-    user_id = 1, caption = 'caption 2', location = 'Japan')
-  three = Post(
+  objects = []
+  Post(user_id = 1, caption = 'caption 1', location = 'Australia'),
+  Post(user_id = 1, caption = 'caption 2', location = 'Japan'),
+  Post(
     user_id = 1, caption = 'caption 3', location = 'Canada')
   four = Post(
     user_id = 1, caption = 'caption 4', location = 'Denmark')
@@ -116,3 +115,79 @@ def seed_posts():
     user_id = 3, caption = 'caption 19', location = 'Rwanda')
   twentyb = Post(
     user_id = 3, caption = 'caption 20', location = 'Netherlands')
+  onec = Post(
+    user_id = 4, caption = 'caption 1', location = 'Australia')
+  twoc = Post(
+    user_id = 4, caption = 'caption 2', location = 'Japan')
+  threec = Post(
+    user_id = 4, caption = 'caption 3', location = 'Canada')
+  fourc = Post(
+    user_id = 4, caption = 'caption 4', location = 'Denmark')
+  fivec = Post(
+    user_id = 4, caption = 'caption 5', location = 'Germany')
+  sixc = Post(
+    user_id = 4, caption = 'caption 6', location = 'India')
+  sevenc = Post(
+    user_id = 4, caption = 'caption 7', location = 'Hungary')
+  eightc = Post(
+    user_id = 4, caption = 'caption 8', location = 'China')
+  ninec = Post(
+    user_id = 4, caption = 'caption 9', location = 'Finland')
+  tenc = Post(
+    user_id = 4, caption = 'caption 10', location = 'United Kingdom')
+  elevenc = Post(
+    user_id = 4, caption = 'caption 11', location = 'Yemen')
+  twelvec = Post(
+    user_id = 4, caption = 'caption 12', location = 'Oman')
+  fourteenc = Post(
+    user_id = 4, caption = 'caption 14', location = 'Zimbabwe')
+  fifteenc = Post(
+    user_id = 4, caption = 'caption 15', location = 'France')
+  sixteenc = Post(
+    user_id = 4, caption = 'caption 16', location = 'Peru')
+  seventeenc = Post(
+    user_id = 4, caption = 'caption 17', location = 'Qatar')
+  eighteenc = Post(
+    user_id = 4, caption = 'caption 18', location = 'Vanuatu')
+  nineteenc = Post(
+    user_id = 4, caption = 'caption 19', location = 'Rwanda')
+  twentyc = Post(
+    user_id = 4, caption = 'caption 20', location = 'Netherlands')
+  oned = Post(
+    user_id = 5, caption = 'caption 1', location = 'Australia')
+  twod = Post(
+    user_id = 5, caption = 'caption 2', location = 'Japan')
+  threed = Post(
+    user_id = 5, caption = 'caption 3', location = 'Canada')
+  fourd = Post(
+    user_id = 5, caption = 'caption 4', location = 'Denmark')
+  fived = Post(
+    user_id = 5, caption = 'caption 5', location = 'Germany')
+  sixd = Post(
+    user_id = 5, caption = 'caption 6', location = 'India')
+  sevend = Post(
+    user_id = 5, caption = 'caption 7', location = 'Hungary')
+  eightd = Post(
+    user_id = 5, caption = 'caption 8', location = 'China')
+  nined = Post(
+    user_id = 5, caption = 'caption 9', location = 'Finland')
+  tend = Post(
+    user_id = 5, caption = 'caption 10', location = 'United Kingdom')
+  elevend = Post(
+    user_id = 5, caption = 'caption 11', location = 'Yemen')
+  twelved = Post(
+    user_id = 5, caption = 'caption 12', location = 'Oman')
+  fourteend = Post(
+    user_id = 5, caption = 'caption 14', location = 'Zimbabwe')
+  fifteend = Post(
+    user_id = 5, caption = 'caption 15', location = 'France')
+  sixteend = Post(
+    user_id = 5, caption = 'caption 16', location = 'Peru')
+  seventeend = Post(
+    user_id = 5, caption = 'caption 17', location = 'Qatar')
+  eighteend = Post(
+    user_id = 5, caption = 'caption 18', location = 'Vanuatu')
+  nineteend = Post(
+    user_id = 5, caption = 'caption 19', location = 'Rwanda')
+  twentyd = Post(
+    user_id = 5, caption = 'caption 20', location = 'Netherlands')
