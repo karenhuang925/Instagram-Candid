@@ -26,6 +26,11 @@ class User(db.Model, UserMixin):
     likes = db.relationship('Like', back_populates='user')
     followers = db.relationship('Follower', back_populates='user')
 
+    # current_user = db.relationship('Follower', back_populates='this_user')
+    # currently_follows = db.relationship('Follower', back_populates='user_follower')
+
+
+
     @property
     def password(self):
         return self.hashed_password
