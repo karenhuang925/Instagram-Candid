@@ -1,6 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-# from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_login import UserMixin
+
 
 
 class Follower(db.Model):
@@ -13,15 +12,18 @@ class Follower(db.Model):
     user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
     follows_user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
     following_status = db.Column(db.Boolean, default=True)
-    createdAt = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    updatedAt = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    # user = db.relationship("User", back_populates="posts")
-    # fix
+    user = db.relationship("User", back_populates="followers", foreign_keys=[user_id, follows_user_id])
+
 
     def to_dict(self):
         return {
             'id': self.id,
-            'username': self.username,
-            'email': self.email
+            'user_id': self.user_id,
+            'follows_user_id': self.follows_user_id,
+            'following_status': self.following_status,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

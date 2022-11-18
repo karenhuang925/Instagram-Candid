@@ -1,6 +1,4 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-# from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_login import UserMixin
 
 
 class Like(db.Model):
@@ -11,11 +9,10 @@ class Like(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
-    # likeable_id = db.Column(db.ForeignKey, nullable=False)
     likeable_type = db.Column(db.String(50), nullable=False)
     like_status = db.Column(db.Boolean, default=True)
-    createdAt = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    updatedAt = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="likes")
     __mapper_args__ = {
@@ -23,11 +20,16 @@ class Like(db.Model):
         "polymorphic_on": likeable_type,
     }
 
-    # post = db.relationship('Post', back_populates="likes")
-    # comment = db.relationship("Comment", back_populates="likes")
-    # reply = db.relationship('Reply', back_populates='likes')
-#fix relationships- should be polymorphic
-#all children in this file, inherit likes
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'likeable_type': self.likeable_type,
+            'like_status': self.like_status,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
 class Post(Like):
     __tablename__ = 'posts'
 
@@ -38,22 +40,25 @@ class Post(Like):
     user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
     caption = db.Column(db.String(256))
     location = db.Column(db.String(100))
-    createdAt = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    updatedAt = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="posts")
     medias = db.relationship('Media', back_populates='post')
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email
-        }
-
     __mapper_args__ = {
         "polymorphic_identity": "posts",
     }
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'caption': self.caption,
+            'location': self.location,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
 
 class Comment(Like):
     __tablename__ = 'comments'
@@ -65,22 +70,25 @@ class Comment(Like):
     user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
     post_id = db.Column(db.ForeignKey('posts.id'), nullable=False)
     comment = db.Column(db.String(256), nullable=False)
-    createdAt = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    updatedAt = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="comments")
     replies = db.relationship('Reply', back_populates='comment')
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email
-        }
-
     __mapper_args__ = {
         "polymorphic_identity": "comments",
     }
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'post_id': self.post_id,
+            'comment': self.comment,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
 
 class Reply(Like):
     __tablename__ = 'replies'
@@ -92,19 +100,22 @@ class Reply(Like):
     user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
     comment_id = db.Column(db.ForeignKey('comments.id'), nullable=False)
     reply = db.Column(db.String(256), nullable=False)
-    createdAt = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    updatedAt = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="replies")
     comment = db.relationship("Comment", back_populates="replies")
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email
-        }
-
     __mapper_args__ = {
         "polymorphic_identity": "replies",
     }
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'comment_id': self.comment_id,
+            'reply': self.reply,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
