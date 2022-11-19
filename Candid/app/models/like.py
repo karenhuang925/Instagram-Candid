@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from sqlalchemy.sql import func
 
 
 class Like(db.Model):
@@ -8,7 +9,7 @@ class Like(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     likeable_type = db.Column(db.String(50), nullable=False)
     like_status = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -37,7 +38,7 @@ class Post(Like):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, db.ForeignKey('likes.id'), primary_key=True)
-    user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     caption = db.Column(db.String(256))
     location = db.Column(db.String(100))
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -67,8 +68,8 @@ class Comment(Like):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, db.ForeignKey('likes.id'), primary_key=True)
-    user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
-    post_id = db.Column(db.ForeignKey('posts.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     comment = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
@@ -97,8 +98,8 @@ class Reply(Like):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, db.ForeignKey('likes.id'), primary_key=True)
-    user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
-    comment_id = db.Column(db.ForeignKey('comments.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'), nullable=False)
     reply = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
