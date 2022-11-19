@@ -1,6 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.sql import func
+
 
 
 class User(db.Model, UserMixin):
@@ -24,7 +26,9 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', back_populates='user')
     replies = db.relationship('Reply', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
-    followers = db.relationship('Follower', back_populates='user')
+    current_user = db.relationship('Follower', back_populates='this_user')
+
+
 
     @property
     def password(self):
