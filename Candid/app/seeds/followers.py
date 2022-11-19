@@ -22,7 +22,7 @@ def seed_followers():
     Follower(user_id = 5, follows_user_id = 1, following_status = True),
     Follower(user_id = 5, follows_user_id = 2, following_status = True),
     Follower(user_id = 5, follows_user_id = 3, following_status = True),
-    Follower(user_id = 5, follows_user_id = 4, following_status = True),
+    Follower(user_id = 5, follows_user_id = 4, following_status = True)
   ]
   db.session.add_all(objects)
   db.session.commit()

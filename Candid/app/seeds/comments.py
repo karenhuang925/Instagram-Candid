@@ -382,7 +382,7 @@ def seed_comments():
     Comment(user_id = 1, post_id = 20, comment = 'comment 1'),
     Comment(user_id = 2, post_id = 20, comment = 'comment 2'),
     Comment(user_id = 3, post_id = 20, comment = 'comment 3'),
-    Comment(user_id = 4, post_id = 20, comment = 'comment 4'),
+    Comment(user_id = 4, post_id = 20, comment = 'comment 4')
   ]
   db.session.add_all(objects)
   db.session.commit()

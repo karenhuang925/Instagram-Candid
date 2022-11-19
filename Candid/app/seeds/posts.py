@@ -97,7 +97,7 @@ def seed_posts():
     Post(user_id = 5, caption = 'caption 17', location = 'Qatar'),
     Post(user_id = 5, caption = 'caption 18', location = 'Vanuatu'),
     Post(user_id = 5, caption = 'caption 19', location = 'Rwanda'),
-    Post(user_id = 5, caption = 'caption 20', location = 'Netherlands'),
+    Post(user_id = 5, caption = 'caption 20', location = 'Netherlands')
   ]
   db.session.add_all(objects)
   db.session.commit()

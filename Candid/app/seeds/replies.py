@@ -377,7 +377,7 @@ def seed_replies():
     Reply(user_id = 5, comment_id = 376, reply = "reply 5"),
     Reply(user_id = 5, comment_id = 377, reply = "reply 5"),
     Reply(user_id = 5, comment_id = 378, reply = "reply 5"),
-    Reply(user_id = 5, comment_id = 379, reply = "reply 5"),
+    Reply(user_id = 5, comment_id = 379, reply = "reply 5")
   ]
   db.session.add_all(objects)
   db.session.commit()
