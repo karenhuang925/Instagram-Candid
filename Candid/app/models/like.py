@@ -10,12 +10,13 @@ class Like(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    likeable_id = db.Column(db.Integer, nullable=False)
     likeable_type = db.Column(db.String(50), nullable=False)
     like_status = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    user = db.relationship("User", back_populates="likes")
+    user = db.relationship("User", back_populates="likes", )
     __mapper_args__ = {
         "polymorphic_identity": "likes",
         "polymorphic_on": likeable_type,
@@ -37,7 +38,7 @@ class Post(Like):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, db.ForeignKey('likes.id'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('likes.likeable_id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     caption = db.Column(db.String(256))
     location = db.Column(db.String(100))
@@ -67,7 +68,7 @@ class Comment(Like):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, db.ForeignKey('likes.id'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('likes.likeable_id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     comment = db.Column(db.String(256), nullable=False)
@@ -75,7 +76,7 @@ class Comment(Like):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="comments")
-    replies = db.relationship('Reply', back_populates='comment')
+    # replies = db.relationship('Reply', foreign_keys='Reply.comment_id')
 
     __mapper_args__ = {
         "polymorphic_identity": "comments",
@@ -97,7 +98,7 @@ class Reply(Like):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, db.ForeignKey('likes.id'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('likes.likeable_id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'), nullable=False)
     reply = db.Column(db.String(256), nullable=False)
@@ -105,7 +106,9 @@ class Reply(Like):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="replies")
-    comment = db.relationship("Comment", back_populates="replies")
+    # comment = db.relationship("Comment",
+    #                         # back_populates="replies",
+    #                         foreign_keys='comments.id')
 
     __mapper_args__ = {
         "polymorphic_identity": "replies",
