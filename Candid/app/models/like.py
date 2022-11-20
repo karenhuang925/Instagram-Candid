@@ -49,7 +49,7 @@ class Post(Like):
     medias = db.relationship('Media', back_populates='post')
 
     __mapper_args__ = {
-        "polymorphic_identity": "posts",
+        "polymorphic_identity": "post",
     }
 
     def to_dict(self):
