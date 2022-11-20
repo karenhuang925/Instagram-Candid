@@ -5,3 +5,5 @@ from app.models import db, Media, User
 media_routes = Blueprint('media', __name__)
 
 @media_routes.route('/posts/<int:postId>/media')
+def placeholder():
+    pass
