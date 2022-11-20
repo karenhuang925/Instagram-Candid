@@ -1,8 +1,8 @@
-"""Test Seeding
+"""Test Seeders
 
-Revision ID: 7ce0b170d075
+Revision ID: 462256898218
 Revises: 
-Create Date: 2022-11-19 14:23:52.880645
+Create Date: 2022-11-19 20:50:09.254989
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7ce0b170d075'
+revision = '462256898218'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,7 @@ def upgrade():
     sa.Column('last_name', sa.String(length=50), nullable=False),
     sa.Column('username', sa.String(length=50), nullable=False),
     sa.Column('email', sa.String(length=50), nullable=False),
+    sa.Column('biography', sa.String(length=500), nullable=True),
     sa.Column('hashed_password', sa.String(length=256), nullable=False),
     sa.Column('preview_image', sa.String(length=256), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
@@ -46,6 +47,7 @@ def upgrade():
     op.create_table('likes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('likeable_id', sa.Integer(), nullable=False),
     sa.Column('likeable_type', sa.String(length=50), nullable=False),
     sa.Column('like_status', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
@@ -60,7 +62,7 @@ def upgrade():
     sa.Column('location', sa.String(length=100), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
-    sa.ForeignKeyConstraint(['id'], ['likes.id'], ),
+    sa.ForeignKeyConstraint(['id'], ['likes.likeable_id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -71,7 +73,7 @@ def upgrade():
     sa.Column('comment', sa.String(length=256), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
-    sa.ForeignKeyConstraint(['id'], ['likes.id'], ),
+    sa.ForeignKeyConstraint(['id'], ['likes.likeable_id'], ),
     sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -96,7 +98,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['comment_id'], ['comments.id'], ),
-    sa.ForeignKeyConstraint(['id'], ['likes.id'], ),
+    sa.ForeignKeyConstraint(['id'], ['likes.likeable_id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

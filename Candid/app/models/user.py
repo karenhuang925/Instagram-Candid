@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(50), nullable=False, unique=True)
     email = db.Column(db.String(50), nullable=False, unique=True)
+    biography = db.Column(db.String(500))
     hashed_password = db.Column(db.String(256), nullable=False)
     preview_image=db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -46,6 +47,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'biography': self.biography,
             'hashed_password': self.hashed_password,
             'preview_image': self.preview_image,
             'created_at': self.created_at,
