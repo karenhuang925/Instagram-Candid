@@ -17,10 +17,11 @@ class Like(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
     user = db.relationship("User", back_populates="likes")
+    id_post_to_like = db.relationship("Post", back_populates='id_likes_to_post')
 
     __mapper_args__ = {
-        "polymorphic_identity": "likes",
         "polymorphic_on": likeable_type,
+        "polymorphic_identity": "likes"
     }
 
     def to_dict(self):
@@ -39,7 +40,7 @@ class Post(Like):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, db.ForeignKey('likes.likeable_id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     caption = db.Column(db.String(256))
     location = db.Column(db.String(100))
@@ -48,6 +49,7 @@ class Post(Like):
 
     user = db.relationship("User", back_populates="posts")
     medias = db.relationship('Media', back_populates='post')
+    id_like_to_post = db.relationship("Like", back_populates='id_post_to_like', foreign_keys='Like.likable_id')
 
     __mapper_args__ = {
         "polymorphic_identity": "posts",
