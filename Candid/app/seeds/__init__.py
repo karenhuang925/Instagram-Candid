@@ -29,7 +29,7 @@ def seed():
         undo_medias()
         undo_posts()
         undo_replies()
-    # seed_users()
+    seed_users()
     # Add other seed functions here
     seed_comments()
     seed_followers()
