@@ -27,7 +27,8 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', back_populates='user')
     replies = db.relationship('Reply', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
-    current_user = db.relationship('Follower', back_populates='this_user')
+
+    current_user = db.relationship('Follower', back_populates='this_user', foreign_keys='Follower.user_id')
 
 
 
