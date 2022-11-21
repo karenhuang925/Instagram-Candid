@@ -61,6 +61,7 @@ def get_posts_by_current_user(id):
 
 # Get all Posts of Users Followed by Current User
 @post_routes.route('/users/<int:id>/follows/posts')
+def get_posts_of_users_current_user_follows():
     # Need find all the people the current user follows
     # Need to find the posts of the 
     pass
