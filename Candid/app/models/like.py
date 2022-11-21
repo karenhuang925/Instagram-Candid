@@ -15,7 +15,7 @@ class Like(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    user = db.relationship("User", back_populates="likes", )
+    user = db.relationship("User", back_populates="likes")
     post = db.relationship("Post", back_populates="likes")
 
 
