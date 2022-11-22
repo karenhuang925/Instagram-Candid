@@ -1,8 +1,11 @@
-from flask import Blueprint, request
-from flask_login import login_required
-from app.models import db, User, Post, Follower, Comment
+from flask import Blueprint, jsonify, request
+from flask_login import login_required, current_user
+from app.models import db, Comment, User
 
 comment_routes = Blueprint('comment', __name__)
+
+@comment_routes.route('/posts/<int:postId>/comments')
+# add validation
 
 #Get all Comments by a Post's id
 @comment_routes.route('/posts/<int:id>/comments', methods=['GET'])
