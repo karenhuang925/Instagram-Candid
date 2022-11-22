@@ -53,9 +53,6 @@ class User(db.Model, UserMixin):
             'preview_image': self.preview_image,
             'created_at': self.created_at,
             'updated_at': self.updated_at
-<<<<<<< HEAD
-        }
-=======
         }
 
     def safe_info(self):
@@ -66,4 +63,3 @@ class User(db.Model, UserMixin):
             'biography': self.biography,
             'preview_image': self.preview_image
         }
->>>>>>> 0fe152725281e3f59ee1a60e643e72b2acbf7b0a
