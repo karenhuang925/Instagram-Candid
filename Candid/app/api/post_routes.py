@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify
+from flask_login import current_user
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
-from ..models.post import Post
-from ..models.user import User
+# from ..models.post import Post
+# from ..models.user import User
+from app.models import Follower, Post, User
 
 post_routes = Blueprint('posts', __name__)
 
@@ -31,9 +33,17 @@ def all_posts():
         ]
     }
 
+
 # Get all Posts created by the Current User
 @post_routes.route('/users/<int:id>/posts', methods=["GET"])
 def get_posts_by_current_user(id):
+
+    # Need to adjust for user login, authenticat and pull current user in session
+
+    # user = current_user
+    # current = user.to_dict()
+    # user_id = current['id']
+
 
     # current_user = User.query.filter(id == User.id).first()
     posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
@@ -60,11 +70,47 @@ def get_posts_by_current_user(id):
 
 
 # Get all Posts of Users Followed by Current User
-@post_routes.route('/users/<int:id>/follows/posts')
-def get_posts_of_users_current_user_follows():
-    # Need find all the people the current user follows
-    # Need to find the posts of the 
-    pass
+@post_routes.route('/users/<int:id>/following/posts')
+def get_posts_of_users_current_user_follows(id):
+
+    following = Follower.query.filter(Follower.user_id == id).filter(Follower.following_status == True).all()
+
+    currently_following = [user.to_dict() for user in following]
+
+    all_id_of_following = [user['follows_user_id'] for user in currently_following]
+
+    following_posts = []
+    for id in all_id_of_following:
+        posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).all()
+        for post in posts:
+            following_posts.append(post)
+
+    return {
+        "Posts" : [
+            {
+                "id": post.id,
+                "userId": post.user_id,
+                "caption": post.caption,
+                "location": post.location,
+                "created_at": post.created_at,
+                "updated_at": post.updated_at,
+                "Media" :[
+                    {
+                        "id": media.id,
+                        "user_id": media.user_id,
+                        "media_file": media.media_file,
+                        "type": media.type
+                    } for media in post.medias
+                ],
+                "Owner": {
+                    "id": post.user.id,
+                    "username": post.user.username,
+                    "previewImage": post.user.preview_image
+                }
+            } for post in following_posts
+        ]
+    }
+
 
 # Get details of a Post from an id
 @post_routes.route('/posts/<int:id>', methods=["GET"])
@@ -92,6 +138,7 @@ def get_post_by_id(id):
             "previewImage": post.user.preview_image
         }
     }
+
 
 # Create a Post
 # Edit a Post
