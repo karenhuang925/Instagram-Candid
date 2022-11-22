@@ -51,12 +51,13 @@ def follow_a_user(userId):
 @login_required
 @follower_routes.route('/users/<int:userId>/followers', methods=['PUT'])
 def unfollow_a_user(userId):
-    # if not current_user.id == userId:
-    #     return {'errors': ['Unauthorized']}
+    user_id = current_user.get_id()
+    if not user_id == userId:
+        return {'errors': ['Unauthorized']}
     follows_user_id = request.json["follows_user_id"]
 
     the_follow_relation = Follower.query.filter(Follower.user_id == userId).filter(Follower.follows_user_id == follows_user_id).first()
-    db.session.delete(the_follow_relation)
-    # the_follow_relation.following_status = False
+    # db.session.delete(the_follow_relation)
+    the_follow_relation.following_status = False
     db.session.commit()
     return the_follow_relation.to_dict()
