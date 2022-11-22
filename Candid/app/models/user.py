@@ -54,3 +54,12 @@ class User(db.Model, UserMixin):
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
+
+    def safe_info(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'biography': self.biography,
+            'preview_image': self.preview_image
+        }
