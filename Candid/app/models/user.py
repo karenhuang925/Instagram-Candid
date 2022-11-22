@@ -22,20 +22,12 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-<<<<<<< HEAD
     posts = db.relationship('Post', back_populates='user')
     medias = db.relationship('Media', back_populates='user')
     comments = db.relationship('Comment', back_populates='user')
     replies = db.relationship('Reply', back_populates='user')
     likes = db.relationship('Like', back_populates='user')
 
-=======
-    posts = db.relationship('Post', back_populates='user', foreign_keys='Post.user_id')
-    medias = db.relationship('Media', back_populates='user', foreign_keys='Media.user_id')
-    comments = db.relationship('Comment', back_populates='user', foreign_keys='Comment.user_id')
-    replies = db.relationship('Reply', back_populates='user', foreign_keys='Reply.user_id')
-    likes = db.relationship('Like', back_populates='user', foreign_keys='Like.user_id')
->>>>>>> GEM-Start-Post-Route
     current_user = db.relationship('Follower', back_populates='this_user', foreign_keys='Follower.user_id')
 
 
@@ -61,9 +53,6 @@ class User(db.Model, UserMixin):
             'preview_image': self.preview_image,
             'created_at': self.created_at,
             'updated_at': self.updated_at
-<<<<<<< HEAD
-        }
-=======
         }
 
     def safe_info(self):
@@ -74,4 +63,3 @@ class User(db.Model, UserMixin):
             'biography': self.biography,
             'preview_image': self.preview_image
         }
->>>>>>> 0fe152725281e3f59ee1a60e643e72b2acbf7b0a
