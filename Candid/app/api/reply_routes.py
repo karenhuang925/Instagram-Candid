@@ -5,6 +5,11 @@ from app.models import db, Follower, Post, User, Reply
 
 reply_routes = Blueprint('reply', __name__)
 
+#Still Need to:
+    # Test Create, Edit, Delete routes and adjust code
+    # Include Authenticat and Authorization capability
+    # Provide Validation and Error handling
+
 # Get all replies under the comment
 @reply_routes.route('/comments/<int:id>/replies')
 def get_replies_for_comment(id):
