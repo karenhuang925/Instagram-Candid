@@ -1,8 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
-# from ..models.post import Post
-# from ..models.user import User
 from app.models import db, Follower, Post, User
 
 post_routes = Blueprint('posts', __name__)
@@ -42,10 +40,9 @@ def get_posts_by_current_user(id):
 
     # user = current_user
     # currentuser = user.to_dict()
-    currentuser = current_user.to_dict()
-    user_id = currentuser['id']
-    print("HERE1", currentuser)
-
+    # currentuser = current_user.to_dict()
+    # user_id = currentuser['id']
+    # print("HERE1", currentuser)
 
     # current_user = User.query.filter(id == User.id).first()
     posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
@@ -163,4 +160,17 @@ def create_new_post():
     return post.to_dict()
 
 # Edit a Post
+@post_routes.route('/posts/<int:id>', methods=["PUT"])
+
 # Delete a Post
+@post_routes.route('/posts/<int:id>', methods=["DELETE"])
+def delete_post(id):
+    
+    post = Post.query.filter(Post.id == id).first()
+
+    db.session.delete(post)
+    db.session.commit()
+    return {
+        "message": "Successfully deleted",
+        "statusCode": 404
+    }
