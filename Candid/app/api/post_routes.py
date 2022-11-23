@@ -1,17 +1,21 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
-# from ..models.post import Post
-# from ..models.user import User
-from app.models import Follower, Post, User
+from app.models import db, Follower, Post
 
 post_routes = Blueprint('posts', __name__)
 
+#Still Need to:
+    # Test Create, Edit, Delete routes and adjust code
+    # Include Authenticat and Authorization capability
+    # Provide Validation and Error handling
+
 # Get all Posts
 @post_routes.route('/posts')
-def all_posts():
+def get_all_posts():
 
     posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    
     return {
         "Posts" : [
             {
@@ -41,12 +45,14 @@ def get_posts_by_current_user(id):
     # Need to adjust for user login, authenticat and pull current user in session
 
     # user = current_user
-    # current = user.to_dict()
-    # user_id = current['id']
-
+    # currentuser = user.to_dict()
+    # currentuser = current_user.to_dict()
+    # user_id = currentuser['id']
+    # print("HERE1", currentuser)
 
     # current_user = User.query.filter(id == User.id).first()
     posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    
     return {
         "Posts" : [
             {
@@ -117,6 +123,7 @@ def get_posts_of_users_current_user_follows(id):
 def get_post_by_id(id):
 
     post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).first()
+    
     return {
         "id": post.id,
         "userId": post.user_id,
@@ -141,5 +148,54 @@ def get_post_by_id(id):
 
 
 # Create a Post
+@post_routes.route('/posts', methods=["POST"])
+def create_new_post():
+
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+    
+    caption = request.json['caption']
+    location = request.json['location']
+
+    post = Post(
+        user_id = user_id,
+        caption = caption,
+        location = location
+    )
+
+    db.session.add(post)
+    db.session.commit()
+
+    return post.to_dict()
+
+
 # Edit a Post
+@post_routes.route('/posts/<int:id>', methods=["PUT"])
+def edit_post(id):
+    
+    caption = request.json['caption']
+    location = request.json['location']
+
+    post = Post.query.filter(Post.id == id).first()
+
+    post.caption = caption
+    post.location = location
+
+    db.session.commit()
+
+    return post.to_dict()
+
+
 # Delete a Post
+@post_routes.route('/posts/<int:id>', methods=["DELETE"])
+def delete_post(id):
+    
+    post = Post.query.filter(Post.id == id).first()
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return {
+        "message": "Successfully deleted",
+        "statusCode": 404
+    }
