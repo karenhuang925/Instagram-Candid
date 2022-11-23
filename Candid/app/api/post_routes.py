@@ -159,8 +159,21 @@ def create_new_post():
     db.session.commit()
     return post.to_dict()
 
+
 # Edit a Post
 @post_routes.route('/posts/<int:id>', methods=["PUT"])
+def edit_post(id):
+    caption = request.json['caption']
+    location = request.json['location']
+
+    post = Post.query.filter(Post.id == id).first()
+
+    post.caption = caption
+    post.location = location
+
+    db.session.commit()
+    return post.to_dict()
+
 
 # Delete a Post
 @post_routes.route('/posts/<int:id>', methods=["DELETE"])
