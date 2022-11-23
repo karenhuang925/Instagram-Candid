@@ -10,6 +10,7 @@ reply_routes = Blueprint('reply', __name__)
 def get_replies_for_comment(id):
 
     replies = Reply.query.filter(Reply.comment_id == id).options(joinedload(Reply.user).options(load_only('id', 'username', 'preview_image'))).all()
+    
     return {
         "Replies" : [
             {
@@ -28,34 +29,53 @@ def get_replies_for_comment(id):
         ]
     }
 
-# {
-#   "Replies": [
-#     {
-#       "id": 1,
-#       "comment_id": 1,
-#       "user_id":1,
-#       "reply": "@Abc thank you for your comments"
-#       "created_at": "2021-11-19 20:39:36",
-#       "updated_at": "2021-11-19 20:39:36",
-#       "Owner": {
-#         "id": 1,
-#         "username": "JohnSmith",
-#         "preview_image": "image url"
-#       }
-#     }
-#   ]
-# }
-
 
 # Create a Reply under the comment
-@reply_routes.route('/comments/<int:id>/replies')
+@reply_routes.route('/comments/<int:id>/replies', methods=["POST"])
 def create_new_reply(id):
-    pass
+
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+
+    user_reply = request.json['reply']
+    
+    new_reply = Reply(
+        user_id = user_id,
+        comment_id = id,
+        reply = user_reply
+    )
+
+    db.session.add(new_reply)
+    db.session.commit()
+
+    return new_reply.to_dict()
+
+
 # Edit a Reply
-@reply_routes.route('/replies/<int:id>')
+@reply_routes.route('/replies/<int:id>', methods=["PUT"])
 def edit_reply(id):
-    pass
+    
+    edit_reply = request.json['reply']
+
+    reply = Reply.query.filter(Reply.id == id).first()
+    
+    reply.reply = edit_reply
+
+    db.session.commit()
+
+    return reply.to_dict()
+
+
 # Delete a Reply
-@reply_routes.route('/replies/<int:id>')
+@reply_routes.route('/replies/<int:id>', methods=["DELETE"])
 def delete_reply(id):
-    pass
+    
+    reply = Reply.query.filter(Reply.id == id).first()
+    
+    db.session.delete(reply)
+    db.session.commit()
+
+    return {
+        "message": "Successfully deleted",
+        "statusCode": 404
+    }

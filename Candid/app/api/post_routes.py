@@ -10,6 +10,7 @@ post_routes = Blueprint('posts', __name__)
 def get_all_posts():
 
     posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    
     return {
         "Posts" : [
             {
@@ -46,6 +47,7 @@ def get_posts_by_current_user(id):
 
     # current_user = User.query.filter(id == User.id).first()
     posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    
     return {
         "Posts" : [
             {
@@ -116,6 +118,7 @@ def get_posts_of_users_current_user_follows(id):
 def get_post_by_id(id):
 
     post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).first()
+    
     return {
         "id": post.id,
         "userId": post.user_id,
@@ -157,12 +160,14 @@ def create_new_post():
 
     db.session.add(post)
     db.session.commit()
+
     return post.to_dict()
 
 
 # Edit a Post
 @post_routes.route('/posts/<int:id>', methods=["PUT"])
 def edit_post(id):
+    
     caption = request.json['caption']
     location = request.json['location']
 
@@ -172,6 +177,7 @@ def edit_post(id):
     post.location = location
 
     db.session.commit()
+
     return post.to_dict()
 
 
@@ -183,6 +189,7 @@ def delete_post(id):
 
     db.session.delete(post)
     db.session.commit()
+
     return {
         "message": "Successfully deleted",
         "statusCode": 404
