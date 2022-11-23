@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
-from app.models import db, Follower, Post, User
+from app.models import db, Follower, Post
 
 post_routes = Blueprint('posts', __name__)
 
