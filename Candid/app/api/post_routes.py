@@ -10,44 +10,11 @@ post_routes = Blueprint('posts', __name__)
     # Include Authenticate and Authorization capability
     # Provide Validation and Error handling
 
-# Get all Posts
-@post_routes.route('/posts')
-def get_all_posts():
-
-    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+# Get all Posts by user id
+@post_routes.route('/users/<int:id>/posts', methods=["GET"])
+def get_posts_by_user_id(id):
     
-    return {
-        "Posts" : [
-            {
-                "id": post.id,
-                "userId": post.user_id,
-                "caption": post.caption,
-                "location": post.location,
-                "created_at": post.created_at,
-                "updated_at": post.updated_at,
-                "Media" :[
-                    {
-                        "id": media.id,
-                        "user_id": media.user_id,
-                        "media_file": media.media_file,
-                        "type": media.type
-                    } for media in post.medias
-                ]
-            } for post in posts
-        ]
-    }
-
-
-# Get all Posts created by the Current User
-@post_routes.route('/users/current/posts', methods=["GET"])
-@login_required
-# def get_posts_by_current_user(id):
-def get_posts_by_current_user():
-
-    currentuser = current_user.to_dict()
-    user_id = currentuser['id']
-    
-    posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
     
     return {
         "Posts" : [
@@ -72,7 +39,7 @@ def get_posts_by_current_user():
 
 
 # Get all Posts of Users Followed by Current User
-@post_routes.route('/users/current/following/posts')
+@post_routes.route('/users/current/following/posts', methods=["GET"])
 @login_required
 def get_posts_of_users_current_user_follows():
 
@@ -118,7 +85,39 @@ def get_posts_of_users_current_user_follows():
     }
 
 
-# Get details of a Post from an id
+# Get all Posts created by the Current User
+@post_routes.route('/users/current/posts', methods=["GET"])
+@login_required
+def get_posts_by_current_user():
+
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+    
+    posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    
+    return {
+        "Posts" : [
+            {
+                "id": post.id,
+                "userId": post.user_id,
+                "caption": post.caption,
+                "location": post.location,
+                "created_at": post.created_at,
+                "updated_at": post.updated_at,
+                "Media" :[
+                    {
+                        "id": media.id,
+                        "user_id": media.user_id,
+                        "media_file": media.media_file,
+                        "type": media.type
+                    } for media in post.medias
+                ]
+            } for post in posts
+        ]
+    }
+
+
+ # Get details of a Post from an id
 @post_routes.route('/posts/<int:id>', methods=["GET"])
 def get_post_by_id(id):
 
@@ -147,8 +146,37 @@ def get_post_by_id(id):
     }
 
 
+# Get all Posts
+@post_routes.route('/posts', methods=["GET"])
+def get_all_posts():
+
+    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    
+    return {
+        "Posts" : [
+            {
+                "id": post.id,
+                "userId": post.user_id,
+                "caption": post.caption,
+                "location": post.location,
+                "created_at": post.created_at,
+                "updated_at": post.updated_at,
+                "Media" :[
+                    {
+                        "id": media.id,
+                        "user_id": media.user_id,
+                        "media_file": media.media_file,
+                        "type": media.type
+                    } for media in post.medias
+                ]
+            } for post in posts
+        ]
+    }
+
+
 # Create a Post
 @post_routes.route('/posts', methods=["POST"])
+@login_required
 def create_new_post():
 
     currentuser = current_user.to_dict()
@@ -171,6 +199,7 @@ def create_new_post():
 
 # Edit a Post
 @post_routes.route('/posts/<int:id>', methods=["PUT"])
+@login_required
 def edit_post(id):
     
     caption = request.json['caption']
