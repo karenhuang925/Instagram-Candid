@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_login import current_user
+from flask_login import current_user, login_required
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db, Follower, Post
 
@@ -39,19 +39,15 @@ def get_all_posts():
 
 
 # Get all Posts created by the Current User
-@post_routes.route('/users/<int:id>/posts', methods=["GET"])
-def get_posts_by_current_user(id):
+@post_routes.route('/users/current/posts', methods=["GET"])
+@login_required
+# def get_posts_by_current_user(id):
+def get_posts_by_current_user():
 
-    # Need to adjust for user login, authenticat and pull current user in session
-
-    # user = current_user
-    # currentuser = user.to_dict()
-    # currentuser = current_user.to_dict()
-    # user_id = currentuser['id']
-    # print("HERE1", currentuser)
-
-    # current_user = User.query.filter(id == User.id).first()
-    posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+    
+    posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
     
     return {
         "Posts" : [
@@ -76,18 +72,22 @@ def get_posts_by_current_user(id):
 
 
 # Get all Posts of Users Followed by Current User
-@post_routes.route('/users/<int:id>/following/posts')
-def get_posts_of_users_current_user_follows(id):
+@post_routes.route('/users/current/following/posts')
+@login_required
+def get_posts_of_users_current_user_follows():
 
-    following = Follower.query.filter(Follower.user_id == id).filter(Follower.following_status == True).all()
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+
+    following = Follower.query.filter(Follower.user_id == user_id).filter(Follower.following_status == True).all()
 
     currently_following = [user.to_dict() for user in following]
 
     all_id_of_following = [user['follows_user_id'] for user in currently_following]
 
     following_posts = []
-    for id in all_id_of_following:
-        posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).all()
+    for user_id in all_id_of_following:
+        posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).all()
         for post in posts:
             following_posts.append(post)
 
