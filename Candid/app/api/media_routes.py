@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Media, User
+from app.models import db, Media, Post, User
 
 media_routes = Blueprint('media', __name__)
 
@@ -9,15 +9,16 @@ media_routes = Blueprint('media', __name__)
 def add_media(postId):
     media_file = request.json["media_file"]
     media_type = request.json["type"]
+    currentId = current_user.get_id()
 
     post = Post.query.filter(Post.id == postId).one_or_none()
     if not post:
         return {"errors": ["Post couldn't be found"]}, 404
-    elif current_user.id != post.user_id:
+    elif currentId != post.user_id:
         return {"errors": ["Authorization required"]}, 403
     else:
         media = Media(
-        user_id = current_user.id,
+        user_id = currentId,
         post_id = post.id,
         media_file = media_file,
         type = media_type
@@ -30,11 +31,12 @@ def add_media(postId):
 @login_required
 @media_routes.route('/media/<int:mediaId>', methods=["DELETE"])
 def delete_media(mediaId):
+    currentId = current_user.get_id()
 
     media = Media.query.filter(Media.id == mediaId).one_or_none()
     if not media:
         return {"errors": ["Media couldn't be found"]}, 404
-    elif media.user_id != current_user.id:
+    elif media.user_id != currentId:
         return {"errors": ["Authorization required"]}, 403
     else:
         db.session.delete(media)
