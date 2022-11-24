@@ -7,7 +7,7 @@ reply_routes = Blueprint('reply', __name__)
 
 #Still Need to:
     # Test Create, Edit, Delete routes and adjust code
-    # Include Authenticat and Authorization capability
+    # Include Authenticate and Authorization capability
     # Provide Validation and Error handling
 
 # Get all replies under the comment

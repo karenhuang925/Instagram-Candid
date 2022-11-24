@@ -7,7 +7,7 @@ post_routes = Blueprint('posts', __name__)
 
 #Still Need to:
     # Test Create, Edit, Delete routes and adjust code
-    # Include Authenticat and Authorization capability
+    # Include Authenticate and Authorization capability
     # Provide Validation and Error handling
 
 # Get all Posts
