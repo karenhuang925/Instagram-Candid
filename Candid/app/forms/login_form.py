@@ -23,5 +23,4 @@ def password_check(form, field):
 
 class LoginForm(FlaskForm):
     credential = StringField('credential', validators=[DataRequired(), credential_exists])
-    
     password = StringField('password', validators=[DataRequired(), password_check])
