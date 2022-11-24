@@ -17,8 +17,12 @@ def signup():
 # GET - POST login user
 @user_routes.route('/login', methods=["GET", "POST"])
 def login():
-    user_credentials = request.json
-    user = User.query.filter(User.email == user_credentials['email']).first()
+    user_info = request.json
+    credential = user_info["credential"]
+    password = user_info["password"]
+    user = User.query.filter((User.email == credential) | (User.username == credential)).first()
+    if not user: return { "message": "Invalid credential" }
+    if not user.check_password(password): return { "message": "Invalid password" }
     login_user(user)
     return user.safe_info()
 
@@ -43,14 +47,3 @@ def session():
 def user(id):
     user = User.query.get(id)
     return user.safe_info()
-
-# GET user by id
-@user_routes.route('/raw')
-def userss():
-    # user = User.query.filter(User.id.in_([1,2,3,4])).order_by(User.created_at.asce())
-    user = User.query.filter(User.id.in_([1,2,3,4])).order_by(User.created_at.desc()).offset(2).limit(10)
-    # print(user[0])
-    result_dict = [dict(u) for u in user]
-    print(result_dict)
-    return result_dict
-    return raw
