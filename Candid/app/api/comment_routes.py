@@ -9,12 +9,15 @@ def authorization_required(callback):
         user_id = current_user.get_id()
         comment = Post.query.get(comment_id)
         if user_id != comment.user_id:
-            return { "message": "Authorization required"}
+            return { "errors": ["Authorization required"] }, 404
         return callback(comment_id)
     return wrapper
 
+
 @comment_routes.route('/posts/<int:post_id>/comments', methods=['GET'])
 def get_comments_by_post_id(post_id):
+    if not Post.query.get(post_id):
+        return { "errors": ["Post not found"] }, 404
     comments = Comment.query.filter(Comment.post_id == post_id).all()
     return {'Comments' : [comment.to_dict() for comment in comments]}
 
@@ -24,7 +27,7 @@ def get_comments_by_post_id(post_id):
 def post_comment_by_post_id(post_id):
     user_id = current_user.get_id()
     if not Post.query.get(post_id):
-        return { "message": "Post not found" }
+        return { "errors": ["Post not found"] }, 404
     comment_data = {
         "user_id": user_id,
         "post_id": post_id,
@@ -40,6 +43,11 @@ def post_comment_by_post_id(post_id):
 @login_required
 def edit_comment(comment_id):
     comment = Comment.query.get(comment_id)
+    if not comment:
+        return { "errors": ["Comment not found"] }, 404
+    user_id = current_user.get_id()
+    if user_id != comment.user_id:
+        return { "errors": ["Authorization required"] }, 403
     comment.comment = request.json["comment"]
     db.session.commit()
     return comment.to_dict()
@@ -47,11 +55,13 @@ def edit_comment(comment_id):
 
 @comment_routes.route('/comments/<int:comment_id>', methods=['DELETE'])
 @login_required
-@authorization_required
 def delete_comment(comment_id):
     comment = Comment.query.get(comment_id)
     if not comment:
-        return { "error_message": "Comment not found"}
+        return { "errors": ["Comment not found"] }, 404
+    user_id = current_user.get_id()
+    if user_id != comment.user_id:
+        return { "errors": ["Authorization required"] }, 403
     db.session.delete(comment)
     db.session.commit()
     return { "message": "Comment successfully deleted"}
