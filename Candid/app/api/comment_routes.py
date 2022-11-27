@@ -1,8 +1,17 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import db, Comment, User, Post
+from app.models import db, Comment, Post
 
 comment_routes = Blueprint('comment', __name__)
+
+def authorization_required(callback):
+    def wrapper(comment_id):
+        user_id = current_user.get_id()
+        comment = Post.query.get(comment_id)
+        if user_id != comment.user_id:
+            return { "message": "Authorization required"}
+        return callback(comment_id)
+    return wrapper
 
 @comment_routes.route('/posts/<int:post_id>/comments', methods=['GET'])
 def get_comments_by_post_id(post_id):
@@ -38,6 +47,7 @@ def edit_comment(comment_id):
 
 @comment_routes.route('/comments/<int:comment_id>', methods=['DELETE'])
 @login_required
+@authorization_required
 def delete_comment(comment_id):
     comment = Comment.query.get(comment_id)
     if not comment:
