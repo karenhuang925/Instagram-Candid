@@ -1,7 +1,7 @@
 """Seed with no polymorphic
 
 Revision ID: 938861ccfaa3
-Revises: 
+Revises:
 Create Date: 2022-11-20 12:37:02.335159
 
 """
@@ -83,7 +83,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('post_id', sa.Integer(), nullable=False),
-    sa.Column('media_file', sa.String(length=256), nullable=False),
+    sa.Column('media_file', sa.Text(), nullable=False),
     sa.Column('type', sa.String(length=256), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
