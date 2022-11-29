@@ -24,12 +24,11 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_replies()
         undo_comments()
-        undo_users()
-
-        undo_followers()
         undo_likes()
         undo_medias()
         undo_posts()
+        undo_followers()
+        undo_users()
 
     seed_users()
     # Add other seed functions here
