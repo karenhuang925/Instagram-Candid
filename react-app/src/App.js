@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import HomePage from "./components/HomePage"
 // import LoginForm from './components/Starter/auth/LoginForm';
 // import SignUpForm from './components/Starter/auth/SignUpForm';
-// import NavBar from './components/NavBar';
+import NavBar from './components/Starter/NavBar';
 // import ProtectedRoute from './components/Starter/auth/ProtectedRoute';
 // import UsersList from './components/Starter/UsersList';
 // import User from './components/Starter/User';
@@ -14,23 +14,24 @@ function App() {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    (async() => {
-      await dispatch(authenticate());
-      setLoaded(true);
-    })();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   (async() => {
+  //     await dispatch(authenticate());
+  //     setLoaded(true);
+  //   })();
+  // }, [dispatch]);
 
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
   return (
-    <Switch>
-      <Route path="/">
-        <HomePage />
-      </Route>
-    </Switch>
+      <Switch>
+        <NavBar />
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
 
     // <BrowserRouter>
     //   <NavBar />
