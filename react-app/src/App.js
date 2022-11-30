@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import HomePage from "./components/HomePage"
 // import LoginForm from './components/Starter/auth/LoginForm';
@@ -8,22 +9,22 @@ import HomePage from "./components/HomePage"
 // import ProtectedRoute from './components/Starter/auth/ProtectedRoute';
 // import UsersList from './components/Starter/UsersList';
 // import User from './components/Starter/User';
-import { authenticate } from './store/session';
+// import { authenticate } from './store/session';
 
 function App() {
-  const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
+  // const dispatch = useDispatch();
+  // const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    (async() => {
-      await dispatch(authenticate());
-      setLoaded(true);
-    })();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   (async() => {
+  //     await dispatch(authenticate());
+  //     setLoaded(true);
+  //   })();
+  // }, [dispatch]);
 
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
   return (
     <Switch>
