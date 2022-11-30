@@ -22,6 +22,7 @@ const loadPosts = (allPosts) => {
 export const loadAllPosts = () => async (dispatch) => {
   const response = await fetch("/api/posts");
   const posts = await response.json();
+  console.log(posts)
 
   let allPostsObj = {};
   posts.Posts.forEach(post => {

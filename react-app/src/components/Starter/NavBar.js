@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
+// import LogoutButton from './auth/LogoutButton';
 
 const Outstyle = {
   height: '100vh',
@@ -71,37 +71,37 @@ const NavBar = () => {
         <ul style={listStyle}>
           <li>
             <NavLink to='/' exact={true} activeClassName='active' style={itemStyle}>
-              <i style={iconStyle} class="fa-solid fa-house fa-lg"/>
+              <i style={iconStyle} className="fa-solid fa-house fa-lg"/>
               <div>Home</div>
             </NavLink>
           </li>
           <li >
             <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
-              <i style={iconStyle} class="fa-solid fa-magnifying-glass fa-lg"></i>
+              <i style={iconStyle} className="fa-solid fa-magnifying-glass fa-lg"></i>
               <div>Search</div>
             </NavLink>
           </li>
           <li >
             <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
-              <i style={iconStyle} class="fa-regular fa-compass fa-lg"/>
+              <i style={iconStyle} className="fa-regular fa-compass fa-lg"/>
               <div>Explore</div>
             </NavLink>
           </li>
           <li >
             <NavLink to='/explore' exact={true} activeClassName='active' style={itemStyle}>
-            <i style={iconStyle} class="fa-brands fa-facebook-messenger fa-lg"></i>
+            <i style={iconStyle} className="fa-brands fa-facebook-messenger fa-lg"></i>
               <div>Messages</div>
             </NavLink>
           </li>
           <li >
             <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
-            <i style={iconStyle} class="fa-regular fa-heart fa-lg"/>
+            <i style={iconStyle} className="fa-regular fa-heart fa-lg"/>
               <div>Notifications</div>
             </NavLink>
           </li>
           <li >
             <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
-            <i style={iconStyle} class="fa-regular fa-square-plus fa-lg"/>
+            <i style={iconStyle} className="fa-regular fa-square-plus fa-lg"/>
               <div>Create</div>
             </NavLink>
           </li>
@@ -112,7 +112,7 @@ const NavBar = () => {
           </li>
         </ul>
         <NavLink to='/more' exact={true} activeClassName='active' style={lastItemStyle}>
-          <i style={iconStyle} class="fa-solid fa-bars fa-lg"/>
+          <i style={iconStyle} className="fa-solid fa-bars fa-lg"/>
           <div>More</div>
         </NavLink>
       </nav>

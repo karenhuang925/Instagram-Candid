@@ -1,6 +1,6 @@
 import React from 'react';
 import Feed from "../Post/Feed"
-import { Switch, Route } from 'react-router-dom';
+// import { Switch, Route } from 'react-router-dom';
 import "./HomePage.css"
 
 
