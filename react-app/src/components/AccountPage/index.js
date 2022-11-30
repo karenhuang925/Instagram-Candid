@@ -1,30 +1,34 @@
 import { useEffect } from "react";
-import { fetchMyPosts } from "../../store/posts2";
+import { fetchUserPosts } from "../../store/posts2";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../Posts";
+import { useParams } from "react-router-dom";
 
-const ProfilePage = () => {
+const AccountPage = () => {
   const dispatch = useDispatch();
 
+  const { accountId } = useParams();
+  const account = useSelector((state) => state.users[accountId]);
+  //fix
   const posts = Object.values(useSelector((state) => state.posts));
   const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    dispatch(fetchMyPosts());
+    dispatch(fetchUserPosts(accountId));
   }, [dispatch]);
 
   return (
     <>
-      <div>{sessionUser?.preview_image}</div>
-      <span>{sessionUser?.username}</span>
-      <button>Edit</button>
-      {/* add route for this? */}
+      <div>{account?.preview_image}</div>
+      <span>{account?.username}</span>
+      <button>Follow</button>
+      {/* toggle button depending whether or not follower already */}
       <span>posts</span>
       <span>followers</span>
       <span>following</span>
       {/* add aggregates */}
-      <span>{sessionUser?.username}</span>
-      <p>{sessionUser?.biography}</p>
+      <span>{account?.username}</span>
+      <p>{account?.biography}</p>
       <span>Posts</span>
       <hr />
       <hr />
@@ -40,4 +44,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default AccountPage;
