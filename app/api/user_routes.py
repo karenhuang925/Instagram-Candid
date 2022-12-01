@@ -7,6 +7,9 @@ user_routes = Blueprint('users', __name__, url_prefix='/users')
 # GET - POST signup user
 @user_routes.route('/signup', methods=["GET", "POST"])
 def signup():
+    c_user = current_user
+    if c_user:
+        return { "errors": ["User already logged in"] }, 403
     user_info = request.json
     user_by_email = User.query.filter((User.email == user_info["email"])).first()
     if user_by_email:
@@ -17,12 +20,15 @@ def signup():
     new_user = User(**user_info)
     db.session.add(new_user)
     db.session.commit()
-    login_user(user)
+    login_user(new_user)
     return new_user.safe_info()
 
 # GET - POST login user
 @user_routes.route('/login', methods=["GET", "POST"])
 def login():
+    c_user = current_user
+    if c_user:
+        return { "errors": ["User already logged in"] }, 403
     user_info = request.json
     credential = user_info["credential"]
     password = user_info["password"]
