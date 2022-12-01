@@ -21,21 +21,23 @@ const loadPosts = (allPosts) => {
 //Thunk action creators
 export const loadAllPosts = () => async (dispatch) => {
   const response = await fetch("/api/posts");
-  const posts = await response.json();
-  console.log(posts)
 
-  let allPostsObj = {};
-  posts.Posts.forEach(post => {
-    allPostsObj[post.id] = post;
-  });
+  if (response.ok) {
+    const posts = await response.json();
+    
+    let allPostsObj = {};
+    posts.Posts.forEach(post => {
+      allPostsObj[post.id] = post;
+    });
 
-  dispatch(loadPosts(allPostsObj));
-  return response;
+    dispatch(loadPosts(allPostsObj));
+    return response;
+  }
 }
 
 
 
-//Initial State
+//Initial State Object
 const initialState = {
   post: null
 };
