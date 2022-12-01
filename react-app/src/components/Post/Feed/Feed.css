@@ -1,4 +1,21 @@
 .individual-post-container {
+    background-color: white;
     border-style: solid;
+    /* border: lightgray; */
     margin-bottom: 25px;
+    max-width: 470px;
+    height: auto;
+}
+
+.post-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.post-media {
+    width: 100%;
+    object-fit: contain;
 }

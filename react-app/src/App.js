@@ -28,7 +28,6 @@ function App() {
 
   return (
       <Switch>
-        {/* <NavBar /> */}
         <Route path="/">
           <HomePage />
         </Route>
