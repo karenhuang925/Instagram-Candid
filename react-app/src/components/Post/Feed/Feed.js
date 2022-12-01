@@ -20,6 +20,10 @@ function Feed() {
 
     let feed = useSelector((state) => state.posts.post)
 
+    if (!feed) {
+        return null;
+      }
+
 
     return (
         <div className='post-feed-container'>
@@ -37,10 +41,11 @@ function Feed() {
                             </div>
                         </div>
 
-                        <div id='post-image'>
+                        <div id='post-image' key={postId}>
                             <img
                                 className='post_media'
                                 src={feed[postId].Media[0].media_file}
+                                key={postId}
                             />
                         </div>
                     </div>
