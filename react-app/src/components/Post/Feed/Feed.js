@@ -48,6 +48,8 @@ function Feed() {
                                 key={postId}
                             />
                         </div>
+
+                        <div></div>
                     </div>
                 )
             })}
