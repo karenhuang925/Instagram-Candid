@@ -8,13 +8,13 @@ const loadMyPosts = (posts) => {
   };
 };
 
-const loadUserPosts = () => {
+const loadUserPosts = (payload) => {
   return {
     type: LOAD_USER_POSTS,
-    payload: posts,
+    payload,
   };
 };
-//fix
+
 export const fetchMyPosts = () => async (dispatch) => {
   const res = await fetch("/api/users/current/posts");
   const posts = await res.json();
@@ -22,13 +22,13 @@ export const fetchMyPosts = () => async (dispatch) => {
   dispatch(loadMyPosts(posts));
 };
 
-export const fetchUserPosts = () => async (dispatch) => {
-  const res = await fetch("/api/users/current/posts");
+export const fetchUserPosts = (id) => async (dispatch) => {
+  const res = await fetch(`/api/users/${id}/posts`);
   const posts = await res.json();
 
   dispatch(loadUserPosts(posts));
 };
-//fix
+
 const postReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
@@ -46,7 +46,6 @@ const postReducer = (state = {}, action) => {
         newState[post.id] = post;
       });
       return newState;
-    //fix
     default:
       return state;
   }

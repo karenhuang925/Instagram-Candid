@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { fetchUserPosts } from "../../store/posts2";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../Posts";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,10 @@ const AccountPage = () => {
   //fix
   const posts = Object.values(useSelector((state) => state.posts));
   const sessionUser = useSelector((state) => state.session.user);
+  if (sessionUser.id === accountId) {
+    return <Redirect to="/users/current/posts" />;
+  }
+  //url might be different on frontend for profile page, worried that will flash below return on load
 
   useEffect(() => {
     dispatch(fetchUserPosts(accountId));

@@ -17,8 +17,6 @@ const ProfilePage = () => {
     <>
       <div>{sessionUser?.preview_image}</div>
       <span>{sessionUser?.username}</span>
-      <button>Edit</button>
-      {/* add route for this? */}
       <span>posts</span>
       <span>followers</span>
       <span>following</span>
