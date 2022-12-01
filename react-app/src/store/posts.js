@@ -2,9 +2,11 @@
 
 //Type Key String Literals
 const LOAD_POSTS = "/api/getPosts"
-const CREATE_POST = "/api/createPost"
-const UPDATE_POST = "/api/updatePost"
-const DELETE_POST = "/api/deletePost"
+// const CREATE_POST = "/api/createPost"
+// const UPDATE_POST = "/api/updatePost"
+// const DELETE_POST = "/api/deletePost"
+
+
 
 //Redux action creators
 const loadPosts = (allPosts) => {
@@ -14,25 +16,34 @@ const loadPosts = (allPosts) => {
   }
 }
 
+
+
 //Thunk action creators
 export const loadAllPosts = () => async (dispatch) => {
   const response = await fetch("/api/posts");
-  const posts = await response.json();
 
-  let allPostsObj = {};
-  posts.Posts.forEach(post => {
-    allPostsObj[post.id] = post;
-  });
+  if (response.ok) {
+    const posts = await response.json();
+    
+    let allPostsObj = {};
+    posts.Posts.forEach(post => {
+      allPostsObj[post.id] = post;
+    });
 
-  dispatch(loadPosts(allPostsObj));
-  return response;
+    dispatch(loadPosts(allPostsObj));
+    return response;
+  }
 }
 
+
+
+//Initial State Object
 const initialState = {
   post: null
 };
 
-// practicePosts.forEach((post) => {});
+
+
 //Redux Reducer
 const postReducer = (state = initialState, action) => {
   let newState;

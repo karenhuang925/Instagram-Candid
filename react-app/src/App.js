@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+// import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
 import HomePage from "./components/HomePage"
 // import LoginForm from './components/Starter/auth/LoginForm';
 // import SignUpForm from './components/Starter/auth/SignUpForm';
@@ -8,11 +9,11 @@ import NavBar from './components/Starter/NavBar';
 // import ProtectedRoute from './components/Starter/auth/ProtectedRoute';
 // import UsersList from './components/Starter/UsersList';
 // import User from './components/Starter/User';
-import { authenticate } from './store/session';
+// import { authenticate } from './store/session';
 
 function App() {
-  const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
+  // const dispatch = useDispatch();
+  // const [loaded, setLoaded] = useState(false);
 
   // useEffect(() => {
   //   (async() => {
@@ -27,7 +28,7 @@ function App() {
 
   return (
       <Switch>
-        <NavBar />
+        {/* <NavBar /> */}
         <Route path="/">
           <HomePage />
         </Route>
