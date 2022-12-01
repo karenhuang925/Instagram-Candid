@@ -27,12 +27,15 @@ function App() {
   // }
 
   return (
+    <div>
+      <NavBar />
       <Switch>
-        {/* <NavBar /> */}
         <Route path="/">
           <HomePage />
         </Route>
       </Switch>
+    </div>
+
 
     // <BrowserRouter>
     //   <NavBar />
