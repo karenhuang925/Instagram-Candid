@@ -28,13 +28,12 @@ function App() {
   // }
 
   return (
-      <Index />
-      // <Switch>
-      //   {/* <NavBar /> */}
-      //   <Route path="/">
-      //     <HomePage />
-      //   </Route>
-      // </Switch>
+      <Switch>
+        {/* <NavBar /> */}
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
 
     // <BrowserRouter>
     //   <NavBar />
