@@ -32,8 +32,10 @@ const ProfilePage = () => {
             <Post />
           </li>
         ))}
+        {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
       </ul>
       <span>About</span>
+      {/* link to github repo */}
     </>
   );
 };

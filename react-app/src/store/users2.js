@@ -1,8 +1,16 @@
 const LOAD_USER = "user/load";
+const LOAD_FOLLOWERS = "followers/load";
 
 const loadUser = (payload) => {
   return {
     type: LOAD_USER,
+    payload,
+  };
+};
+
+const loadFollowers = (payload) => {
+  return {
+    type: LOAD_FOLLOWERS,
     payload,
   };
 };
