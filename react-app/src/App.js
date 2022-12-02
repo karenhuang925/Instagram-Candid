@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
 import HomePage from "./components/HomePage"
+import Index from './components/alonso/Index';
 // import LoginForm from './components/Starter/auth/LoginForm';
 // import SignUpForm from './components/Starter/auth/SignUpForm';
 import NavBar from './components/Starter/NavBar';
@@ -27,12 +28,13 @@ function App() {
   // }
 
   return (
-      <Switch>
-        {/* <NavBar /> */}
-        <Route path="/">
-          <HomePage />
-        </Route>
-      </Switch>
+      <Index />
+      // <Switch>
+      //   {/* <NavBar /> */}
+      //   <Route path="/">
+      //     <HomePage />
+      //   </Route>
+      // </Switch>
 
     // <BrowserRouter>
     //   <NavBar />
