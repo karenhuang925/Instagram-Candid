@@ -18,6 +18,12 @@ const signUpAction = (user) => {
     }
 }
 
+const logOutAction = (user) => {
+    return {
+        type: USER_LOGOUT
+    }
+}
+
 // Functions
 export const logInFunction = (data) => async (dispatch) => {
     const response = await fetch('/api/users/login', {
@@ -27,9 +33,9 @@ export const logInFunction = (data) => async (dispatch) => {
       },
       body: JSON.stringify(data)
     });
-    const user = await response.json();
-    dispatch(logInAction(user));
-    return user;
+    const responseJSON = await response.json();
+    dispatch(logInAction(responseJSON));
+    return responseJSON;
 }
 
 
@@ -41,9 +47,16 @@ export const signUpFunction = (data) => async (dispatch) => {
       },
       body: JSON.stringify(data)
     });
-    const user = await response.json();
-    dispatch(signUpAction(user));
-    return user;
+    const responseJSON = await response.json();
+    dispatch(signUpAction(responseJSON));
+    return responseJSON;
+}
+
+export const logOutFunction = () => async (dispatch) => {
+    const response = await fetch('/api/users/logout');
+    const responseJSON = await response.json();
+    dispatch(logOutAction());
+    return responseJSON;
 }
 
 // Reducer
@@ -63,7 +76,8 @@ function userReducer(state = initialState, action) {
             }
             return newState;
         case USER_LOGOUT: 
-            return
+            newState = initialState;
+            return newState
         default:
             return state;
     }
