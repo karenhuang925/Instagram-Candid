@@ -27,11 +27,14 @@ function App() {
   // }
 
   return (
+    <>
+      <NavBar />
       <Switch>
         <Route path="/">
           <HomePage />
         </Route>
       </Switch>
+    </>
 
     // <BrowserRouter>
     //   <NavBar />
