@@ -34,7 +34,7 @@ const listStyle = {
   flexGrow: 1,
   fontFamily:'Helvetica, Arial, sans-serif',
   fontWeight:400,
-  fontSize:'0.75em',
+  fontSize:'16px',
 }
 
 const iconStyle={

@@ -180,7 +180,7 @@ def get_post_by_id(id):
 @post_routes.route('/posts', methods=["GET"])
 def get_all_posts():
 
-    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).all()
+    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.asc()).all()
     
     return {
         "Posts" : [
@@ -191,14 +191,19 @@ def get_all_posts():
                 "location": post.location,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
-                "Media" :[
+                "Media" : [
                     {
                         "id": media.id,
                         "user_id": media.user_id,
                         "media_file": media.media_file,
                         "type": media.type
                     } for media in post.medias
-                ]
+                ],
+                "Owner": {
+                    "id": post.user.id,
+                    "username": post.user.username,
+                    "previewImage": post.user.preview_image
+                }
             } for post in posts
         ]
     }
