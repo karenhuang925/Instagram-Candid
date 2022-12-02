@@ -1,0 +1,22 @@
+#FormsFooter-id-d1 {
+    height: 134px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#FormsFooter-id-d1d1 {
+    margin: 10px 0px;
+    display: grid;
+    grid-template-columns: repeat(13, auto);
+    gap: 0px 20px;
+}
+
+#FormsFooter-id-d1d2 {
+    margin: 10px 0px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 0px 20px;
+}
