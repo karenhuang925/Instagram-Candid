@@ -25,7 +25,7 @@ def get_posts_by_user_id(id):
             "statusCode": 404
             }, 404
     
-    posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).order_by(Post.created_at.asc()).first()
+    posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file'))).order_by(Post.created_at.asc()).all()
     if not posts:
         return {
             "message": "Posts couldn't be found",
