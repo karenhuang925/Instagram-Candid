@@ -3,7 +3,11 @@ import { fetchUserPosts } from "../../store/posts2";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../Posts";
 import { Redirect, useParams } from "react-router-dom";
-import { fetchPlusFollower } from "../../store/followers2";
+import {
+  fetchCreateFollower,
+  fetchMinusFollower,
+  fetchPlusFollower,
+} from "../../store/followers2";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -13,7 +17,18 @@ const AccountPage = () => {
   //fix
   const posts = Object.values(useSelector((state) => state.posts));
   const sessionUser = useSelector((state) => state.session.user);
-  if (sessionUser.id === accountId) {
+  const followers = Object.values(
+    useSelector((state) => state.user.followers.user_id)
+  );
+  //fix or fix reducer
+  const following = Object.values(
+    useSelector((state) => state.users[accountId].following)
+  );
+  //fix
+  if (!sessionUser?.id) {
+    return <Redirect to="/" />;
+    //redirect should return to sign up/log in page, but not sure what url will be
+  } else if (sessionUser?.id === accountId) {
     return <Redirect to="/users/current/posts" />;
   }
   //url might be different on frontend for profile page, worried that will flash below return on load
@@ -21,8 +36,18 @@ const AccountPage = () => {
   const followAccount = async (e) => {
     e.preventDefault();
 
-    await dispatch(fetchPlusFollower(account.id));
-    // different dispatch if already a follower
+    if (following.includes(accountId)) {
+      await dispatch(fetchPlusFollower(accountId));
+    } else if (!following.includes(accountId)) {
+      await dispatch(fetchCreateFollower(accountId));
+    }
+  };
+
+  const unfollowAccount = async (e) => {
+    e.preventDefault();
+
+    if (!followers.includes(sessionUser?.id))
+      await dispatch(fetchMinusFollower(account.id));
   };
 
   useEffect(() => {
@@ -33,7 +58,12 @@ const AccountPage = () => {
     <>
       <div>{account?.preview_image}</div>
       <span>{account?.username}</span>
-      <button onClick={followAccount}>Follow</button>
+      {!followers.includes(sessionUser?.id) && (
+        <button onClick={followAccount}>Follow</button>
+      )}
+      {followers.includes(sessionUser?.id) && (
+        <button onClick={unfollowAccount}>Unfollow</button>
+      )}
       {/* toggle button depending whether or not follower already */}
       <span>posts</span>
       <span>followers</span>
