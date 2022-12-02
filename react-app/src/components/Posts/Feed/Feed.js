@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-// import * as postStoreSliceAction from '../../../store/posts'
 import { loadAllPosts } from '../../../store/posts'
 import "./Feed.css"
 
@@ -12,11 +11,7 @@ function Feed() {
         dispatch(loadAllPosts())
     }, [dispatch])
 
-    // useEffect(() => {
-    //     (async() => {
-    //         await dispatch(loadAllPosts())
-    //     })();
-    // }, [dispatch]);
+
 
     let feed = useSelector((state) => state.posts.post)
 
@@ -24,10 +19,13 @@ function Feed() {
         return null;
     }
 
+  
     return (
         <section className='feed-section'>
             <section className='post-feed-container'>
                 {Object.keys(feed).map((postId) => {
+
+                    // Need to add NavLinks to icons
 
                     return (
                         <div className='individual-post-container' key={postId}>
@@ -108,5 +106,22 @@ function Feed() {
         </section>
     )
 }
+
+// import * as postStoreSliceAction from '../../../store/posts'
+// import Post from "../Post"
+
+    // useEffect(() => {
+    //     (async() => {
+    //         await dispatch(loadAllPosts())
+    //     })();
+    // }, [dispatch]);
+
+  // return (
+    //     <>
+    //         {Object.keys(feed).map(postId => (
+    //             <Post key={postId} userProfileImage={feed[postId].Owner.previewImage} />
+    //         ))}
+    //     </>
+    // )
 
 export default Feed;
