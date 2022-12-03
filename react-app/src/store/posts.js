@@ -73,7 +73,7 @@ export const loadAllCurrentUserPosts = () => async (dispatch) => {
   return response;
 }
 
-// Get all Posts by user id
+// Get all Posts by User id
 export const loadAllPostsByUserId = (id) => async (dispatch) => {
   const response = await fetch(`/api/users/${id}/posts`);
   const posts = await response.json();
@@ -88,7 +88,7 @@ export const loadAllPostsByUserId = (id) => async (dispatch) => {
 }
 
 // Get all Posts of Users Followed by Current User
-export const loadAllPostsOfUsersFollowed = (id) => async (dispatch) => {
+export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
   const response = await fetch(`/api/users/current/following/posts`);
   const posts = await response.json();
 
@@ -111,25 +111,25 @@ export const createPost = (post) => async (dispatch) => {
     },
     body: JSON.stringify(post)
   })
-  const post = await response.json();
+  const newPost = await response.json();
 
-  dispatch(createAPost(post));
+  dispatch(createAPost(newPost));
   return response;
 }
 
 
 // Edit a Post
-export const editPost = (post, id) => async (dispatch) => {
+export const editPost = (edits, id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
     method: "PUT",
     header: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(post)
+    body: JSON.stringify(edits)
   });
-  const post = await response.json();
+  const editedPost = await response.json();
 
-  dispatch(updateAPost(post));
+  dispatch(updateAPost(editedPost));
   return response;
 }
 
@@ -182,6 +182,14 @@ const postReducer = (state = initialState, action) => {
       };
       return newState
     case DELETE_POST:
+      newState = {
+        ...state,
+        post: {
+          ...state.post,
+        }
+      };
+      delete newState.post[action.payload];
+      return newState;
     default:
       return state;
   }
