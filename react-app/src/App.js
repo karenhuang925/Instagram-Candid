@@ -19,6 +19,7 @@ function App() {
   const user = useSelector(state => state.session);
   const [loaded, setLoaded] = useState(false);
   const [authenticate, setAuthenticate] = useState(false);
+  
   useEffect(() =>{
     (async() => {
       await dispatch(sessionFunction());
@@ -42,7 +43,7 @@ function App() {
         !authenticate && <Index />
       }
     </>
-    
+
     // <BrowserRouter>
     //   <NavBar />
     //   <Switch>
