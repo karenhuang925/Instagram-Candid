@@ -52,7 +52,7 @@ export const minusFollower = (payload) => {
 // }
 
 export const fetchFollower =
-  ({ user_id }) =>
+  (user_id ) =>
   async (dispatch) => {
     const res = await fetch(`/api/users/${user_id}/followers`);
     if (res.ok) {
@@ -62,7 +62,7 @@ export const fetchFollower =
     }
   };
 export const fetchFollowing =
-  ({ user_id }) =>
+  ( user_id ) =>
   async (dispatch) => {
     const res = await fetch(`/api/users/${user_id}/following`);
     if (res.ok) {
@@ -72,7 +72,7 @@ export const fetchFollowing =
     }
   };
 export const fetchSuggestion =
-  ({ user_id }) =>
+  ( user_id ) =>
   async (dispatch) => {
     const res = await fetch(`/api/users/${user_id}/following/suggestions`);
     if (res.ok) {
