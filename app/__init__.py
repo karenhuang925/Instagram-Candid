@@ -86,6 +86,7 @@ def react_root(path):
 
 @app.errorhandler(404)
 def not_found(e):
+    print('error handler')
     return app.send_static_file('index.html')
 
 
@@ -99,5 +100,3 @@ def api_help():
                     app.view_functions[rule.endpoint].__doc__ ]
                     for rule in app.url_map.iter_rules() if rule.endpoint != 'static' }
     return route_list
-
-
