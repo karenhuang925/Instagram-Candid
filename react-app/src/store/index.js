@@ -1,28 +1,28 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import session from './session'
+// import session from './session'
 import postReducer from "./posts"
 import sessionReducer from './user';
 import userReducer from './userV1';
-import postReducer from "./posts";
-import userReducer from './user';
-import followerReducer from './followers2';
+import followerReducer from './followers';
 import singlePostReducer from './singlepost';
 import replyReducer from "./reply"
 import commentReducer from "./comments"
 import likeReducer from './likes';
+import mediaReducer from './media'
 
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   user: userReducer,
   posts: postReducer,
-  posts: postReducer,
   singlePost: singlePostReducer,
   replies: replyReducer,
   comments: commentReducer,
-  likes: likeReducer
+  likes: likeReducer,
+  follows: followerReducer,
+  medias: mediaReducer
 });
 
 
