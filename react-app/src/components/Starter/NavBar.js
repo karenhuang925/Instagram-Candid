@@ -67,7 +67,7 @@ const NavBar = () => {
   return (
     <div >
       <nav style={Outstyle}>
-        <img style={imageStyle} src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/840px-Instagram_logo.svg.png" />
+        <img style={imageStyle} alt='logo' src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/840px-Instagram_logo.svg.png" />
         <ul style={listStyle}>
           <li>
             <NavLink to='/' exact={true} activeClassName='active' style={itemStyle}>

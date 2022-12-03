@@ -12,8 +12,18 @@ def follower_detail(userId):
 @follower_routes.route('/users/<int:userId>/following')
 def following_detail(userId):
     following = Follower.query.filter(Follower.user_id == userId).filter(Follower.following_status == True)
-
     return {'following': [follower.to_dict() for follower in following]}
+
+@follower_routes.route('/users/<int:userId>/following/suggestions')
+def follower_suggestion(userId):
+    following2 = Follower.query\
+    .filter(Follower.user_id == userId)\
+    .filter(Follower.following_status == True).all()
+    list = [follower.follows_user_id for follower in following2]
+    list.append(userId)
+
+    suggestions = User.query.filter(User.id.notin_(list)).all()
+    return {'Followers Suggestion': [follower.to_dict() for follower in suggestions]}
 
 
 @login_required

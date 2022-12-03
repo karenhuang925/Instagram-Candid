@@ -4,17 +4,22 @@ import thunk from 'redux-thunk';
 import session from './session';
 import postReducer from "./posts";
 import userReducer from './user';
+import followerReducer from './followers2';
 import singlePostReducer from './singlepost';
 import replyReducer from "./reply"
 import commentReducer from "./comments"
+import likeReducer from './likes';
 
 const rootReducer = combineReducers({
   session,
+  posts: postReducer,
+  follower:followerReducer,
   user: userReducer,
   posts: postReducer,
   singlePost: singlePostReducer,
   replies: replyReducer,
-  comments: combineReducers
+  comments: commentReducer,
+  likes: likeReducer
 });
 
 
