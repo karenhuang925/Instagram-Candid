@@ -14,6 +14,7 @@ def authorization_required(callback):
     return wrapper
 
 
+# Get all Comments by a Post's Id
 @comment_routes.route('/posts/<int:post_id>/comments', methods=['GET'])
 def get_comments_by_post_id(post_id):
     if not Post.query.get(post_id):
@@ -22,6 +23,7 @@ def get_comments_by_post_id(post_id):
     return {'Comments' : [comment.to_dict() for comment in comments]}
 
 
+# Create a Comment for a Post based on the Post's Id
 @comment_routes.route('/posts/<int:post_id>/comments', methods=['POST'])
 @login_required
 def post_comment_by_post_id(post_id):
@@ -39,6 +41,7 @@ def post_comment_by_post_id(post_id):
     return new_comment.to_dict()
 
 
+# Edit a Comment
 @comment_routes.route('/comments/<int:comment_id>', methods=['PUT'])
 @login_required
 def edit_comment(comment_id):
@@ -53,6 +56,7 @@ def edit_comment(comment_id):
     return comment.to_dict()
 
 
+# Delete a Comment
 @comment_routes.route('/comments/<int:comment_id>', methods=['DELETE'])
 @login_required
 def delete_comment(comment_id):

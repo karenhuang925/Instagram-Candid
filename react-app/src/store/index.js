@@ -5,11 +5,22 @@ import session from './session'
 import postReducer from "./posts"
 import sessionReducer from './user';
 import userReducer from './userV1';
+import session from './session';
+import postReducer from "./posts";
+import userReducer from './user';
+import singlePostReducer from './singlepost';
+import replyReducer from "./reply"
+import commentReducer from "./comments"
+
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   user: userReducer,
-  posts: postReducer
+  posts: postReducer,
+  posts: postReducer,
+  singlePost: singlePostReducer,
+  replies: replyReducer,
+  comments: combineReducers
 });
 
 
