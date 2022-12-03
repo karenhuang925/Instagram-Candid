@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { logInFunction, signUpFunction } from "../../store/user";
 import "./style/SignForms.css"
 
 function LogInForm() {
+    const history = useHistory();
     const dispatch = useDispatch();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
@@ -11,7 +13,7 @@ function LogInForm() {
         e.preventDefault();
         const data = { credential, password };
         const response = await dispatch(logInFunction(data));
-        console.log(response)
+        history.push("/homepage")
     }
     return (
         <form className="SignForm-f1" onSubmit={(e) => handleSumbit(e)}>
