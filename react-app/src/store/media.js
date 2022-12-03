@@ -37,7 +37,7 @@ function mediaReducer(state = initialState, action) {
     switch(action.type) {
         case ADD_MEDIA:
             newState = {
-                ...media
+                ...action.media
             }
             return newState;
         case DELETE_MEDIA:

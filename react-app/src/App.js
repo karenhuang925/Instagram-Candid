@@ -32,6 +32,7 @@ function App() {
   }, [user])
 
   if (!loaded) return null;
+
   return (
     <>
       {
@@ -41,6 +42,7 @@ function App() {
         !authenticate && <Index />
       }
     </>
+    
     // <BrowserRouter>
     //   <NavBar />
     //   <Switch>

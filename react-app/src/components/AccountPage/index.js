@@ -3,7 +3,7 @@ import { fetchUserPosts } from "../../store/posts2";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../Posts";
 import { Redirect, useParams } from "react-router-dom";
-import { fetchPlusFollower } from "../../store/followers2";
+import { fetchPlusFollower } from "../../store/followers";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
