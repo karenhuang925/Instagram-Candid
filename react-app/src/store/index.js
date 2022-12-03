@@ -5,12 +5,13 @@ import session from './session'
 import postReducer from "./posts"
 import sessionReducer from './user';
 import userReducer from './userV1';
-import session from './session';
 import postReducer from "./posts";
 import userReducer from './user';
+import followerReducer from './followers2';
 import singlePostReducer from './singlepost';
 import replyReducer from "./reply"
 import commentReducer from "./comments"
+import likeReducer from './likes';
 
 
 const rootReducer = combineReducers({
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   posts: postReducer,
   singlePost: singlePostReducer,
   replies: replyReducer,
-  comments: combineReducers
+  comments: commentReducer,
+  likes: likeReducer
 });
 
 
