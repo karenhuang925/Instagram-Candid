@@ -17,14 +17,18 @@ import AccountPage from "./components/AccountPage";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.session);
-  const [loaded, setLoaded] = useState(false);
+  const user = useSelector((state) => state?.session);
   const [authenticate, setAuthenticate] = useState(false);
+  // useEffect(() => {
+  //   (async () => {
+  //     await dispatch(sessionFunction());
+  //     setLoaded(true);
+  //   })();
+  // }, [dispatch]);
+  // const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
-    (async () => {
-      await dispatch(sessionFunction());
-      setLoaded(true);
-    })();
+    dispatch(sessionFunction());
   }, [dispatch]);
 
   useEffect(() => {
@@ -33,17 +37,27 @@ function App() {
   }, [user]);
 
   // if (!loaded) return null;
-
+  // if(!user) return null
   return (
     <>
       {/* {authenticate && <HomePage />}
       {!authenticate && <Index />} */}
-      <NavBar />
-      <Switch>
-        <Route path="/profile/:id" exact={true}>
-          <AccountPage />
-        </Route>
-      </Switch>
+
+      {!authenticate && <Index />}
+      {authenticate && (
+        <>
+          <NavBar />
+          <Switch>
+            <Route path={"/homepage"}>
+              <HomePage />
+            </Route>
+
+            <Route path="/profile/:id" exact={true}>
+              <AccountPage />
+            </Route>
+          </Switch>
+        </>
+      )}
     </>
 
     // <BrowserRouter>
