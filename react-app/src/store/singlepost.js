@@ -6,7 +6,7 @@ const LOAD_A_SPOT = "/api/getSpotById"
 //Redux action creators
 const loadAPost = (post) => {
     return {
-        type: LOAD_A_SPOT,
+        type: LOAD_A_POST,
         payload: post
     }
 }
@@ -35,7 +35,7 @@ const initialState = {
 const singlePostReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-        case LOAD_A_SPOT:
+        case LOAD_A_POST:
             newState = {
                 ...state,
                 post: action.payload

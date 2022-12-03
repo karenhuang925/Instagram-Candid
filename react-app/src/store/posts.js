@@ -1,10 +1,8 @@
-// import practicePosts from "../data/practice-posts.json";
-
 //Type Key String Literals
 const LOAD_POSTS = "/api/getPosts"
 const CREATE_POST = "/api/createPost"
-const UPDATE_POST = "/api/updatePost"
-const DELETE_POST = "/api/deletePost"
+const UPDATE_POST_BY_USER = "/api/updatePost"
+const DELETE_POST_BY_USER = "/api/deletePost"
 
 
 
@@ -25,14 +23,14 @@ const createAPost = (newPost) => {
 
 const updateAPost = (postEdits) => {
   return {
-    type: UPDATE_POST,
+    type: UPDATE_POST_BY_USER,
     payload: postEdits
   }
 }
 
 const deleteAPost = (postId) => {
   return {
-    type: DELETE_POST,
+    type: DELETE_POST_BY_USER,
     payload: postId
   }
 }
@@ -74,8 +72,8 @@ export const loadAllCurrentUserPosts = () => async (dispatch) => {
 }
 
 // Get all Posts by User id
-export const loadAllPostsByUserId = (id) => async (dispatch) => {
-  const response = await fetch(`/api/users/${id}/posts`);
+export const loadAllPostsByUserId = (userId) => async (dispatch) => {
+  const response = await fetch(`/api/users/${userId}/posts`);
   const posts = await response.json();
 
   let userPosts = {}
@@ -101,7 +99,6 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
   return response;
 }
 
-
 // Create a Post
 export const createPost = (post) => async (dispatch) => {
   const response = await fetch('/api/posts', {
@@ -117,7 +114,6 @@ export const createPost = (post) => async (dispatch) => {
   return response;
 }
 
-
 // Edit a Post
 export const editPost = (edits, id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
@@ -127,12 +123,11 @@ export const editPost = (edits, id) => async (dispatch) => {
     },
     body: JSON.stringify(edits)
   });
-  const editedPost = await response.json();
+  const updatePost = await response.json();
 
-  dispatch(updateAPost(editedPost));
+  dispatch(updateAPost(updatePost));
   return response;
 }
-
 
 // Delete a Post
 export const deletePost = (id) => async (dispatch) => {
@@ -172,7 +167,7 @@ const postReducer = (state = initialState, action) => {
         }
       };
       return newState
-    case UPDATE_POST:
+    case UPDATE_POST_BY_USER:
       newState = {
         ...state,
         post: {
@@ -181,7 +176,7 @@ const postReducer = (state = initialState, action) => {
         }
       };
       return newState
-    case DELETE_POST:
+    case DELETE_POST_BY_USER:
       newState = {
         ...state,
         post: {

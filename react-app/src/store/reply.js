@@ -1,6 +1,6 @@
 //Type Key String Literals
-const LOAD_COMMENT_REPLIES = "/api/getRepliesByCommentId";
-const CREATE_COMMENT_REPLY = "/api/createReply";
+const LOAD_REPLIES = "/api/getRepliesByCommentId";
+const CREATE_REPLY = "/api/createReply";
 const UPDATE_REPLY_BY_USER = "/api/updateReply"
 const DELETE_REPLY_BY_USER = "/api/deleteReply"
 
@@ -9,14 +9,14 @@ const DELETE_REPLY_BY_USER = "/api/deleteReply"
 //Redux action creators
 const loadRepliesForAComment = (allRepliesByCommentId) => {
     return {
-        type: LOAD_COMMENT_REPLIES,
+        type: LOAD_REPLIES,
         payload: allRepliesByCommentId
     }
 };
 
 const createAReply = (newReply) => {
     return {
-        type: CREATE_COMMENT_REPLY,
+        type: CREATE_REPLY,
         payload: newReply
     }
 };
@@ -122,13 +122,13 @@ const initialState = {
 const replyReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-        case LOAD_COMMENT_REPLIES:
+        case LOAD_REPLIES:
             newState = {
                 ...state,
                 reply: action.payload
             }
             return newState;
-        case CREATE_COMMENT_REPLY:
+        case CREATE_REPLY:
             newState = {
                 ...state,
                 reply: {
