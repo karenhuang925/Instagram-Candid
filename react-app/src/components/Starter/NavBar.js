@@ -1,7 +1,11 @@
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link, useHistory } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import { logOutFunction } from '../../store/user';
 // import LogoutButton from './auth/LogoutButton';
+
 
 const Outstyle = {
   height: '100vh',
@@ -63,7 +67,16 @@ const lastItemStyle = {
   fontSize:'0.75em',
 }
 
+
 const NavBar = () => {
+  const history = useHistory();
+
+  const dispatch = useDispatch()
+  const onLogout = async (e) => {
+    await dispatch(logOutFunction());
+    history.push('/')
+  };
+
   return (
     <div >
       <nav style={Outstyle}>
@@ -110,15 +123,18 @@ const NavBar = () => {
               Profile
             </NavLink>
           </li>
+          <li >
+            <Link onClick={onLogout} exact={true} activeClassName='active' style={itemStyle}>
+              Logout
+            </Link>
+          </li>
         </ul>
         <NavLink to='/more' exact={true} activeClassName='active' style={lastItemStyle}>
           <i style={iconStyle} className="fa-solid fa-bars fa-lg"/>
           <div>More</div>
         </NavLink>
       </nav>
-
     </div>
   );
 }
-
 export default NavBar;
