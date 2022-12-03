@@ -1,5 +1,5 @@
 //Type Key String Literals
-const LOAD_A_SPOT = "/api/getSpotById"
+const LOAD_A_POST = "/api/getPostById"
 
 
 
