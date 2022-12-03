@@ -65,6 +65,15 @@ def create_new_reply(id):
 
     return new_reply.to_dict()
 
+    # return {
+    #         'id': self.id,
+    #         'user_id': self.user_id,
+    #         'comment_id': self.comment_id,
+    #         'reply': self.reply,
+    #         'created_at': self.created_at,
+    #         'updated_at': self.updated_at
+    #     }
+
 
 # Edit a Reply
 @reply_routes.route('/replies/<int:id>', methods=["PUT"])
