@@ -2,10 +2,10 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user, login_user, logout_user
 from app.models import db, User
 
-user_routes = Blueprint('users', __name__, url_prefix='/users')
+user_routes = Blueprint('users', __name__)
 
 # GET - POST signup user
-@user_routes.route('/signup', methods=["GET", "POST"])
+@user_routes.route('/signup', methods=["POST"])
 def signup():
     user_info = request.json
     user_by_email = User.query.filter((User.email == user_info["email"])).first()
@@ -21,9 +21,11 @@ def signup():
     return new_user.safe_info()
 
 # GET - POST login user
-@user_routes.route('/login', methods=["GET", "POST"])
+@user_routes.route('/login', methods=["POST"])
 def login():
     user_info = request.json
+    print(user_info)
+    print("raaaaw")
     credential = user_info["credential"]
     password = user_info["password"]
     user = User.query.filter((User.email == credential) | (User.username == credential)).first()
@@ -45,7 +47,6 @@ def logout():
 
 # GET current user
 @user_routes.route('/session')
-@login_required
 def session():
     user = current_user
     return user.to_dict()
