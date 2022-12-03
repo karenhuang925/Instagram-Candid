@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fetchMyPosts } from "../../store/posts2";
+import { loadAllCurrentUserPosts } from "../../store/posts2";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../Posts";
 
@@ -10,7 +10,7 @@ const ProfilePage = () => {
   const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    dispatch(fetchMyPosts());
+    dispatch(loadAllCurrentUserPosts());
   }, [dispatch]);
 
   return (

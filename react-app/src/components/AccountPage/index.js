@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fetchUserPosts } from "../../store/posts2";
+import { loadAllPostsByUserId } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../Posts";
 import { Redirect, useParams } from "react-router-dom";
@@ -51,7 +51,7 @@ const AccountPage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchUserPosts(accountId));
+    dispatch(loadAllPostsByUserId(accountId));
   }, [dispatch]);
 
   return (
