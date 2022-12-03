@@ -1,5 +1,3 @@
-import { csrfFetch } from './csrf';
-
 const initialState = null
 const ADD_MEDIA = "add/media"
 const DELETE_MEDIA = "delete/media"
@@ -20,14 +18,14 @@ const deleteMediaAction = () => {
 
 // Functions
 export const addMediaFunction = (id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/posts/${id}/media`);
+    const response = await fetch(`/api/posts/${id}/media`);
     const responseJSON = await response.json();
     dispatch(addMediaAction(responseJSON));
     return responseJSON;
 }
 
 export const deleteMediaFunction = (id) => async (dispatch) => {
-    const response = await csrfFetch('/api/media/' + id);
+    const response = await fetch('/api/media/' + id);
     const responseJSON = await response.json();
     dispatch(deleteMediaAction(responseJSON));
     return responseJSON;

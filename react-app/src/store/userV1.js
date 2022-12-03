@@ -1,4 +1,4 @@
-import { csrfFetch } from './csrf';
+// import { csrfFetch } from './csrf';
 
 const initialState = null
 const GET_USER = "get/user"
@@ -13,7 +13,7 @@ const getUserAction = (user) => {
 
 // Functions
 export const getUserFunction = (id) => async (dispatch) => {
-    const response = await csrfFetch('/api/users/' + id);
+    const response = await fetch('/api/users/' + id);
     const responseJSON = await response.json();
     dispatch(getUserAction(responseJSON));
     return responseJSON;
