@@ -3,6 +3,7 @@ const PLUS_FOLLOWER = "followers/plus";
 const MINUS_FOLLOWER = "followers/minus";
 const GET_FOLLOWER = "followers/followers"
 const GET_FOLLOWING = "followers/following"
+const GET_FOLLOWING_SUGGESTIONS = "followers/suggestions"
 
 // export const createFollower = (follower) => {
 //   return {
@@ -20,6 +21,12 @@ export const loadFollower = (payload) => {
 export const loadFollowing = (payload) => {
   return {
     type: GET_FOLLOWING,
+    payload: payload,
+  };
+};
+export const loadSuggestion = (payload) => {
+  return {
+    type: GET_FOLLOWING_SUGGESTIONS,
     payload: payload,
   };
 };
@@ -54,6 +61,14 @@ export const fetchFollower = ({user_id}) => async (dispatch) => {
 };
 export const fetchFollowing = ({user_id}) => async (dispatch) => {
   const res = await fetch(`/users/${user_id}/following`);
+  if (res.ok){
+    const data = await res.json();
+    dispatch(loadFollower(data));
+    return data;
+  }
+};
+export const fetchSuggestion = ({user_id}) => async (dispatch) => {
+  const res = await fetch(`/api/users/${user_id}/following/suggestions`);
   if (res.ok){
     const data = await res.json();
     dispatch(loadFollower(data));
@@ -102,6 +117,11 @@ const followerReducer = (state = {}, action) => {
       newState = {
         ...state,
         following: action.payload
+      }
+    case GET_FOLLOWING_SUGGESTIONS:
+      newState = {
+        ...state,
+        suggestions: action.payload
       }
     case PLUS_FOLLOWER:
       newState = { ...state };
