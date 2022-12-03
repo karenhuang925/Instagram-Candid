@@ -25,7 +25,7 @@ export const minusLike = (payload) => {
 };
 
 export const fetchLike = ({postId}) => async (dispatch) => {
-    const res = await fetch(`/users/${postId}/followers`);
+    const res = await fetch(`/posts/${postId}/likes`);
     if (res.ok){
         const data = await res.json();
         dispatch(loadLikes(data));
@@ -33,8 +33,8 @@ export const fetchLike = ({postId}) => async (dispatch) => {
     }
 };
 
-export const fetchPlusLike = () => async (dispatch) => {
-    const res = await fetch(`/posts/${post_id}/likes`, {
+export const fetchPlusLike = ({postId}) => async (dispatch) => {
+    const res = await fetch(`/posts/${postId}/likes`, {
         method: "POST",
     });
     if (res.ok){
