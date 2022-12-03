@@ -67,6 +67,7 @@ const likeReducer = (state = {}, action) => {
             ...state,
             like: action.payload
         }
+        return newState;
         case PLUS_LIKE:
         newState = { ...state };
         newState[action.payload.id] = action.payload;

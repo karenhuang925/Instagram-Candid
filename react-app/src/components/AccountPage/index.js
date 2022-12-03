@@ -7,7 +7,7 @@ import {
   fetchCreateFollower,
   fetchMinusFollower,
   fetchPlusFollower,
-} from "../../store/followers2";
+} from "../../store/followers";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
