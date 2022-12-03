@@ -107,7 +107,7 @@ def get_posts_of_users_current_user_follows():
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
-    following = Follower.query.filter(Follower.user_id == user_id).filter(Follower.following_status == True).all()
+    following = Follower.query.filter(user_id == Follower.user_id).filter(Follower.following_status == True).all()
     if not following:
         return {
             "message": "Users followed couldn't be found",
@@ -272,7 +272,7 @@ def edit_post(id):
     caption = request.json['caption']
     location = request.json['location']
 
-    PostEdit = Post.query.filter(Post.id == id).one_or_none()
+    PostEdit = Post.query.filter(id == Post.id).one_or_none()
     if not PostEdit:
         return {
             "message": "Post couldn't be found",
@@ -290,7 +290,7 @@ def edit_post(id):
 
     db.session.commit()
 
-    post = Post.query.filter(Post.id == id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
+    post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
     return {
         "id": post.id,
@@ -323,7 +323,7 @@ def delete_post(id):
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
     
-    post = Post.query.filter(Post.id == id).one_or_none()
+    post = Post.query.filter(id == Post.id).one_or_none()
     if not post:
         return {
             "message": "Post couldn't be found",

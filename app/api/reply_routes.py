@@ -18,7 +18,7 @@ reply_routes = Blueprint('reply', __name__)
 @reply_routes.route('/comments/<int:id>/replies')
 def get_replies_for_comment(id):
 
-    replies = Reply.query.filter(Reply.comment_id == id).options(joinedload(Reply.user).options(load_only('id', 'username', 'preview_image'))).order_by(Reply.created_at).all()
+    replies = Reply.query.filter(id == Reply.comment_id).options(joinedload(Reply.user).options(load_only('id', 'username', 'preview_image'))).order_by(Reply.created_at).all()
     if not replies:
         return {
             "message": "Replies couldn't be found",
@@ -65,16 +65,6 @@ def create_new_reply(id):
 
     return new_reply.to_dict()
 
-    # return {
-    #         'id': self.id,
-    #         'user_id': self.user_id,
-    #         'comment_id': self.comment_id,
-    #         'reply': self.reply,
-    #         'created_at': self.created_at,
-    #         'updated_at': self.updated_at
-    #     }
-
-
 # Edit a Reply
 @reply_routes.route('/replies/<int:id>', methods=["PUT"])
 @login_required
@@ -85,7 +75,7 @@ def edit_reply(id):
     
     edit_reply = request.json['reply']
 
-    reply = Reply.query.filter(Reply.id == id).one_or_none()
+    reply = Reply.query.filter(id == Reply.id).one_or_none()
     if not reply:
         return {
             "message": "Reply couldn't be found",
@@ -113,7 +103,7 @@ def delete_reply(id):
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
     
-    reply = Reply.query.filter(Reply.id == id).one_or_none()
+    reply = Reply.query.filter(id == Reply.id).one_or_none()
     if not reply:
         return {
             "message": "Reply couldn't be found",
