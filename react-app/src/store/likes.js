@@ -33,14 +33,9 @@ export const fetchLike = ({postId}) => async (dispatch) => {
     }
 };
 
-export const fetchPlusLike = (like) => async (dispatch) => {
-    const { user_id, post_id } = like;
+export const fetchPlusLike = () => async (dispatch) => {
     const res = await fetch(`/posts/${post_id}/likes`, {
         method: "POST",
-        body: JSON.stringify({
-        user_id,
-        post_id,
-        }),
     });
     if (res.ok){
         const data = await res.json();
@@ -67,7 +62,7 @@ export const fetchMinusFollower = (like) => async (dispatch) => {
 const likeReducer = (state = {}, action) => {
     let newState;
     switch (action.type) {
-        case GET_Like:
+        case GET_LIKE:
         newState = {
             ...state,
             like: action.payload

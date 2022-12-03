@@ -65,7 +65,6 @@ export const fetchPlusFollower = (follower) => async (dispatch) => {
   const res = await fetch(`/users/${user_id}/followers`, {
     method: "POST",
     body: JSON.stringify({
-      user_id,
       follows_user_id,
     }),
   });
@@ -81,7 +80,6 @@ export const fetchMinusFollower = (follower) => async (dispatch) => {
   const res = await fetch(`/users/${user_id}/followers`, {
     method: "PUT",
     body: JSON.stringify({
-      user_id,
       follows_user_id,
     }),
   });
