@@ -1,36 +1,50 @@
-const initialState = {}
-const USER_LOGIN = "user/login"
-const USER_SIGNUP = "user/signup"
-const USER_LOGOUT = "user/logout"
+import { csrfFetch } from './csrf';
+
+const initialState = null
+const CURRENT_SESSION = "session/current"
+const LOGIN_SESSION = "session/login"
+const SIGNSUP_SESSION = "session/signup"
+const LOGOUT_SESSION = "session/logout"
 
 // Actions
+const sessionAction = (user) => {
+    return {
+        type: CURRENT_SESSION,
+        user
+    }
+}
+
 const logInAction = (user) => {
     return {
-        type: USER_LOGIN,
+        type: LOGIN_SESSION,
         user
     }
 }
 
 const signUpAction = (user) => {
     return {
-        type: USER_SIGNUP,
+        type: SIGNSUP_SESSION,
         user
     }
 }
 
-const logOutAction = (user) => {
+const logOutAction = () => {
     return {
-        type: USER_LOGOUT
+        type: LOGOUT_SESSION
     }
 }
 
 // Functions
+export const sessionFunction = () => async (dispatch) => {
+    const response = await csrfFetch('/api/users/session');
+    const responseJSON = await response.json();
+    dispatch(sessionAction(responseJSON));
+    return responseJSON;
+}
+
 export const logInFunction = (data) => async (dispatch) => {
-    const response = await fetch('/api/users/login', {
+    const response = await csrfFetch('/api/users/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(data)
     });
     const responseJSON = await response.json();
@@ -40,11 +54,8 @@ export const logInFunction = (data) => async (dispatch) => {
 
 
 export const signUpFunction = (data) => async (dispatch) => {
-    const response = await fetch('/api/users/signup', {
+    const response = await csrfFetch('/api/users/signup', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(data)
     });
     const responseJSON = await response.json();
@@ -53,29 +64,32 @@ export const signUpFunction = (data) => async (dispatch) => {
 }
 
 export const logOutFunction = () => async (dispatch) => {
-    const response = await fetch('/api/users/logout');
+    const response = await csrfFetch('/api/users/logout');
     const responseJSON = await response.json();
     dispatch(logOutAction());
     return responseJSON;
 }
 
 // Reducer
-function userReducer(state = initialState, action) {
+function sessionReducer(state = initialState, action) {
     let newState;
     switch(action.type) {
-        case USER_LOGIN:
+        case CURRENT_SESSION:
             newState = {
-                ...newState,
                 ...action.user
             }
             return newState;
-        case USER_SIGNUP: 
+        case LOGIN_SESSION:
             newState = {
-                ...newState,
                 ...action.user
             }
             return newState;
-        case USER_LOGOUT: 
+        case SIGNSUP_SESSION: 
+            newState = {
+                ...action.user
+            }
+            return newState;
+        case LOGOUT_SESSION: 
             newState = initialState;
             return newState
         default:
@@ -83,4 +97,4 @@ function userReducer(state = initialState, action) {
     }
 }
 
-export default userReducer;
+export default sessionReducer;
