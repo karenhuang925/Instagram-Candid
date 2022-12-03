@@ -64,9 +64,9 @@ const AccountPage = () => {
       <p>
         {account?.first_name} {account?.last_name}
       </p>
-      {!followers.includes(sessionUser?.id) && (
+      {/* {!followers.includes(sessionUser?.id) && (
         <button onClick={followAccount}>Follow</button>
-      )}
+      )} */}
       {/* //       {followers.includes(sessionUser?.id) && ( */}
       {/* //         <button onClick={unfollowAccount}>Unfollow</button>
     //       )} */}
