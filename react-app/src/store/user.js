@@ -1,5 +1,3 @@
-import { csrfFetch } from './csrf';
-
 const initialState = null
 const CURRENT_SESSION = "session/current"
 const LOGIN_SESSION = "session/login"
@@ -36,14 +34,15 @@ const logOutAction = () => {
 
 // Functions
 export const sessionFunction = () => async (dispatch) => {
-    const response = await csrfFetch('/api/users/session');
+    const response = await fetch('/api/users/session');
     const responseJSON = await response.json();
+    if(responseJSON?.errors) return
     dispatch(sessionAction(responseJSON));
     return responseJSON;
 }
 
 export const logInFunction = (data) => async (dispatch) => {
-    const response = await csrfFetch('/api/users/login', {
+    const response = await fetch('/api/users/login', {
       method: 'POST',
       body: JSON.stringify(data)
     });
@@ -54,7 +53,7 @@ export const logInFunction = (data) => async (dispatch) => {
 
 
 export const signUpFunction = (data) => async (dispatch) => {
-    const response = await csrfFetch('/api/users/signup', {
+    const response = await fetch('/api/users/signup', {
       method: 'POST',
       body: JSON.stringify(data)
     });
@@ -64,7 +63,7 @@ export const signUpFunction = (data) => async (dispatch) => {
 }
 
 export const logOutFunction = () => async (dispatch) => {
-    const response = await csrfFetch('/api/users/logout');
+    const response = await fetch('/api/users/logout');
     const responseJSON = await response.json();
     dispatch(logOutAction());
     return responseJSON;
