@@ -16,27 +16,40 @@ import { sessionFunction } from "./store/user";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.session);
-  const [loaded, setLoaded] = useState(false);
+  const user = useSelector((state) => state?.session);
   const [authenticate, setAuthenticate] = useState(false);
-  useEffect(() => {
-    (async () => {
-      await dispatch(sessionFunction());
-      setLoaded(true);
-    })();
+  // useEffect(() => {
+  //   (async () => {
+  //     await dispatch(sessionFunction());
+  //     setLoaded(true);
+  //   })();
+  // }, [dispatch]);
+  // const [loaded, setLoaded] = useState(false);
+
+  useEffect(() =>{
+    dispatch(sessionFunction());
   }, [dispatch]);
 
   useEffect(() => {
+
     if (user) setAuthenticate(true);
     else setAuthenticate(false);
   }, [user]);
-
+  
   // if (!loaded) return null;
-
+  // if(!user) return null
   return (
     <>
-      {authenticate && <HomePage />}
       {!authenticate && <Index />}
+      {
+        authenticate && (
+          <Switch>
+            <Route path={"/homepage"}>
+              <HomePage />
+            </Route>
+          </Switch>
+        )
+      }
     </>
 
     // <BrowserRouter>
