@@ -6,13 +6,15 @@ import postReducer from "./posts";
 import userReducer from './user';
 import singlePostReducer from './singlepost';
 import replyReducer from "./reply"
+import commentReducer from "./comments"
 
 const rootReducer = combineReducers({
   session,
   user: userReducer,
   posts: postReducer,
   singlePost: singlePostReducer,
-  replies: replyReducer
+  replies: replyReducer,
+  comments: combineReducers
 });
 
 
