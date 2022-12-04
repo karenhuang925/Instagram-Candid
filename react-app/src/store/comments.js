@@ -57,7 +57,7 @@ export const loadCommentsByPostId = (id) => async (dispatch) => {
 export const createComment = (postId, comment) => async (dispatch) => {
     const response = await fetch(`/api/posts/${postId}/comments`, {
         method: "POST",
-        header: {
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(comment)
@@ -72,7 +72,7 @@ export const createComment = (postId, comment) => async (dispatch) => {
 export const editComment = (edits, id) => async (dispatch) => {
     const response = await fetch(`/api/comments/${id}`, {
         method: "PUT",
-        header: {
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(edits)
