@@ -2,15 +2,15 @@
 import React from 'react';
 import { NavLink, Link, useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logOutFunction } from '../../store/user';
 // import LogoutButton from './auth/LogoutButton';
-
+import './NavBar.css'
 
 const Outstyle = {
   height: '100vh',
   borderRight:'1px solid #eeeeee',
-  width:'150px',
+  width:'250px',
   display:'flex',
   paddingTop: '8px',
   paddingLeft: '12px',
@@ -19,15 +19,13 @@ const Outstyle = {
   flexDirection: 'column',
   position:'fixed'
 }
-
 const imageStyle ={
-  width:"80px",
+  width:"110px",
   paddingTop: '10px',
   paddingBottom: '10px'
 }
-
 const listStyle = {
-  width: "80px",
+  width: "250px",
   padding: 0,
   margin: 0,
   listStyleType: 'none',
@@ -40,42 +38,57 @@ const listStyle = {
   fontWeight:400,
   fontSize:'16px',
 }
-
 const iconStyle={
   marginRight: '15px',
+  fontSize: '25px'
 }
-
 const itemStyle = {
   textDecoration: 'none',
   outline:'none',
   color: 'black',
   display: 'inline-flex',
   alignItems:'center',
-  paddingTop: '15px',
-  paddingBottom: '15px'
+  paddingTop: '20px',
+  paddingBottom: '20px',
+  marginBottom: '5px',
+  marginTop:'5px',
 }
-
 const lastItemStyle = {
   textDecoration: 'none',
   outline:'none',
   color: 'black',
-  paddingBottom:'25px',
+  marginBottom:'40px',
+  paddingTop: '25px',
+  paddingBottom: '25px',
+  marginTop:'5px',
   display: 'inline-flex',
   alignItems:'center',
   fontFamily:'Helvetica, Arial, sans-serif',
   fontWeight:400,
-  fontSize:'0.75em',
+  fontSize:'1em',
 }
+const profilePic = {
+  width: "25px",
+  height: '25px',
+  borderRadius:"20px",
+  marginRight: "15px",
+}
+
 
 
 const NavBar = () => {
   const history = useHistory();
+  let user = useSelector((state) => state.session)
 
   const dispatch = useDispatch()
   const onLogout = async (e) => {
     await dispatch(logOutFunction());
     history.push('/')
   };
+
+  if(!user){
+    return null
+  }
 
   return (
     <div >
@@ -89,25 +102,25 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li >
-            <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/posts' exact={true} activeClassName='active' style={itemStyle}>
               <i style={iconStyle} className="fa-solid fa-magnifying-glass fa-lg"></i>
               <div>Search</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/explore' exact={true} activeClassName='active' style={itemStyle}>
               <i style={iconStyle} className="fa-regular fa-compass fa-lg"/>
               <div>Explore</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/explore' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/messages' exact={true} activeClassName='active' style={itemStyle}>
             <i style={iconStyle} className="fa-brands fa-facebook-messenger fa-lg"></i>
               <div>Messages</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/notifications' exact={true} activeClassName='active' style={itemStyle}>
             <i style={iconStyle} className="fa-regular fa-heart fa-lg"/>
               <div>Notifications</div>
             </NavLink>
@@ -120,6 +133,7 @@ const NavBar = () => {
           </li>
           <li >
             <NavLink to='/users' exact={true} activeClassName='active' style={itemStyle}>
+              <img alt='preview' src={user.preview_image} style={profilePic}></img>
               Profile
             </NavLink>
           </li>
@@ -129,7 +143,7 @@ const NavBar = () => {
             </Link>
           </li>
         </ul>
-        <NavLink to='/more' exact={true} activeClassName='active' style={lastItemStyle}>
+        <NavLink to='/more' exact={true} activeClassName='active' style={lastItemStyle} className='more'>
           <i style={iconStyle} className="fa-solid fa-bars fa-lg"/>
           <div>More</div>
         </NavLink>
