@@ -1,0 +1,32 @@
+.main-image-container {
+    background-color: #000;
+    overflow: hidden;
+    position: relative;
+    /* width: 100%;
+    height: 100%;
+    object-fit: contain; */
+}
+
+.image-swiper {
+    display: flex;
+    overflow-x: visible;
+    transition-property: tranform;
+    will-change: transform;
+    /* width: 100%;
+    height: 100%;
+    object-fit: contain; */
+}
+
+.post-media {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: lightgray;
+
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: lightgray;
+
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
