@@ -124,7 +124,7 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li >
-            <Link onClick={onLogout} exact={true} activeClassName='active' style={itemStyle}>
+            <Link onClick={onLogout} to='/' style={itemStyle}>
               Logout
             </Link>
           </li>
