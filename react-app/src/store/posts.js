@@ -87,7 +87,9 @@ export const loadAllPostsByUserId = (userId) => async (dispatch) => {
 
 // Get all Posts of Users Followed by Current User
 export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
+  console.log("raaawr")
   const response = await fetch(`/api/users/current/following/posts`);
+  console.log(response)
   const posts = await response.json();
 
   let userPosts = {}

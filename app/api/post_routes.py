@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
+from sqlalchemy import func
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
-from app.models import db, Follower, Post, User
+from app.models import db, Follower, Post, User, Like, Comment
 
 post_routes = Blueprint('posts', __name__)
 
@@ -121,8 +122,15 @@ def get_posts_of_users_current_user_follows():
     for user_id in all_id_of_following:
         posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.asc()).all()
         for post in posts:
+            print("Here", post)
+            # postLikes = db.session.query(func.count(Like.id)).filter(58 == Like.post_id).scalar()
+            # if not postLikes:
+            #     postLikes = 0
+            # post[0]["likes"] = postLikes
+            print(dir(post))
             following_posts.append(post)
 
+    
     return {
         "Posts" : [
             {
@@ -130,6 +138,7 @@ def get_posts_of_users_current_user_follows():
                 "userId": post.user_id,
                 "caption": post.caption,
                 "location": post.location,
+                # "likes": post.likes,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
                 "Media" :[
