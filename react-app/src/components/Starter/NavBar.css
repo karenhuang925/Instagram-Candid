@@ -1,0 +1,25 @@
+.active{
+    font-weight: bold;
+}
+
+
+li:hover{
+    font-weight: bold;
+    background-color: rgb(240, 238, 238);
+    transition: background-color 3s;
+    border-bottom-left-radius: 24px;
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-top-right-radius: 24px;
+    width: 250px
+}
+.more:hover{
+    font-weight: bold;
+    background-color: rgb(240, 238, 238);
+    transition: background-color 3s;
+    border-bottom-left-radius: 24px;
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-top-right-radius: 24px;
+    width: 250px
+}

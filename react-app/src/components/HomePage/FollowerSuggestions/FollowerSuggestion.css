@@ -1,0 +1,85 @@
+.suggestion-outer{
+    width: 319px;
+    position: relative;
+    top:10px;
+    margin-left: 50px
+}
+
+.profile-pic{
+    width: 50px;
+    height: 50px;
+    border-radius:50px;
+    margin-right: 15px;
+}
+
+
+.user-profile{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.username{
+    font-weight: 500;
+    flex-grow: 1
+}
+
+.action-link{
+    text-decoration: none;
+    color: rgb(31, 162, 255);
+    font-weight: 500;
+    font-size: smaller;
+}
+
+.action-link:visited{
+    text-decoration: none;
+    color: rgb(31, 162, 255);
+}
+
+.suggestion-profile-pic{
+    width: 30px;
+    border-radius:30px;
+    margin-right: 15px;
+}
+
+.sub-username{
+    font-weight: 400;
+    color:gray;
+    font-size: smaller;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.title-username{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+
+.title-suggest{
+    color: gray;
+    font-weight: 500;
+    font-size: 15px;
+    flex-grow: 1;
+}
+
+.seeall{
+    color: black;
+}
+.seeall:visited{
+    color: black;
+}
+
+.title-flex{
+    display: flex;
+    align-items: center;
+
+}
+
+.more{
+    color: rgb(181, 180, 180);
+    font-weight: 400;
+    font-size: 10px;
+    margin-top: 40px;
+}
