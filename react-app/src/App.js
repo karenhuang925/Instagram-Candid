@@ -38,6 +38,7 @@ function App() {
 
   // if (!loaded) return null;
   // if(!user) return null
+
   return (
     <>
       {/* {authenticate && <HomePage />}
@@ -48,7 +49,7 @@ function App() {
         <>
           <NavBar />
           <Switch>
-            <Route path={"/homepage"}>
+            <Route exact path={"/homepage"}>
               <HomePage />
             </Route>
 

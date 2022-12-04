@@ -87,7 +87,9 @@ export const loadAllPostsByUserId = (userId) => async (dispatch) => {
 
 // Get all Posts of Users Followed by Current User
 export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
+  console.log("raaawr")
   const response = await fetch(`/api/users/current/following/posts`);
+  console.log(response)
   const posts = await response.json();
 
   let userPosts = {}
@@ -103,7 +105,7 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
 export const createPost = (post) => async (dispatch) => {
   const response = await fetch('/api/posts', {
     method: "POST",
-    header: {
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(post)
@@ -118,7 +120,7 @@ export const createPost = (post) => async (dispatch) => {
 export const editPost = (edits, id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
     method: "PUT",
-    header: {
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(edits)
