@@ -9,7 +9,7 @@ import Index from "./components/alonso/Index";
 import NavBar from "./components/Starter/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { sessionFunction } from "./store/user";
-import AccountPage from "./components/AccountPage";
+// import AccountPage from "./components/AccountPage";
 // import ProtectedRoute from './components/Starter/auth/ProtectedRoute';
 // import UsersList from './components/Starter/UsersList';
 // import User from './components/Starter/User';
@@ -53,9 +53,9 @@ function App() {
               <HomePage />
             </Route>
 
-            <Route path="/profile/:id" exact={true}>
+            {/* <Route path="/profile/:id" exact={true}>
               <AccountPage />
-            </Route>
+            </Route> */}
           </Switch>
         </>
       )}

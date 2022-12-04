@@ -122,23 +122,24 @@ def get_posts_of_users_current_user_follows():
     for user_id in all_id_of_following:
         posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.asc()).all()
         for post in posts:
-            print("Here", post)
-            # postLikes = db.session.query(func.count(Like.id)).filter(58 == Like.post_id).scalar()
-            # if not postLikes:
-            #     postLikes = 0
-            # post[0]["likes"] = postLikes
-            print(dir(post))
-            following_posts.append(post)
 
-    
-    return {
-        "Posts" : [
-            {
+            postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+            postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+
+
+            if not postLikes:
+                postLikes = 0
+
+            if not postComments:
+                postComments = 0
+
+            returnPost = {
                 "id": post.id,
                 "userId": post.user_id,
                 "caption": post.caption,
                 "location": post.location,
-                # "likes": post.likes,
+                "likes": postLikes,
+                "comments": postComments,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
                 "Media" :[
@@ -154,9 +155,41 @@ def get_posts_of_users_current_user_follows():
                     "username": post.user.username,
                     "previewImage": post.user.preview_image
                 }
-            } for post in following_posts
-        ]
-    }
+            }
+
+            following_posts.append(returnPost)
+
+    # print (following_posts)
+
+    return {"Posts" : [post for post in following_posts]}
+
+    
+    # return {
+    #     "Posts" : [
+    #         {
+    #             "id": thisPost.id,
+    #             "userId": thisPost.user_id,
+    #             "caption": thisPost.caption,
+    #             "location": thisPost.location,
+    #             "likes": thisPost.likes,
+    #             "created_at": thisPost.created_at,
+    #             "updated_at": thisPost.updated_at,
+    #             "Media" :[
+    #                 {
+    #                     "id": thisPost.id,
+    #                     "user_id": thisPost.user_id,
+    #                     "media_file": thisPost.media_file,
+    #                     "type": thisPost.type
+    #                 } for media in thisPost.medias
+    #             ],
+    #             "Owner": {
+    #                 "id": thisPost.user.id,
+    #                 "username": thisPost.user.username,
+    #                 "previewImage": thisPost.user.preview_image
+    #             }
+    #         } for thisPost in following_posts
+    #     ]
+    # }
 
 # Get all Posts
 @post_routes.route('/posts', methods=["GET"])
