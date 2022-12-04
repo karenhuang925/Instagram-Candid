@@ -9,6 +9,7 @@ import Index from "./components/alonso/Index";
 import NavBar from "./components/Starter/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { sessionFunction } from "./store/user";
+import AccountPage from "./components/AccountPage";
 // import ProtectedRoute from './components/Starter/auth/ProtectedRoute';
 // import UsersList from './components/Starter/UsersList';
 // import User from './components/Starter/User';
@@ -26,7 +27,7 @@ function App() {
   // }, [dispatch]);
   // const [loaded, setLoaded] = useState(false);
 
-  useEffect(() =>{
+  useEffect(() => {
     dispatch(sessionFunction());
   }, [dispatch]);
 
@@ -34,42 +35,50 @@ function App() {
     if (user) setAuthenticate(true);
     else setAuthenticate(false);
   }, [user]);
-  
+
   // if (!loaded) return null;
   // if(!user) return null
 
   return (
     <>
+      {/* {authenticate && <HomePage />}
+      {!authenticate && <Index />} */}
+
       {!authenticate && <Index />}
-      {
-        authenticate && (
+      {authenticate && (
+        <>
+          <NavBar />
           <Switch>
             <Route exact path={"/homepage"}>
               <HomePage />
             </Route>
+
+            <Route path="/profile/:id" exact={true}>
+              <AccountPage />
+            </Route>
           </Switch>
-        )
-      }
+        </>
+      )}
     </>
 
     // <BrowserRouter>
-    //   <NavBar />
-    //   <Switch>
-    //     <Route path='/login' exact={true}>
-    //       <LoginForm />
-    //     </Route>
-    //     <Route path='/sign-up' exact={true}>
-    //       <SignUpForm />
-    //     </Route>
-    //     <ProtectedRoute path='/users' exact={true} >
-    //       <UsersList/>
-    //     </ProtectedRoute>
-    //     <ProtectedRoute path='/users/:userId' exact={true} >
-    //       <User />
-    //     </ProtectedRoute>
-    //     <Route path='/' exact={true} >
-    //       <h1>My Home Page</h1>
-    //     </Route>
+    // //   <NavBar />
+    // //   <Switch>
+    // //     <Route path='/login' exact={true}>
+    // //       <LoginForm />
+    // //     </Route>
+    // //     <Route path='/sign-up' exact={true}>
+    // //       <SignUpForm />
+    // //     </Route>
+    // //     <ProtectedRoute path='/users' exact={true} >
+    // //       <UsersList/>
+    // //     </ProtectedRoute>
+    // //     <ProtectedRoute path='/users/:userId' exact={true} >
+    // //       <User />
+    // //     </ProtectedRoute>
+    // //     <Route path='/' exact={true} >
+    // //       <h1>My Home Page</h1>
+    // //     </Route>
     //   </Switch>
     // </BrowserRouter>
   );
