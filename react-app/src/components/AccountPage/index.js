@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { loadAllPostsByUserId } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
-import Post from "../Posts/Post";
+// import Post from "../Posts/Post";
 import { Redirect, useParams } from "react-router-dom";
 import {
   fetchFollower,

@@ -12,20 +12,24 @@ function ImageComponent({ images }) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [movement, setMovement] = useState(0)
 
-    const handleMovement = (delta) => {
+    // const handleMovement = (delta) => {
 
-    }
+    // }
 
-    const handleWheel = (e) => {
-        handleMovement(e.deltaX)
-    }
+    // const handleWheel = (e) => {
+    //     handleMovement(e.deltaX)
+    // }
+
+    // onWheel={handleWheel}
 
 
 
 
     return (
-        <div className='main-image-container' onWheel={handleWheel}>
+        <div className='main-image-container'>
             <div className='image-swiper'>
+                <i className="fa-solid fa-house"></i>
+                {/* <i className="fa-regular fa-circle-arrow-left fa-2x"></i> */}
                 {images.map((image) => {
                     return (
                         <img

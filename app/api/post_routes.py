@@ -159,7 +159,7 @@ def get_posts_of_users_current_user_follows():
 
             following_posts.append(returnPost)
 
-    print (following_posts)
+    # print (following_posts)
 
     return {"Posts" : [post for post in following_posts]}
 
