@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadAllPostsOfUsersFollowed } from '../../../store/posts'
-import Post from "../Post"
+import Post from "../Post/FeedPost"
 import "./Feed.css"
 
 function Feed() {

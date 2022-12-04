@@ -47,19 +47,6 @@
     padding-right: 8px;
 }
 
-.post-media {
-    border-top-width: 1px;
-    border-top-style: solid;
-    border-top-color: lightgray;
-
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: lightgray;
-
-    width: 100%;
-    object-fit: contain;
-}
-
 .post-interaction-section {
     display: flex;
     flex-direction: row;
@@ -153,4 +140,5 @@
     border: none;
     color: #4892dd;
     background-color: transparent;
+    padding-right: 8px;
 }

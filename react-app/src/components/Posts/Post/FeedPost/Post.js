@@ -1,7 +1,15 @@
 import React from 'react'
+import ImageComponent from "./FeedPostComponents/ImageComponent"
 import "./Post.css"
 
 function Post({ post }) {
+
+    let today = Date.parse(new Date())
+    let unixTimeZero = Date.parse(post.created_at)
+
+    let diff = today - unixTimeZero
+    let diffindays = Math.floor((diff) / (24 * 3600 * 1000))
+    let diffinhours = Math.floor(diff / (3600 * 1000))
 
     return (
         <div className='individual-post-container'>
@@ -30,11 +38,12 @@ function Post({ post }) {
 
             <section id='post-image-section'>
                 {/* Need to create capability to have and scroll through multiple images */}
-                <img
+                {/* <img
                     className='post-media'
                     src={post.Media[0].media_file}
                     alt={post.id}
-                />
+                /> */}
+                <ImageComponent images={post.Media} />
             </section>
 
             <section className='post-interaction-section'>
@@ -51,15 +60,18 @@ function Post({ post }) {
 
 
             <section className='post-body-section'>
-                <div className='post-detail-likes'>Count of likes</div>
+                <div className='post-detail-likes'>{post.likes} likes</div>
 
                 <div className='post-detail-caption-body'>
                     <div id='post-detail-username'>{post.Owner.username}</div>
                     <div id='post-detail-caption'>{post.caption}</div>
                 </div>
 
-                <div className='post-comment-count'>View all COUNT comments</div>
-                <div className='post-time'>Time HOURS or DAY or DAYS AGO</div>
+                <div className='post-comment-count'>View all {post.comments} comments</div>
+                {diffinhours > 23
+                    ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
+                    : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
+                }
             </section>
 
 
