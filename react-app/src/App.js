@@ -31,20 +31,20 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-
     if (user) setAuthenticate(true);
     else setAuthenticate(false);
   }, [user]);
   
   // if (!loaded) return null;
   // if(!user) return null
+
   return (
     <>
       {!authenticate && <Index />}
       {
         authenticate && (
           <Switch>
-            <Route path={"/homepage"}>
+            <Route exact path={"/homepage"}>
               <HomePage />
             </Route>
           </Switch>
