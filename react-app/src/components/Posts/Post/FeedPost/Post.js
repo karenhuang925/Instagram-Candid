@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState }  from 'react'
 import ImageComponent from "./FeedPostComponents/ImageComponent"
 import "./Post.css"
+import { Link } from 'react-router-dom'
+import { Modal } from '../../../../context/Modal'
+import PostDetail from '../../PostDetail/PostDetail'
 
 function Post({ post }) {
 
@@ -10,6 +13,8 @@ function Post({ post }) {
     let diff = today - unixTimeZero
     let diffindays = Math.floor((diff) / (24 * 3600 * 1000))
     let diffinhours = Math.floor(diff / (3600 * 1000))
+
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <div className='individual-post-container'>
@@ -67,7 +72,12 @@ function Post({ post }) {
                     <div id='post-detail-caption'>{post.caption}</div>
                 </div>
 
-                <div className='post-comment-count'>View all {post.comments} comments</div>
+                <Link className='post-comment-count' onClick={()=>setShowModal(true)}>View all {post.comments} comments</Link>
+                {showModal && (
+                    <Modal onClose={() => setShowModal(false)}>
+                        <PostDetail />
+                    </Modal>
+                )}
                 {diffinhours > 23
                     ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
                     : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
