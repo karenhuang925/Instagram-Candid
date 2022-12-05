@@ -1,0 +1,40 @@
+#profile-top {
+  margin: auto;
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+#profile-pic {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+#profile-right {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+#profile-top-right {
+  display: flex;
+  justify-content: space-between;
+}
+
+#profile-username {
+  font-size: 20pt;
+  margin-right: 20px;
+}
+
+.follow-btn {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 13px;
+  font-size: 14px;
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}

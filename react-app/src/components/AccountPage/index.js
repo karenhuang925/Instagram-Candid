@@ -9,6 +9,7 @@ import {
 } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
+import "./AccountPage.css";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -47,22 +48,36 @@ const AccountPage = () => {
 
   return (
     <>
-      <img src={account?.preview_image} alt="Account Profile Picture" />
-      <p>{account?.username}</p>
-      {!Object?.values(followers)?.includes(sessionUser?.id) && (
-        <button onClick={followAccount}>Follow</button>
-      )}
-      {Object?.values(followers)?.includes(sessionUser?.id) && (
-        <button onClick={unfollowAccount}>Unfollow</button>
-      )}
-      <span>posts</span>
-      <span>followers</span>
-      <span>following</span>
-      {/* add aggregates */}
-      <p>
-        {account?.first_name} {account?.last_name}
-      </p>
-      <p>{account?.biography}</p>
+      <div id="profile-top">
+        <img
+          src={account?.preview_image}
+          alt="Account Profile Picture"
+          id="profile-pic"
+        />
+        <div id="profile-right">
+          <div id="profile-top-right">
+            <span id="profile-username">{account?.username}</span>
+            {!Object?.values(followers)?.includes(sessionUser?.id) && (
+              <button className="follow-btn" onClick={followAccount}>
+                Follow
+              </button>
+            )}
+            {Object?.values(followers)?.includes(sessionUser?.id) && (
+              <button className="follow-btn" onClick={unfollowAccount}>
+                Unfollow
+              </button>
+            )}
+          </div>
+          <span>posts</span>
+          <span>followers</span>
+          <span>following</span>
+          {/* add aggregates */}
+          <p>
+            {account?.first_name} {account?.last_name}
+          </p>
+          <p>{account?.biography}</p>
+        </div>
+      </div>
       <span>Posts</span>
       <hr />
       <hr />
