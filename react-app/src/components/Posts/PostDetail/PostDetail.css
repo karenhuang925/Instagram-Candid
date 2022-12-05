@@ -1,0 +1,23 @@
+.modal-outer{
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: stretch;
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.image{
+    /* flex-grow: 1; */
+    width:60%;
+    height: 100%;
+    overflow: hidden;
+    background-color: gray;
+}
+
+.info{
+    background-color: white;
+    width: 400px
+}
