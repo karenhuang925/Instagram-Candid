@@ -127,10 +127,8 @@ const followerReducer = (state = {}, action) => {
       };
       return newState;
     case GET_FOLLOWING_SUGGESTIONS:
-      newState = {
-        ...state,
-        suggestions: action.payload,
-      };
+      newState = {...state};
+      newState.suggestions = action.payload
       return newState;
     case PLUS_FOLLOWER:
       newState = { ...state };

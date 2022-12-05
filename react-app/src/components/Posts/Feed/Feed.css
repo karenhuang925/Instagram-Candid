@@ -1,11 +1,12 @@
 .feed-section {
     display: flex;
     justify-content: center;
-}
-
-.post-feed-container {
     max-width: 470px;
 }
+
+/* .post-feed-container {
+    max-width: 470px;
+} */
 
 .individual-post-container {
     border-radius: 10px;
