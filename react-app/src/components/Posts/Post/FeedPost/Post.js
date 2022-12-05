@@ -1,9 +1,10 @@
 import React, { useState }  from 'react'
 import ImageComponent from "./FeedPostComponents/ImageComponent"
+import FeedPostButtons from './FeedPostComponents/InteractionButtonComponent/FeedPostButtons'
 import "./Post.css"
 import { Link } from 'react-router-dom'
 import { Modal } from '../../../../context/Modal'
-import PostDetail from '../../PostDetail/PostDetail'
+import PostDetail from '../PostDetail/PostDetail'
 
 function Post({ post }) {
 
@@ -42,25 +43,11 @@ function Post({ post }) {
             </section>
 
             <section id='post-image-section'>
-                {/* Need to create capability to have and scroll through multiple images */}
-                {/* <img
-                    className='post-media'
-                    src={post.Media[0].media_file}
-                    alt={post.id}
-                /> */}
                 <ImageComponent images={post.Media} />
             </section>
 
             <section className='post-interaction-section'>
-                <div id='post-interaction-button-container'>
-                    <div id='interaction-button'><i className="fa-regular fa-heart fa-1x"></i></div>
-                    <div id='interaction-button'><i className="fa-regular fa-comment fa-1x"></i></div>
-                    <div id='interaction-button'><i className="fa-regular fa-paper-plane fa-1x"></i></div>
-                </div>
-
-                <div id='post-interaction-button-container'>
-                    <div id='interaction-button'><i className="fa-regular fa-bookmark fa-1x"></i></div>
-                </div>
+                <FeedPostButtons />
             </section>
 
 
@@ -95,6 +82,7 @@ function Post({ post }) {
                     <button className='post-comment-button'>Post</button>
                 </form>
             </section>
+
         </div>
     )
 

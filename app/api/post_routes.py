@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from sqlalchemy import func
+from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db, Follower, Post, User, Like, Comment
 
@@ -26,23 +27,33 @@ def get_posts_by_user_id(id):
             "statusCode": 404
             }, 404
     
-    posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.asc()).all()
+    posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
     if not posts:
         return {
             "message": "Posts couldn't be found",
             "statusCode": 404
             }, 404 
-    
-    return {
-        "Posts" : [
-            {
+
+    user_posts = []
+    for post in posts:
+            postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+            postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+
+            if not postLikes:
+                postLikes = 0
+            if not postComments:
+                postComments = 0
+
+            returnPost = {
                 "id": post.id,
                 "userId": post.user_id,
                 "caption": post.caption,
                 "location": post.location,
+                "likes": postLikes,
+                "comments": postComments,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
-                "Media" : [
+                "Media" :[
                     {
                         "id": media.id,
                         "user_id": media.user_id,
@@ -55,9 +66,10 @@ def get_posts_by_user_id(id):
                     "username": post.user.username,
                     "previewImage": post.user.preview_image
                 }
-            } for post in posts
-        ]
-    }
+            }
+
+            user_posts.append(returnPost)
+    return {"Posts" : [post for post in user_posts]}
 
 # Get all Posts created by the Current User
 @post_routes.route('/users/current/posts', methods=["GET"])
@@ -67,23 +79,33 @@ def get_posts_by_current_user():
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
     
-    posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.asc()).all()
+    posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
     if not posts:
         return {
             "message": "Posts couldn't be found",
             "statusCode": 404
             }, 404
 
-    return {
-        "Posts" : [
-            {
+    user_posts = []
+    for post in posts:
+            postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+            postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+
+            if not postLikes:
+                postLikes = 0
+            if not postComments:
+                postComments = 0
+
+            returnPost = {
                 "id": post.id,
                 "userId": post.user_id,
                 "caption": post.caption,
                 "location": post.location,
+                "likes": postLikes,
+                "comments": postComments,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
-                "Media" : [
+                "Media" :[
                     {
                         "id": media.id,
                         "user_id": media.user_id,
@@ -96,9 +118,10 @@ def get_posts_by_current_user():
                     "username": post.user.username,
                     "previewImage": post.user.preview_image
                 }
-            } for post in posts
-        ]
-    }
+            }
+
+            user_posts.append(returnPost)
+    return {"Posts" : [post for post in user_posts]}
 
 # Get all Posts of Users Followed by Current User
 @post_routes.route('/users/current/following/posts', methods=["GET"])
@@ -120,7 +143,9 @@ def get_posts_of_users_current_user_follows():
 
     following_posts = []
     for user_id in all_id_of_following:
-        posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.asc()).all()
+        posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(func.random()).all()
+        # .order_by(Post.created_at.desc()).all()
+        print("HERE", posts)
         for post in posts:
 
             postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
@@ -159,7 +184,6 @@ def get_posts_of_users_current_user_follows():
 
             following_posts.append(returnPost)
 
-    # print (following_posts)
 
     return {"Posts" : [post for post in following_posts]}
 
@@ -195,18 +219,33 @@ def get_posts_of_users_current_user_follows():
 @post_routes.route('/posts', methods=["GET"])
 def get_all_posts():
 
-    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.asc()).all()
-    
-    return {
-        "Posts" : [
-            {
+    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
+    if not posts:
+        return {
+            "message": "Posts couldn't be found",
+            "statusCode": 404
+            }, 404
+
+    all_posts = []
+    for post in posts:
+            postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+            postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+
+            if not postLikes:
+                postLikes = 0
+            if not postComments:
+                postComments = 0
+
+            returnPost = {
                 "id": post.id,
                 "userId": post.user_id,
                 "caption": post.caption,
                 "location": post.location,
+                "likes": postLikes,
+                "comments": postComments,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
-                "Media" : [
+                "Media" :[
                     {
                         "id": media.id,
                         "user_id": media.user_id,
@@ -219,9 +258,10 @@ def get_all_posts():
                     "username": post.user.username,
                     "previewImage": post.user.preview_image
                 }
-            } for post in posts
-        ]
-    }
+            }
+
+            all_posts.append(returnPost)
+    return {"Posts" : [post for post in all_posts]}
 
  # Get details of a Post from an id
 @post_routes.route('/posts/<int:id>', methods=["GET"])
@@ -234,11 +274,21 @@ def get_post_by_id(id):
             "statusCode": 404
             }, 404
 
+    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+    postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+
+    if not postLikes:
+        postLikes = 0
+    if not postComments:
+        postComments = 0
+
     return {
         "id": post.id,
         "userId": post.user_id,
         "caption": post.caption,
         "location": post.location,
+        "likes": postLikes,
+        "comments": postComments,
         "created_at": post.created_at,
         "updated_at": post.updated_at,
         "Media" : [
@@ -248,14 +298,13 @@ def get_post_by_id(id):
                 "media_file": media.media_file,
                 "type": media.type
             } for media in post.medias
-                ],
+        ],
         "Owner": {
             "id": post.user.id,
             "username": post.user.username,
             "previewImage": post.user.preview_image
         }
-    }
-
+    } 
 
 # Create a Post
 @post_routes.route('/posts', methods=["POST"])
@@ -280,11 +329,22 @@ def create_new_post():
     addedPost = newPost.to_dict()
     post = Post.query.filter(addedPost.id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
+    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+    postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+    
+    if not postLikes:
+        postLikes = 0
+
+    if not postComments:
+        postComments = 0
+
     return {
         "id": post.id,
         "userId": post.user_id,
         "caption": post.caption,
         "location": post.location,
+        "likes": postLikes,
+        "comments": postComments,
         "created_at": post.created_at,
         "updated_at": post.updated_at,
         "Media" : [
@@ -334,11 +394,22 @@ def edit_post(id):
 
     post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
+    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+    postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+    
+    if not postLikes:
+        postLikes = 0
+
+    if not postComments:
+        postComments = 0
+
     return {
         "id": post.id,
         "userId": post.user_id,
         "caption": post.caption,
         "location": post.location,
+        "likes": postLikes,
+        "comments": postComments,
         "created_at": post.created_at,
         "updated_at": post.updated_at,
         "Media" : [
