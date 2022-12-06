@@ -14,6 +14,13 @@ const loadPosts = (allPosts) => {
   }
 }
 
+const loadFeedPosts = (allPosts) => {
+  return {
+    type: LOAD_FEED_POSTS,
+    payload: allPosts
+  }
+}
+
 const createAPost = (newPost) => {
   return {
     type: CREATE_POST,
@@ -47,7 +54,7 @@ export const loadAllPosts = () => async (dispatch) => {
   if (response.ok) {
     const posts = await response.json();
 
-    let allPosts= {};
+    let allPosts = {};
     posts.Posts.forEach(post => {
       allPosts[post.id] = post;
     });
@@ -103,7 +110,7 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
 
   // console.log("HERE!5", userPosts)
 
-  dispatch(loadPosts(userPosts));
+  dispatch(loadFeedPosts(userPosts));
   return response;
 }
 
@@ -142,7 +149,7 @@ export const deletePost = (id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
     method: "DELETE"
   });
-  
+
   dispatch(deleteAPost(id));
   return response;
 }
@@ -160,6 +167,12 @@ const initialState = {
 const postReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
+    case LOAD_FEED_POSTS:
+      newState = {
+        ...state,
+        post: action.payload
+      }
+      return newState;
     case LOAD_POSTS:
       newState = {
         ...state,
