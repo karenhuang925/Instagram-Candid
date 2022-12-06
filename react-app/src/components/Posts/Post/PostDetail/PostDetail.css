@@ -57,7 +57,7 @@
     padding-top: 20px;
     position: absolute;
     overflow-y: scroll;
-    width: calc(100% - 32px);
+    width: 454px;
     height: 500px
 }
 

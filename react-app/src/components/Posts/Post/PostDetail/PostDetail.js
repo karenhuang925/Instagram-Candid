@@ -22,9 +22,12 @@ function PostDetail({postId}) {
     console.log(allComments)
     let today = Date.parse(new Date())
     let unixTimeZero = Date.parse(post.created_at)
+
     let diff = today - unixTimeZero
+
     let diffindays = Math.floor((diff) / (24 * 3600 * 1000))
     let diffinhours = Math.floor(diff / (3600 * 1000))
+
 
     return (
         <section className='modal-outer'>
@@ -60,17 +63,21 @@ function PostDetail({postId}) {
                         </div>
                         <div className='comments'>
                             {Object.values(allComments).map((comment)=>{
+                                let commentunixTimeZero = Date.parse(comment.created_at)
+                                let commentdiff = today - commentunixTimeZero
+                                let commentdiffindays = Math.floor((commentdiff) / (24 * 3600 * 1000))
+                                let commentdiffinhours = Math.floor(commentdiff / (3600 * 1000))
                                 return(
                                     <div key={comment.id} className='caption-card'>
-                                        <img alt='preview' src={post.Owner.previewImage} className='detail-profile-pic'></img>
+                                        <img alt='preview' src={comment.Owner.preview_image} className='detail-profile-pic'></img>
                                         <div>
                                             <div className='usernameAndCaption'>
-                                                <p className='caption-username'>{post.Owner.username}</p>
-                                                <div >{post.caption}</div>
+                                                <p className='caption-username'>{comment.Owner.username}</p>
+                                                <div >{comment.comment}</div>
                                             </div>
                                             <div>{diffinhours > 23
-                                                ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
-                                                : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
+                                                ? <div className='post-time'>{diffindays > 1 ? `${commentdiffindays} DAYS AGO` : `1 DAY AGO`}</div>
+                                                : <div className='post-time'>{diffinhours > 1 ? `${commentdiffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
                                             }</div>
                                         </div>
                                     </div>)
