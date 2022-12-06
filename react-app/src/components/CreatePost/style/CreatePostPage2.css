@@ -1,0 +1,40 @@
+
+#CreatePostPage2-id-d1 {
+    display: flex;
+}
+
+#MediaPreview-id-d1 {
+    width: 725px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#MediaPreview-id-d1i1 {
+    width: 725px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#MediaPreview-id-d1b1 {
+    position: absolute;
+    left: 0px;
+    margin: 15px;
+}
+
+#MediaPreview-id-d1b2 {
+    position: absolute;
+    right: 0px;
+    margin: 15px;
+}
+
+#WriteCaption-id-d1 {
+    width: 325px;
+}
+
+.WriteCaption-d1d {
+    margin: 20px 20px;
+}

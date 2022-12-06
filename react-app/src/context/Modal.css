@@ -20,9 +20,9 @@
 
   #modal-content {
     position: absolute;
-    background-color:white;
-    width: 1200px;
-    height: 800px
+    /* background-color:white; */
+    /* width: 1200px;
+    height: 800px */
   }
 
 .close{
