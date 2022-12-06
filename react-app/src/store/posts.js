@@ -1,5 +1,6 @@
 //Type Key String Literals
 const LOAD_POSTS = "/api/getPosts"
+const LOAD_FEED_POSTS = "/api/getPosts"
 const CREATE_POST = "/api/createPost"
 const UPDATE_POST_BY_USER = "/api/updatePost"
 const DELETE_POST_BY_USER = "/api/deletePost"
