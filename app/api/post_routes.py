@@ -4,6 +4,7 @@ from sqlalchemy import func
 from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db, Follower, Post, User, Like, Comment
+import random
 
 post_routes = Blueprint('posts', __name__)
 
@@ -140,11 +141,13 @@ def get_posts_of_users_current_user_follows():
 
     currently_following = [user.to_dict() for user in following]
     all_id_of_following = [user['follows_user_id'] for user in currently_following]
+    all_id_of_following.append(user_id)
+    print(all_id_of_following)
 
     following_posts = []
     for user_id in all_id_of_following:
         posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(func.random()).all()
-        # .order_by(Post.created_at.desc()).all()
+        # .order_by(Post.created_at.desc())
         print("HERE", posts)
         for post in posts:
 
@@ -183,8 +186,7 @@ def get_posts_of_users_current_user_follows():
             }
 
             following_posts.append(returnPost)
-
-
+    # Shuffle again
     return {"Posts" : [post for post in following_posts]}
 
     
@@ -219,7 +221,7 @@ def get_posts_of_users_current_user_follows():
 @post_routes.route('/posts', methods=["GET"])
 def get_all_posts():
 
-    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
+    posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).order_by(func.random()).all()
     if not posts:
         return {
             "message": "Posts couldn't be found",

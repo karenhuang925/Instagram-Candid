@@ -47,7 +47,7 @@ function Post({ post }) {
             </section>
 
             <section className='post-interaction-section'>
-                <FeedPostButtons />
+                <FeedPostButtons post={post}/>
             </section>
 
 
