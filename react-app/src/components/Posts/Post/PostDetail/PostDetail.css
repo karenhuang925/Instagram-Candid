@@ -9,7 +9,6 @@
 }
 
 .image{
-    /* flex-grow: 1; */
     max-width:730px;
     min-width: 300px;
     height: 100%;
@@ -31,9 +30,61 @@
 
 .userinfo{
     display: flex;
+    align-items: center;
+    padding: 20px 30px 20px 16px;
+    border-bottom: 1px solid #eeeeee
 }
 
 .usernameAndLocation{
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+
 }
+
+.usernameAndLocation > p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.location{
+    font-size: small;
+    font-weight: 400;
+}
+
+.captionAndComments{
+    padding-left: 16px;
+    padding-top: 20px;
+    position: absolute;
+    overflow-y: scroll;
+    width: calc(100% - 32px);
+    height: 500px
+}
+
+.detail-profile-pic{
+    width: 40px;
+    height: 40px;
+    border-radius:50px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.caption-card{
+    display: flex;
+    align-items: flex-start;
+}
+
+.caption-username{
+    font-weight: 600;
+    padding-right: 5px;
+    margin:0
+}
+
+.usernameAndCaption{
+    display: flex;
+    margin-bottom: 5px;
+}
+
+/* .comments{
+
+} */

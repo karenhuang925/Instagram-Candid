@@ -72,6 +72,7 @@ const profilePic = {
   height: '25px',
   borderRadius:"20px",
   marginRight: "15px",
+  objectFit: "cover",
 }
 
 
