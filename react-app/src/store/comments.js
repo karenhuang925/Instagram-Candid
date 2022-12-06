@@ -43,9 +43,8 @@ const deleteAComment = (commentId) => {
 export const loadCommentsByPostId = (id) => async (dispatch) => {
     const response = await fetch(`/api/posts/${id}/comments`);
     const comments = await response.json();
-
     let allCommentsForPost = {};
-    comments.Comments.foreach((comment) => {
+    comments.Comments.forEach((comment) => {
         allCommentsForPost[comment.id] = comment
     });
 

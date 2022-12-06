@@ -62,7 +62,7 @@ function Post({ post }) {
                 <Link className='post-comment-count' onClick={()=>setShowModal(true)}>View all {post.comments} comments</Link>
                 {showModal && (
                     <Modal onClose={() => setShowModal(false)}>
-                        <PostDetail />
+                        <PostDetail postId={post.id}/>
                     </Modal>
                 )}
                 {diffinhours > 23
