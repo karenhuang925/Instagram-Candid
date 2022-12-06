@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 // import { useDispatch, useSelector } from 'react-redux';
 import HomePage from "./components/HomePage";
 import Index from "./components/alonso/Index";
+import CreatePost from "./components/CreatePost";
 // import LoginForm from './components/Starter/auth/LoginForm';
 // import SignUpForm from './components/Starter/auth/SignUpForm';
 import NavBar from "./components/Starter/NavBar";
@@ -47,10 +48,13 @@ function App() {
       {!authenticate && <Index />}
       {authenticate && (
         <>
-          <NavBar />
+          {/* <NavBar /> */}
           <Switch>
             <Route exact path={"/homepage"}>
               <HomePage />
+            </Route>
+            <Route exact path={"/postform"}>
+              <CreatePost />
             </Route>
 
             {/* <Route path="/profile/:id" exact={true}>
