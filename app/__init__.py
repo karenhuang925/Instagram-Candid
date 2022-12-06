@@ -12,6 +12,7 @@ from .api.follower_route import follower_routes
 from .api.comment_routes import comment_routes
 from .api.like_route import like_routes
 from .api.reply_routes import reply_routes
+from .api.media_routes import media_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -38,6 +39,7 @@ app.register_blueprint(follower_routes, url_prefix='/api')
 app.register_blueprint(comment_routes, url_prefix='/api')
 app.register_blueprint(like_routes, url_prefix='/api')
 app.register_blueprint(reply_routes, url_prefix='/api')
+app.register_blueprint(media_routes, url_prefix='/api')
 db.init_app(app)
 Migrate(app, db)
 

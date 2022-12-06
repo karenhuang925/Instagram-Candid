@@ -315,9 +315,9 @@ def create_new_post():
 
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    
-    caption = request.json['caption']
-    location = request.json['location']
+
+    caption = request.json['caption'] or ""
+    location = request.json['location'] or ""
 
     newPost = Post(
         user_id = user_id,
@@ -329,7 +329,8 @@ def create_new_post():
     db.session.commit()
 
     addedPost = newPost.to_dict()
-    post = Post.query.filter(addedPost.id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
+
+    post = Post.query.filter(addedPost['id'] == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
     postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()

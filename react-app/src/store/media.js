@@ -17,10 +17,14 @@ const deleteMediaAction = () => {
 }
 
 // Functions
-export const addMediaFunction = (id) => async (dispatch) => {
-    const response = await fetch(`/api/posts/${id}/media`);
+export const addMediaFunction = (data) => async (dispatch) => {
+        const response = await fetch(`/api/posts/${data.post_id}/media` , {
+        method: "POST",
+        headers: { "Content-Type": "application/JSON" },
+        body: JSON.stringify(data),
+    });
     const responseJSON = await response.json();
-    dispatch(addMediaAction(responseJSON));
+    // dispatch(logInAction(responseJSON));
     return responseJSON;
 }
 
