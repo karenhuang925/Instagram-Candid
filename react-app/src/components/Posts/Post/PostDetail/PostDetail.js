@@ -4,6 +4,8 @@ import './PostDetail.css'
 import ImageComponent from '../FeedPost/FeedPostComponents/ImageComponent/index'
 import { loadPostById } from '../../../../store/singlepost';
 import {loadCommentsByPostId} from '../../../../store/comments'
+import FeedPostButtons from '../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons';
+
 
 function PostDetail({postId}) {
     const dispatch = useDispatch()
@@ -19,14 +21,18 @@ function PostDetail({postId}) {
 
     if (!post) {return null;}
     if (!allComments) {return null;}
-    console.log(allComments)
     let today = Date.parse(new Date())
     let unixTimeZero = Date.parse(post.created_at)
 
     let diff = today - unixTimeZero
 
+    let diffinyears = Math.floor(diff / (365 * 3600 * 1000))
+    let diffinmonths = Math.floor(diff / (30 * 24 * 3600 * 1000))
     let diffindays = Math.floor((diff) / (24 * 3600 * 1000))
     let diffinhours = Math.floor(diff / (3600 * 1000))
+
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let createdAt = new Date(post.created_at).toDateString(undefined, options);
 
 
     return (
@@ -85,8 +91,30 @@ function PostDetail({postId}) {
                             }
                         </div>
                     </div>
-                    <div className='actionButton'></div>
-                    <div className='addComment'></div>
+                    <div className='actionButton'>
+                        <FeedPostButtons post={post}/>
+                    </div>
+                    <div className='post-detail-likes' Id='inpost' >{post.likes} likes</div>
+                    <div className='created-at'>{
+                                    diffinyears > 1
+                                    ? <div>{createdAt}</div>
+                                    : diffindays > 30
+                                    ? <div className='post-time'>{diffinmonths > 1 ? `${diffinhours} MONTHS AGO` : `1 MONTH AGO`}</div>
+                                    : diffinhours > 23
+                                    ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
+                                    : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
+                                }</div>
+
+                    <div className='addComment'>
+                        <form className='post-comment-form'>
+                            <input
+                                className='post-comment-input'
+                                type='text'
+                                placeholder='Add a comment...'
+                            />
+                            <button className='post-comment-button'>Post</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
