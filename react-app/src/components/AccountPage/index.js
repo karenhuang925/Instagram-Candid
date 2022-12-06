@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import {
   fetchFollower,
+  fetchFollowing,
   fetchMinusFollower,
   fetchPlusFollower,
 } from "../../store/followers";
@@ -19,6 +20,7 @@ const AccountPage = () => {
   useEffect(() => {
     dispatch(getUserFunction(id));
     dispatch(fetchFollower(id));
+    dispatch(fetchFollowing(id));
     dispatch(loadAllPostsByUserId(id));
   }, [dispatch]);
 
@@ -26,7 +28,10 @@ const AccountPage = () => {
   const posts = useSelector((state) => state?.posts?.post) || "";
   const sessionUser = useSelector((state) => state?.session);
   const followers =
-    useSelector((state) => state?.follows?.follower?.followers?.user_id) || "";
+    useSelector((state) => state?.follows?.follower?.followers) || "";
+  const following = useSelector(
+    (state) => state?.follows?.following?.following
+  );
   if (!sessionUser?.id) {
     return <Redirect to="/" />;
   } else if (sessionUser?.id === id) {
@@ -48,45 +53,57 @@ const AccountPage = () => {
 
   return (
     <>
-      <div id="profile-top">
-        <img
-          src={account?.preview_image}
-          alt="Account Profile Picture"
-          id="profile-pic"
-        />
-        <div id="profile-right">
-          <div id="profile-top-right">
-            <span id="profile-username">{account?.username}</span>
-            {!Object?.values(followers)?.includes(sessionUser?.id) && (
-              <button className="follow-btn" onClick={followAccount}>
-                Follow
-              </button>
-            )}
-            {Object?.values(followers)?.includes(sessionUser?.id) && (
-              <button className="follow-btn" onClick={unfollowAccount}>
-                Unfollow
-              </button>
-            )}
+      <div id="profile-div">
+        <div id="profile-top">
+          <img
+            src={account?.preview_image}
+            alt="Account Profile Picture"
+            id="profile-pic"
+          />
+          <div id="profile-right">
+            <div id="profile-top-right">
+              <span id="profile-username">{account?.username}</span>
+              {!Object?.values(followers)?.includes(sessionUser?.id) && (
+                <button className="follow-btn" onClick={followAccount}>
+                  Follow
+                </button>
+              )}
+              {Object?.values(followers)?.includes(sessionUser?.id) && (
+                <button className="follow-btn" onClick={unfollowAccount}>
+                  Unfollow
+                </button>
+              )}
+            </div>
+            <div id="profile-aggs">
+              <div id="post-agg">
+                <span id="number-1">{Object?.keys(posts)?.length}</span>
+                <span>posts</span>
+              </div>
+              <div id="follower-agg">
+                <span id="number-2">{Object?.keys(followers)?.length}</span>
+                <span>followers</span>
+              </div>
+              <div id="following-agg">
+                <span id="number-3">{Object?.keys(following)?.length}</span>
+                <span>following</span>
+              </div>
+              {/* add aggregates */}
+            </div>
+            <p id="profile-names">
+              {account?.first_name} {account?.last_name}
+            </p>
+            <p id="biograph">{account?.biography}</p>
           </div>
-          <span>posts</span>
-          <span>followers</span>
-          <span>following</span>
-          {/* add aggregates */}
-          <p>
-            {account?.first_name} {account?.last_name}
-          </p>
-          <p>{account?.biography}</p>
+        </div>
+        <hr id="long-hr" />
+        <span id="post-tab">POSTS</span>
+        <div id="post-previews">
+          {Object?.keys(posts)?.map((postId) => {
+            return <AccountProfilePost key={postId} post={posts[postId]} />;
+          })}
+          {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
         </div>
       </div>
-      <span>Posts</span>
-      <hr />
-      <hr />
-      <section>
-        {Object?.keys(posts)?.map((postId) => {
-          return <AccountProfilePost key={postId} post={posts[postId]} />;
-        })}
-        {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
-      </section>
       <p>About</p>
       {/* link to github repo */}
     </>

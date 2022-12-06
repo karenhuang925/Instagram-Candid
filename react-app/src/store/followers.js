@@ -51,36 +51,30 @@ export const minusFollower = (payload) => {
 //   }
 // }
 
-export const fetchFollower =
-  (user_id ) =>
-  async (dispatch) => {
-    const res = await fetch(`/api/users/${user_id}/followers`);
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(loadFollower(data));
-      return data;
-    }
-  };
-export const fetchFollowing =
-  ( user_id ) =>
-  async (dispatch) => {
-    const res = await fetch(`/api/users/${user_id}/following`);
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(loadFollower(data));
-      return data;
-    }
-  };
-export const fetchSuggestion =
-  ( user_id ) =>
-  async (dispatch) => {
-    const res = await fetch(`/api/users/${user_id}/following/suggestions`);
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(loadFollower(data));
-      return data;
-    }
-  };
+export const fetchFollower = (user_id) => async (dispatch) => {
+  const res = await fetch(`/api/users/${user_id}/followers`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadFollower(data));
+    return data;
+  }
+};
+export const fetchFollowing = (user_id) => async (dispatch) => {
+  const res = await fetch(`/api/users/${user_id}/following`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadFollowing(data));
+    return data;
+  }
+};
+export const fetchSuggestion = (user_id) => async (dispatch) => {
+  const res = await fetch(`/api/users/${user_id}/following/suggestions`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadFollower(data));
+    return data;
+  }
+};
 export const fetchPlusFollower = (follower) => async (dispatch) => {
   const { user_id, follows_user_id } = follower;
   const res = await fetch(`/api/users/${user_id}/followers`, {
@@ -127,8 +121,8 @@ const followerReducer = (state = {}, action) => {
       };
       return newState;
     case GET_FOLLOWING_SUGGESTIONS:
-      newState = {...state};
-      newState.suggestions = action.payload
+      newState = { ...state };
+      newState.suggestions = action.payload;
       return newState;
     case PLUS_FOLLOWER:
       newState = { ...state };
