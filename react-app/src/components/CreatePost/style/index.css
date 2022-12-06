@@ -1,0 +1,14 @@
+#CreatePost-id-d1 {
+    width: max-content;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+#CreatePost-id-d1d1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px
+}

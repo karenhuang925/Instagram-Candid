@@ -117,9 +117,9 @@ export const createPost = (post) => async (dispatch) => {
     body: JSON.stringify(post)
   })
   const newPost = await response.json();
+  // dispatch(createAPost(newPost));
 
-  dispatch(createAPost(newPost));
-  return response;
+  return newPost;
 }
 
 // Edit a Post

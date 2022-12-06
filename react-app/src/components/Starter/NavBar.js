@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Link, useHistory } from 'react-router-dom';
-
+import { Modal } from '../../context/Modal';
+import CreatePost from '../CreatePost';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutFunction } from '../../store/user';
 // import LogoutButton from './auth/LogoutButton';
@@ -78,6 +79,7 @@ const profilePic = {
 
 
 const NavBar = () => {
+  const [modal, setModal] = useState(false);
   const history = useHistory();
   let user = useSelector((state) => state.session)
 
@@ -127,10 +129,17 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li >
-            <NavLink to='/post/create' exact={true} activeClassName='active' style={itemStyle}>
-            <i style={iconStyle} className="fa-regular fa-square-plus fa-lg"/>
+            <div activeClassName='active' style={itemStyle} onClick={() => setModal(true)}>
+              <i style={iconStyle} className="fa-regular fa-square-plus fa-lg"/>
               <div>Create</div>
-            </NavLink>
+            </div>
+            {
+              modal && (
+                <Modal onClose={() => setModal(false)}>
+                  <CreatePost { ...{ setModal } }/>
+                </Modal>
+              )
+            }
           </li>
           <li >
             <NavLink to='/users' exact={true} activeClassName='active' style={itemStyle}>
