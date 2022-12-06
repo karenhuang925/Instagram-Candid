@@ -1,0 +1,42 @@
+.post-interaction-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 46px;
+}
+
+#post-interaction-button-container {
+    display: flex;
+    flex-direction: row;
+    margin: 4px, 0px, 0px;
+    padding: 0px, 12px, 6px;
+}
+
+#interaction-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    padding: 8px;
+}
+
+#interaction-button:hover{
+    color: lightgray;
+    cursor: pointer;
+}
+
+.LikeButtonUnlike {
+    border: none;
+    background: none;
+    font-size: inherit;
+}
+.LikeButtonLike {
+    border: none;
+    color: pink;
+    background: none;
+    font-size: inherit;
+}
+.LikeButtonLike:hover {
+    color: lightgray;
+    cursor: pointer;
+}

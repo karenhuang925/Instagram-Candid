@@ -44,7 +44,7 @@ export const fetchPlusLike = ({postId}) => async (dispatch) => {
     }
 };
 
-export const fetchMinusFollower = (like) => async (dispatch) => {
+export const fetchMinusLike = (like) => async (dispatch) => {
     const { id } = like;
     const res = await fetch(`/likes/${id}`, {
         method: "PUT",
