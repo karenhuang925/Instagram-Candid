@@ -103,7 +103,7 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
 export const createPost = (post) => async (dispatch) => {
   const response = await fetch('/api/posts', {
     method: "POST",
-    header: {
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(post)
@@ -118,7 +118,7 @@ export const createPost = (post) => async (dispatch) => {
 export const editPost = (edits, id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
     method: "PUT",
-    header: {
+    headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(edits)

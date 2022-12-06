@@ -1,13 +1,3 @@
-.feed-section {
-    display: flex;
-    justify-content: center;
-    max-width: 470px;
-}
-
-/* .post-feed-container {
-    max-width: 470px;
-} */
-
 .individual-post-container {
     border-radius: 10px;
     background-color: white;
@@ -55,19 +45,6 @@
 
 .post-more-options {
     padding-right: 8px;
-}
-
-.post-media {
-    border-top-width: 1px;
-    border-top-style: solid;
-    border-top-color: lightgray;
-
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: lightgray;
-
-    width: 100%;
-    object-fit: contain;
 }
 
 .post-interaction-section {
@@ -163,4 +140,5 @@
     border: none;
     color: #4892dd;
     background-color: transparent;
+    padding-right: 8px;
 }

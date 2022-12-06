@@ -24,7 +24,7 @@ export const minusLike = (payload) => {
     };
 };
 
-export const fetchLike = ({postId}) => async (dispatch) => {
+export const fetchLike = (postId) => async (dispatch) => {
     const res = await fetch(`/posts/${postId}/likes`);
     if (res.ok){
         const data = await res.json();

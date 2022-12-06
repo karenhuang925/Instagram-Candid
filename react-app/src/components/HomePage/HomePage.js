@@ -1,14 +1,20 @@
 import React from 'react';
 import Feed from "../Posts/Feed"
-// import { Switch, Route } from 'react-router-dom';
 import "./HomePage.css"
+import FollowerSuggestions from './FollowerSuggestions/FollowerSuggestions';
 
+let feedAndSuggestStyle={
+    display: "flex",
+    justifyContent: 'center',
+    marginLeft: '250px'
+}
 
 function HomePage() {
     return (
-        <>
+        <div style={feedAndSuggestStyle}>
             <Feed />
-        </>
+            <FollowerSuggestions />
+        </div>
     )
 }
 

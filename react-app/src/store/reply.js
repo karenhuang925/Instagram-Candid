@@ -57,7 +57,7 @@ export const loadRepliesByCommentId = (id) => async (dispatch) => {
 export const createReply = (commentId, reply) => async (dispatch) => {
     const addedReply = await fetch(`/api/comments/${commentId}/replies`, {
         method: "POST",
-        header: {
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(reply)
