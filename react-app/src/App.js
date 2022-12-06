@@ -48,7 +48,7 @@ function App() {
       {!authenticate && <Index />}
       {authenticate && (
         <>
-          {/* <NavBar /> */}
+          <NavBar />
           <Switch>
             <Route exact path={"/homepage"}>
               <HomePage />
