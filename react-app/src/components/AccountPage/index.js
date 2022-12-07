@@ -112,7 +112,7 @@ const AccountPage = () => {
           })}
           {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
         </div>
-        <p>About</p>
+        <p className="about-link">About</p>
         {/* link to github repo */}
       </div>
     </>

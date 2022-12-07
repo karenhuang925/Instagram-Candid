@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { loadAllCurrentUserPosts } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { fetchFollower, fetchFollowing } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
@@ -65,7 +64,7 @@ const ProfilePage = () => {
           })}
           {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
         </div>
-        <p>About</p>
+        <p className="about-link">About</p>
         {/* link to github repo */}
       </div>
     </>
