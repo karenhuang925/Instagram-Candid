@@ -5,18 +5,22 @@ import ImageComponent from '../FeedPost/FeedPostComponents/ImageComponent/index'
 import { loadPostById } from '../../../../store/singlepost';
 import {loadCommentsByPostId} from '../../../../store/comments'
 import FeedPostButtons from '../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons';
+import { loadFollowing } from '../../../../store/followers';
 
 
 function PostDetail({postId}) {
     const dispatch = useDispatch()
+    // let user = useSelector((state) => state.session)
 
     useEffect(() => {
         dispatch(loadPostById(postId))
         dispatch(loadCommentsByPostId(postId))
+        // dispatch(loadFollowing(user.id))
     }, [dispatch])
 
     let post = useSelector((state) => state.singlePost.post)
     let allComments = useSelector((state) => state.comments.comment)
+    let following = useSelector((state) => state.follows.following)
 
 
     if (!post) {return null;}
