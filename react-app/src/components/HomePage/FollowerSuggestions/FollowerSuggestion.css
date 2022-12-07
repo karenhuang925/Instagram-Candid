@@ -40,6 +40,8 @@
 
 .suggestion-profile-pic{
     width: 30px;
+    height: 30px;
+    object-fit: cover;
     border-radius:30px;
     margin-right: 15px;
 }
@@ -78,7 +80,7 @@
 
 }
 
-.more{
+.more-info{
     color: rgb(181, 180, 180);
     font-weight: 400;
     font-size: 10px;

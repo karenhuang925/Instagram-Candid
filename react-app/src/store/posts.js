@@ -110,10 +110,16 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
 
   let userPosts = []
   posts?.Posts?.forEach(post => {
+    // console.log("HERE!3", post)
+    // userPosts[post.id] = post
     userPosts.push(post)
+    // console.log("HERE!4", userPosts[post.id])
   });
 
   dispatch(loadFeedPosts(userPosts));
+  // console.log("HERE!5", userPosts)
+
+  dispatch(loadPosts(userPosts));
   return response;
 }
 
@@ -188,12 +194,14 @@ const postReducer = (state = initialState, action) => {
           action.payload
       }
       return newState;
+
     case LOAD_POSTS:
       newState = {
         ...state,
         post: action.payload
       }
       return newState;
+
     case CREATE_POST:
       newState = {
         ...state,
@@ -203,6 +211,7 @@ const postReducer = (state = initialState, action) => {
         ]
       };
       return newState
+
     case UPDATE_POST_BY_USER:
       newState = {
         ...state,
@@ -245,6 +254,7 @@ const postReducer = (state = initialState, action) => {
       }
       console.log(newState, "NOW NEW STATE!!!!!!")
       return newState
+
     case DELETE_POST_BY_USER:
       newState = {
         ...state,
@@ -254,6 +264,7 @@ const postReducer = (state = initialState, action) => {
       };
       delete newState.post[action.payload];
       return newState;
+
     default:
       return state;
   }
