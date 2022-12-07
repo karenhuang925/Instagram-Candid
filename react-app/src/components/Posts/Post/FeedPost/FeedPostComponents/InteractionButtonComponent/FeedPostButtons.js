@@ -3,14 +3,29 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLike, fetchPlusLike, fetchMinusLike} from "../../../../../../store/likes";
+import { loadAllPostsOfUsersFollowed, addTheLikeToPost } from "../../../../../../store/posts";
 import "./FeedPostButtons.css"
 
-function FeedPostButtons({ post }) {
+function FeedPostButtons({ post, user }) {
     const dispatch = useDispatch();
-    const [liked, setLiked] = useState(false)
+    const [liked, setLiked] = useState(post.likeStatus)
 
-    const like = dispatch(fetchLike(post.id))
-    useSelector((state) => state.posts.post)
+    let newLikes = useSelector((state) => state?.likes) || ""
+    // const userLike = Likes.filter((like) => {
+        //     like.user_id === user.id
+        // })
+        
+    const Likes = post.Likes
+    let userLike = Likes.find((like) => {
+        return like.user_id === user.id
+    })
+
+
+    // const like = dispatch(fetchLike(post.id))
+
+    // useEffect(() => {
+    //     dispatch(loadAllPostsOfUsersFollowed())
+    // }, [dispatch])
 
     // useEffect(() => {
     //     // if (post.likeStatus === false) {
@@ -24,13 +39,15 @@ function FeedPostButtons({ post }) {
     // }, [dispatch])
 
     const handleClick = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
 
         setLiked(!liked)
 
-        if (liked === false) return dispatch(fetchPlusLike(post.id));
+        if (liked === false) return dispatch(addTheLikeToPost(post.id));
+        // await const data = dispatch(fetchPlusLike(post.id))
+        // creat new reducer
 
-        if(liked === true) return dispatch(fetchMinusLike(like.id));
+        if(liked === true) return dispatch(fetchMinusLike(userLike).then(dispatch(loadAllPostsOfUsersFollowed())));
     }
 
     // const [likes, setLikes]= useState({})

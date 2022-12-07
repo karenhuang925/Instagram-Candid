@@ -4,6 +4,7 @@ const LOAD_FEED_POSTS = "/api/getPosts"
 const CREATE_POST = "/api/createPost"
 const UPDATE_POST_BY_USER = "/api/updatePost"
 const DELETE_POST_BY_USER = "/api/deletePost"
+const UPDATE_LIKES = "/api/updateLikesinPosts"
 
 
 
@@ -40,6 +41,13 @@ const deleteAPost = (postId) => {
   return {
     type: DELETE_POST_BY_USER,
     payload: postId
+  }
+}
+
+const updateTheLikes = (likeObject) => {
+  return {
+    type: UPDATE_LIKES,
+    payload: likeObject
   }
 }
 
@@ -149,6 +157,17 @@ export const deletePost = (id) => async (dispatch) => {
   return response;
 }
 
+export const addTheLikeToPost = (postId) => async (dispatch) => {
+  const res = await fetch(`/api/posts/${postId}/likes`, {
+      method: "POST",
+  });
+  if (res.ok) {
+      const data = await res.json();
+      dispatch(updateTheLikes(data));
+      return data;
+  }
+};
+
 
 
 //Initial State Object
@@ -165,7 +184,8 @@ const postReducer = (state = initialState, action) => {
     case LOAD_FEED_POSTS:
       newState = {
         ...state,
-        post: action.payload
+        post:
+          action.payload
       }
       return newState;
     case LOAD_POSTS:
@@ -191,6 +211,39 @@ const postReducer = (state = initialState, action) => {
           action.payload
         ]
       };
+      return newState
+    case UPDATE_LIKES:
+      const newLikeState = []
+      let likeArray;
+      let currentPost;
+
+      let index = 0
+      for (let i = 0; i < state.post.length; i++) {
+        likeArray = state.post[i]['Likes']
+        index = i
+        currentPost = state.post[i]
+        if (state.post[i].id === action.payload.post_id) {
+          console.log("I FOUND THE CORRECT POST!!!!!!!!!!")
+          newLikeState.push(action.payload)
+        }
+      }
+
+      
+      likeArray = newLikeState
+      console.log("LIKE ARRRAAY!!!!!!", likeArray)
+      
+      currentPost["Likes"] = likeArray
+      const newStatePostArray = state.post
+      newStatePostArray.splice(index, 1)
+      console.log(currentPost, "HERE IS CURRENT POST")
+      newState = {
+        ...state,
+        post: [
+          ...newStatePostArray,
+          currentPost
+        ]
+      }
+      console.log(newState, "NOW NEW STATE!!!!!!")
       return newState
     case DELETE_POST_BY_USER:
       newState = {

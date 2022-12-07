@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { Modal } from '../../../../context/Modal'
 import PostDetail from '../PostDetail/PostDetail'
 
-function Post({ post }) {
+function Post({ post, user }) {
 
     let today = Date.parse(new Date())
     let unixTimeZero = Date.parse(post.created_at)
@@ -47,7 +47,7 @@ function Post({ post }) {
             </section>
 
             <section className='post-interaction-section'>
-                <FeedPostButtons post={post}/>
+                <FeedPostButtons post={post} user={user}/>
             </section>
 
 

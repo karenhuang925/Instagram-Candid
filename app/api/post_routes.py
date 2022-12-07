@@ -169,16 +169,17 @@ def get_posts_of_users_current_user_follows():
         # .order_by(func.random())
         for post in posts:
 
+            allLikes = Like.query.filter(post.id == Like.post_id).all()
             userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
-            postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
-            postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+            postLikesCount = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+            postCommentsCount = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
 
-            if not postLikes:
-                postLikes = 0
+            if not postLikesCount:
+                postLikesCount = 0
 
-            if not postComments:
-                postComments = 0
+            if not postCommentsCount:
+                postCommentsCount = 0
 
             if not userLike:
                 postLikeStatus = False
@@ -191,11 +192,12 @@ def get_posts_of_users_current_user_follows():
                 "userId": post.user_id,
                 "caption": post.caption,
                 "location": post.location,
-                "likes": postLikes,
-                "comments": postComments,
+                "likes": postLikesCount,
+                "comments": postCommentsCount,
                 "likeStatus": postLikeStatus,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
+                "Likes" : [like.to_dict() for like in allLikes],
                 "Media" :[
                     {
                         "id": media.id,
@@ -212,7 +214,7 @@ def get_posts_of_users_current_user_follows():
             }
 
             following_posts.append(returnPost)
-    random.shuffle(following_posts)
+    # random.shuffle(following_posts)
     following_posts.sort(key = lambda obj: obj['created_at'])
 
     return {"Posts" : [post for post in following_posts]}
