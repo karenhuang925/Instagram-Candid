@@ -6,21 +6,48 @@ import { fetchLike, fetchPlusLike, fetchMinusLike} from "../../../../../../store
 import "./FeedPostButtons.css"
 
 function FeedPostButtons({ post }) {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const [liked, setLiked] = useState(false)
+
+    const like = dispatch(fetchLike(post.id))
+    useSelector((state) => state.posts.post)
+
+    // useEffect(() => {
+    //     // if (post.likeStatus === false) {
+    //     //     setLiked(false)
+    //     // }
+    //     // else {
+    //     //     setLiked(true)
+    //     // }
+    //     // setLiked(!liked)
+    //     dispatch(fetchLike(post.id))
+    // }, [dispatch])
+
+    const handleClick = (e) => {
+        // e.preventDefault();
+
+        setLiked(!liked)
+
+        if (liked === false) return dispatch(fetchPlusLike(post.id));
+
+        if(liked === true) return dispatch(fetchMinusLike(like.id));
+    }
+
     // const [likes, setLikes]= useState({})
 
     // useEffect(() => {
     //     dispatch(fetchLike(post.id))
     // }, [dispatch, post.id])
 
-    // setLikes(useSelector((state) => state.likes))
+    
+
 
 
     return (
         <>
             <div id='post-interaction-button-container'>
                 <div id='interaction-button'>
-                    <button className="LikeButtonLike"><i className="fa-regular fa-heart fa-1x"></i></button>
+                    <button className={liked ? "LikeButtonLike" : "LikeButtonUnlike"} onClick={handleClick}><i className="fa-regular fa-heart fa-1x"></i></button>
                 </div>
                 <div id='interaction-button'><i className="fa-regular fa-comment fa-1x"></i></div>
                 <div id='interaction-button'><i className="fa-regular fa-paper-plane fa-1x"></i></div>

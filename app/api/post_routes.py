@@ -21,6 +21,9 @@ post_routes = Blueprint('posts', __name__)
 @post_routes.route('/users/<int:id>/posts', methods=["GET"])
 def get_posts_by_user_id(id):
 
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+
     user = User.query.filter(id == User.id).one_or_none()
     if not user:
         return {
@@ -37,7 +40,8 @@ def get_posts_by_user_id(id):
 
     user_posts = []
     for post in posts:
-
+           
+            userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
             postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
             postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
@@ -45,6 +49,11 @@ def get_posts_by_user_id(id):
                 postLikes = 0
             if not postComments:
                 postComments = 0
+            if not userLike:
+                postLikeStatus = False
+            else:
+                aLike = userLike.to_dict()
+                postLikeStatus = aLike['like_status']
 
             returnPost = {
                 "id": post.id,
@@ -53,6 +62,7 @@ def get_posts_by_user_id(id):
                 "location": post.location,
                 "likes": postLikes,
                 "comments": postComments,
+                "likeStatus": postLikeStatus,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
                 "Media" :[
@@ -91,6 +101,7 @@ def get_posts_by_current_user():
     user_posts = []
     for post in posts:
            
+            userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
             postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
             postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
@@ -98,6 +109,11 @@ def get_posts_by_current_user():
                 postLikes = 0
             if not postComments:
                 postComments = 0
+            if not userLike:
+                postLikeStatus = False
+            else:
+                aLike = userLike.to_dict()
+                postLikeStatus = aLike['like_status']
 
             returnPost = {
                 "id": post.id,
@@ -106,6 +122,7 @@ def get_posts_by_current_user():
                 "location": post.location,
                 "likes": postLikes,
                 "comments": postComments,
+                "likeStatus": postLikeStatus,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
                 "Media" :[
@@ -232,6 +249,9 @@ def get_posts_of_users_current_user_follows():
 @post_routes.route('/posts', methods=["GET"])
 def get_all_posts():
 
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+
     posts = Post.query.options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).order_by(func.random()).all()
     if not posts:
         return {
@@ -241,6 +261,8 @@ def get_all_posts():
 
     all_posts = []
     for post in posts:
+           
+            userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
             postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
             postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
@@ -248,6 +270,11 @@ def get_all_posts():
                 postLikes = 0
             if not postComments:
                 postComments = 0
+            if not userLike:
+                postLikeStatus = False
+            else:
+                aLike = userLike.to_dict()
+                postLikeStatus = aLike['like_status']
 
             returnPost = {
                 "id": post.id,
@@ -256,6 +283,7 @@ def get_all_posts():
                 "location": post.location,
                 "likes": postLikes,
                 "comments": postComments,
+                "likeStatus": postLikeStatus,
                 "created_at": post.created_at,
                 "updated_at": post.updated_at,
                 "Media" :[
@@ -280,6 +308,9 @@ def get_all_posts():
 @post_routes.route('/posts/<int:id>', methods=["GET"])
 def get_post_by_id(id):
 
+    currentuser = current_user.to_dict()
+    user_id = currentuser['id']
+
     post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
     if not post:
         return {
@@ -287,6 +318,7 @@ def get_post_by_id(id):
             "statusCode": 404
             }, 404
 
+    userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
     postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
@@ -294,6 +326,11 @@ def get_post_by_id(id):
         postLikes = 0
     if not postComments:
         postComments = 0
+    if not userLike:
+        postLikeStatus = False
+    else:
+        aLike = userLike.to_dict()
+        postLikeStatus = aLike['like_status']
 
     return {
         "id": post.id,
@@ -302,6 +339,7 @@ def get_post_by_id(id):
         "location": post.location,
         "likes": postLikes,
         "comments": postComments,
+        "likeStatus": postLikeStatus,
         "created_at": post.created_at,
         "updated_at": post.updated_at,
         "Media" : [
@@ -343,6 +381,7 @@ def create_new_post():
 
     post = Post.query.filter(addedPost['id'] == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
+    userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
     postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
     
@@ -352,6 +391,12 @@ def create_new_post():
     if not postComments:
         postComments = 0
 
+    if not userLike:
+        postLikeStatus = False
+    else:
+        aLike = userLike.to_dict()
+        postLikeStatus = aLike['like_status']
+
     return {
         "id": post.id,
         "userId": post.user_id,
@@ -359,6 +404,7 @@ def create_new_post():
         "location": post.location,
         "likes": postLikes,
         "comments": postComments,
+        "likeStatus": postLikeStatus,
         "created_at": post.created_at,
         "updated_at": post.updated_at,
         "Media" : [
@@ -408,6 +454,7 @@ def edit_post(id):
 
     post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
+    userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
     postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
     
@@ -417,6 +464,12 @@ def edit_post(id):
     if not postComments:
         postComments = 0
 
+    if not userLike:
+        postLikeStatus = False
+    else:
+        aLike = userLike.to_dict()
+        postLikeStatus = aLike['like_status']
+
     return {
         "id": post.id,
         "userId": post.user_id,
@@ -424,6 +477,7 @@ def edit_post(id):
         "location": post.location,
         "likes": postLikes,
         "comments": postComments,
+        "likeStatus": postLikeStatus,
         "created_at": post.created_at,
         "updated_at": post.updated_at,
         "Media" : [

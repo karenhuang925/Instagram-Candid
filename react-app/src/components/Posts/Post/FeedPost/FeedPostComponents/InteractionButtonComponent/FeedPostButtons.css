@@ -40,3 +40,7 @@
     color: lightgray;
     cursor: pointer;
 }
+.LikeButtonUnlike:hover {
+    color: lightgray;
+    cursor: pointer;
+}

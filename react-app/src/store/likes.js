@@ -25,7 +25,7 @@ export const minusLike = (payload) => {
 };
 
 export const fetchLike = (postId) => async (dispatch) => {
-    const res = await fetch(`/posts/${postId}/likes`);
+    const res = await fetch(`/api/posts/${postId}/likes`);
     if (res.ok){
         const data = await res.json();
         dispatch(loadLikes(data));
@@ -34,7 +34,7 @@ export const fetchLike = (postId) => async (dispatch) => {
 };
 
 export const fetchPlusLike = ({postId}) => async (dispatch) => {
-    const res = await fetch(`/posts/${postId}/likes`, {
+    const res = await fetch(`/api/posts/${postId}/likes`, {
         method: "POST",
     });
     if (res.ok){
@@ -46,7 +46,7 @@ export const fetchPlusLike = ({postId}) => async (dispatch) => {
 
 export const fetchMinusLike = (like) => async (dispatch) => {
     const { id } = like;
-    const res = await fetch(`/likes/${id}`, {
+    const res = await fetch(`/api/likes/${id}`, {
         method: "PUT",
         body: JSON.stringify({
             like_status: false

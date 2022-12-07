@@ -96,20 +96,14 @@ export const loadAllPostsByUserId = (userId) => async (dispatch) => {
 // Get all Posts of Users Followed by Current User
 export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
   const response = await fetch(`/api/users/current/following/posts`);
-  // console.log("HERE!1", response)
+
   const posts = await response.json();
 
-  // console.log("HERE!2", posts)
 
   let userPosts = []
   posts?.Posts?.forEach(post => {
-    // console.log("HERE!3", post)
-    // userPosts[post.id] = post
     userPosts.push(post)
-    // console.log("HERE!4", userPosts[post.id])
   });
-
-  // console.log("HERE!5", userPosts)
 
   dispatch(loadFeedPosts(userPosts));
   return response;
@@ -125,7 +119,7 @@ export const createPost = (post) => async (dispatch) => {
     body: JSON.stringify(post)
   })
   const newPost = await response.json();
-  // dispatch(createAPost(newPost));
+  dispatch(createAPost(newPost));
 
   return newPost;
 }
@@ -192,10 +186,10 @@ const postReducer = (state = initialState, action) => {
     case UPDATE_POST_BY_USER:
       newState = {
         ...state,
-        post: {
+        post: [
           ...state.post,
-          [action.payload.id]: action.payload
-        }
+          action.payload
+        ]
       };
       return newState
     case DELETE_POST_BY_USER:
