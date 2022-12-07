@@ -95,13 +95,13 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
 
   let userPosts = []
   posts?.Posts?.forEach(post => {
-    console.log("HERE!3", post)
+    // console.log("HERE!3", post)
     // userPosts[post.id] = post
     userPosts.push(post)
-    console.log("HERE!4", userPosts[post.id])
+    // console.log("HERE!4", userPosts[post.id])
   });
 
-  console.log("HERE!5", userPosts)
+  // console.log("HERE!5", userPosts)
 
   dispatch(loadPosts(userPosts));
   return response;
@@ -142,7 +142,7 @@ export const deletePost = (id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
     method: "DELETE"
   });
-  
+
   dispatch(deleteAPost(id));
   return response;
 }

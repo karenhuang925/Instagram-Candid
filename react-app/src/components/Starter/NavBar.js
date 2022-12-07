@@ -92,7 +92,7 @@ const NavBar = () => {
   if(!user){
     return null
   }
-  else if (user?.preview_image.length < 10){
+  else if (user?.preview_image == undefined || user?.preview_image.length < 10 ){
     user.preview_image = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
   }
 
@@ -132,7 +132,7 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li >
-            <div activeClassName='active' style={itemStyle} onClick={() => setModal(true)}>
+            <div activeclassname='active' style={itemStyle} onClick={() => setModal(true)}>
               <i style={iconStyle} className="fa-regular fa-square-plus fa-lg"/>
               <div>Create</div>
             </div>

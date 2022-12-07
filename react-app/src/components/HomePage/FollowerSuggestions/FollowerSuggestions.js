@@ -1,11 +1,12 @@
 import React from 'react';
 // import { Switch, Route } from 'react-router-dom';
-import {useDispatch, useSelector, } from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { useEffect } from 'react';
-import { fetchSuggestion } from '../../../store/followers';
+import { fetchFollowing, fetchSuggestion} from '../../../store/followers';
 import "./FollowerSuggestion.css"
 import { Link,  useHistory } from 'react-router-dom';
 import { logOutFunction } from '../../../store/user';
+import FollowButton from './followButton';
 
 function FollowerSuggestion() {
     const history = useHistory()
@@ -13,14 +14,16 @@ function FollowerSuggestion() {
     let dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchSuggestion(user.id))
+        dispatch(fetchFollowing(user.id))
     }, [dispatch]);
 
-    let followerSuggest = useSelector((state) => state?.follows?.follower)
+    let followerSuggest = useSelector((state) => state?.follows)['Followers Suggestion']
 
-    const onLogout = async (e) => {
+    const onLogout = async () => {
         await dispatch(logOutFunction());
         history.push('/')
     };
+
     if (!followerSuggest) {
         return null;
     }
@@ -44,14 +47,9 @@ function FollowerSuggestion() {
                     <p className='title-suggest'>Suggestions For You</p>
                     <Link className='action-link seeall' >See All</Link>
                 </div>
-                    {followerSuggest['Followers Suggestion'].map((suggestion)=>{
+                    {followerSuggest.map((suggestion)=>{
                         if (suggestion?.preview_image.length < 10){
                             suggestion.preview_image = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
-                        // const fetchImage = async () => {try {
-                        //     const response = await fetch('https://picsum.photos/200')
-                        //     suggestion.preview_image = response.url
-                        //     }catch (e) {console.log("Failed to fetch image", e);
-                        // }}
                     }
                     return(
                         <div key={suggestion.id}>
@@ -61,7 +59,7 @@ function FollowerSuggestion() {
                                     <p className='title-username'>{suggestion.username}</p>
                                     <p className='sub-username'> Suggested for you</p>
                                 </div>
-                                <Link className='action-link'>Follow</Link>
+                                <FollowButton userId={user.id} followsUserId={suggestion.id} >Follow</FollowButton>
                             </div>
                         </div>
                     )
