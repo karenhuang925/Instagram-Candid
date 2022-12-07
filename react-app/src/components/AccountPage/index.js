@@ -30,15 +30,17 @@ const AccountPage = () => {
   const followers =
     useSelector((state) => state?.follows?.follower?.followers) || "";
 
+  // let newArr = [];
+
+  // followers?.forEach((follow) => {
+  //   newArr.push(follow.user_id);
+  // });
   const following =
     useSelector((state) => state?.follows?.following?.following) || "";
 
-  if (!sessionUser?.id) {
-    return <Redirect to="/" />;
-  } else if (sessionUser?.id === id) {
-    return <Redirect to="/users/current/posts" />;
+  if (sessionUser?.id === id) {
+    return <Redirect to="/my/profile" />;
   }
-  //url might be different on frontend for profile page, worried that will flash below return on load
 
   const followAccount = async (e) => {
     e.preventDefault();
@@ -64,12 +66,18 @@ const AccountPage = () => {
           <div id="profile-right">
             <div id="profile-top-right">
               <span id="profile-username">{account?.username}</span>
-              {!Object?.values(following)?.includes(sessionUser?.id) && (
+              {/* following.forEach(user => {
+                return ({
+                  user_id === user
+                })
+              }) && */}
+
+              {!followers?.includes(sessionUser?.id) && (
                 <button className="follow-btn" onClick={followAccount}>
                   Follow
                 </button>
               )}
-              {Object?.values(following)?.includes(sessionUser?.id) && (
+              {followers?.includes(sessionUser?.id) && (
                 <button className="follow-btn" onClick={unfollowAccount}>
                   Unfollow
                 </button>
@@ -104,9 +112,9 @@ const AccountPage = () => {
           })}
           {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
         </div>
+        <p>About</p>
+        {/* link to github repo */}
       </div>
-      <p>About</p>
-      {/* link to github repo */}
     </>
   );
 };

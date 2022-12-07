@@ -15,6 +15,7 @@ import AccountPage from "./components/AccountPage";
 // import UsersList from './components/Starter/UsersList';
 // import User from './components/Starter/User';
 // import { authenticate } from './store/session';
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,7 +57,9 @@ function App() {
             <Route exact path={"/postform"}>
               <CreatePost />
             </Route>
-
+            <Route path="/my/profile" exact={true}>
+              <ProfilePage />
+            </Route>
             <Route path="/profile/:id" exact={true}>
               <AccountPage />
             </Route>
