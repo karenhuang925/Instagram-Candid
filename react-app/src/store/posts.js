@@ -90,7 +90,7 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
 
   let userPosts = [];
   posts?.Posts?.forEach((post) => {
-    console.log("HERE!3", post);
+    // console.log("HERE!3", post);
     // userPosts[post.id] = post
     userPosts.push(post);
     console.log("HERE!4", userPosts[post.id]);

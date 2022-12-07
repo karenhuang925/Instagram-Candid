@@ -63,7 +63,7 @@ export const fetchFollowing = (user_id) => async (dispatch) => {
   const res = await fetch(`/api/users/${user_id}/following`);
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadFollowing(data));
+    dispatch(loadFollower(data));
     return data;
   }
 };
@@ -76,11 +76,14 @@ export const fetchSuggestion = (user_id) => async (dispatch) => {
   }
 };
 export const fetchPlusFollower = (follower) => async (dispatch) => {
-  const { user_id, follows_user_id } = follower;
-  const res = await fetch(`/api/users/${user_id}/followers`, {
+  const { userId, followsUserId } = follower;
+  const res = await fetch(`/api/users/${userId}/followers`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      follows_user_id,
+      follows_user_id: followsUserId,
     }),
   });
   if (res.ok) {
@@ -88,6 +91,7 @@ export const fetchPlusFollower = (follower) => async (dispatch) => {
     dispatch(plusFollower(data));
     return data;
   }
+  console.error();
 };
 
 export const fetchMinusFollower = (follower) => async (dispatch) => {
@@ -111,13 +115,13 @@ const followerReducer = (state = {}, action) => {
     case GET_FOLLOWER:
       newState = {
         ...state,
-        follower: action.payload,
+        ...action.payload,
       };
       return newState;
     case GET_FOLLOWING:
       newState = {
         ...state,
-        following: action.payload,
+        ...action.payload,
       };
       return newState;
     case GET_FOLLOWING_SUGGESTIONS:
@@ -125,8 +129,13 @@ const followerReducer = (state = {}, action) => {
       newState.suggestions = action.payload;
       return newState;
     case PLUS_FOLLOWER:
-      newState = { ...state };
-      newState.following[action.payload.id] = action.payload;
+      // newState = { ...state };
+      // newState.following[action.payload.id] = action.payload;
+      // return newState;
+      newState = {
+        ...state,
+        following: [...state.following, action.payload],
+      };
       return newState;
     case MINUS_FOLLOWER:
       newState = { ...state };
