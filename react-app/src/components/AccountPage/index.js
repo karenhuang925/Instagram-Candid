@@ -29,9 +29,10 @@ const AccountPage = () => {
   const sessionUser = useSelector((state) => state?.session);
   const followers =
     useSelector((state) => state?.follows?.follower?.followers) || "";
-  const following = useSelector(
-    (state) => state?.follows?.following?.following
-  );
+
+  const following =
+    useSelector((state) => state?.follows?.following?.following) || "";
+
   if (!sessionUser?.id) {
     return <Redirect to="/" />;
   } else if (sessionUser?.id === id) {
@@ -63,12 +64,12 @@ const AccountPage = () => {
           <div id="profile-right">
             <div id="profile-top-right">
               <span id="profile-username">{account?.username}</span>
-              {!Object?.values(followers)?.includes(sessionUser?.id) && (
+              {!Object?.values(following)?.includes(sessionUser?.id) && (
                 <button className="follow-btn" onClick={followAccount}>
                   Follow
                 </button>
               )}
-              {Object?.values(followers)?.includes(sessionUser?.id) && (
+              {Object?.values(following)?.includes(sessionUser?.id) && (
                 <button className="follow-btn" onClick={unfollowAccount}>
                   Unfollow
                 </button>
