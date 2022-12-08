@@ -12,13 +12,25 @@ function ViewLikes({ post }) {
         dispatch(fetchLike(post.id))
     }, [dispatch])
 
-    const allPostLikes = useSelector((state) => state?.likes?.like);
+    const allPostLikes = useSelector((state) => state?.likes?.likes);
 
     return (
         <div className="likes-modal-container">
             <div className="likes-modal-title">
-                Likes
+                <div>
+                    Likes
+                </div>
+                <div>X</div>
             </div>
+            {/* {allPostLikes.map((like) => {
+                return (
+                    <div>
+                        <div>profile picture</div>
+                        <div>profile name</div>
+                        <div>user name</div>
+                    </div>
+                )
+            })} */}
         </div>
     )
 }

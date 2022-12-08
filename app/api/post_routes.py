@@ -45,7 +45,7 @@ def get_posts_of_users_current_user_follows():
 
             allLikes = Like.query.filter(post.id == Like.post_id).all()
             userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
-            postLikesCount = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+            postLikesCount = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
             postCommentsCount = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
 
