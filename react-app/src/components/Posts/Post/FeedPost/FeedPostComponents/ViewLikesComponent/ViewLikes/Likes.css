@@ -1,7 +1,8 @@
 .likes-modal-container {
     display:flex;
     background-color:white;
-    width: 1200px;
-    height: 800px
+    width: 450px;
+    height: 430px;
+    border-radius: 2%;
 }
 
