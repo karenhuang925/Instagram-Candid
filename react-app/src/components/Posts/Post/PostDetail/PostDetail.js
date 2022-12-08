@@ -4,8 +4,10 @@ import './PostDetail.css'
 import ImageComponent from '../FeedPost/FeedPostComponents/ImageComponent/index'
 import { loadPostById } from '../../../../store/singlepost';
 import {loadCommentsByPostId} from '../../../../store/comments'
-import FeedPostButtons from '../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons';
-import { loadFollowing } from '../../../../store/followers';
+// import FeedPostButtons from '../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons';
+import PostButtons from "./PostButtons"
+// import { loadFollowing } from '../../../../store/followers';
+import {fetchLike} from '../../../../store/likes'
 
 
 function PostDetail({postId}) {
@@ -20,7 +22,7 @@ function PostDetail({postId}) {
 
     let post = useSelector((state) => state.singlePost.post)
     let allComments = useSelector((state) => state.comments.comment)
-    let following = useSelector((state) => state.follows.following)
+    // let following = useSelector((state) => state.follows.following)
 
 
     if (!post) {return null;}
@@ -96,7 +98,7 @@ function PostDetail({postId}) {
                         </div>
                     </div>
                     <div className='actionButton'>
-                        <FeedPostButtons post={post}/>
+                        <FeedPostButton postId={post.id} />
                     </div>
                     <div className='post-detail-likes' Id='inpost' >{post.likes} likes</div>
                     <div className='created-at'>{

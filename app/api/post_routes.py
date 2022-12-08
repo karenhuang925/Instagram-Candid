@@ -329,7 +329,7 @@ def get_post_by_id(id):
 
     allLikes = Like.query.filter(post.id == Like.post_id).all() 
     userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
-    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
     if not postLikes:

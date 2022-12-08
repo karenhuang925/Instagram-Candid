@@ -8,6 +8,7 @@ function FeedPostButtons({ post, user }) {
     const dispatch = useDispatch();
     const [liked, setLiked] = useState(post.likeStatus)
 
+
     const handleClick = (e) => {
         e.preventDefault();
         setLiked(!liked)
