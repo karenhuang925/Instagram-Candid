@@ -27,16 +27,14 @@ const AccountPage = () => {
   const account = useSelector((state) => state?.user);
   const posts = useSelector((state) => state?.posts?.post) || "";
   const sessionUser = useSelector((state) => state?.session);
-  const followers =
-    useSelector((state) => state?.follows?.follower?.followers) || "";
+  const followers = useSelector((state) => state?.follows?.followers) || "";
 
   // let newArr = [];
 
   // followers?.forEach((follow) => {
   //   newArr.push(follow.user_id);
   // });
-  const following =
-    useSelector((state) => state?.follows?.following?.following) || "";
+  const following = useSelector((state) => state?.follows?.following) || "";
 
   if (sessionUser?.id === id) {
     return <Redirect to="/my/profile" />;

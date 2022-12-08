@@ -11,10 +11,8 @@ const ProfilePage = () => {
 
   const posts = useSelector((state) => state?.posts?.post) || "";
   const sessionUser = useSelector((state) => state?.session);
-  const followers =
-    useSelector((state) => state?.follows?.follower?.followers) || "";
-  const following =
-    useSelector((state) => state?.follows?.following?.following) || "";
+  const followers = useSelector((state) => state?.follows?.followers) || "";
+  const following = useSelector((state) => state?.follows?.following) || "";
 
   useEffect(() => {
     dispatch(getUserFunction(sessionUser?.id));
