@@ -14,6 +14,7 @@ function FollowerSuggestion() {
     let dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchSuggestion(user.id))
+        dispatch(fetchFollowing(user.id))
     }, [dispatch]);
 
     let followerSuggest = useSelector((state) => state?.follows)['Followers Suggestion']

@@ -12,7 +12,9 @@ function Feed() {
         dispatch(loadAllPostsOfUsersFollowed())
     }, [dispatch])
 
+    // let feed = useSelector((state) => Object.values(state?.posts)) || ""
     let feed = useSelector((state) => state?.posts?.post) || ""
+    let user = useSelector((state) => state?.session) || ""
 
     if (!feed) {
         return null;
@@ -23,7 +25,7 @@ function Feed() {
             <section className='post-feed-container'>
                 {feed.map((post) => {
                     return (
-                        <Post key={post.id} post={post} />
+                        <Post key={post.id} post={post} user={user}/>
                     )
                 })}
             </section>

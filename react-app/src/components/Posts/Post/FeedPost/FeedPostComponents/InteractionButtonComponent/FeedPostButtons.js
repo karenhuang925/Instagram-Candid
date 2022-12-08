@@ -1,26 +1,36 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLike, fetchPlusLike, fetchMinusLike} from "../../../../../../store/likes";
+import { addTheLikeToPost, minusTheLikeToPost } from "../../../../../../store/posts";
 import "./FeedPostButtons.css"
 
-function FeedPostButtons({ post }) {
-    // const dispatch = useDispatch();
-    // const [likes, setLikes]= useState({})
+function FeedPostButtons({ post, user }) {
+    const dispatch = useDispatch();
+    const [liked, setLiked] = useState(post.likeStatus)
 
-    // useEffect(() => {
-    //     dispatch(fetchLike(post.id))
-    // }, [dispatch, post.id])
+    const handleClick = (e) => {
+        e.preventDefault();
+        setLiked(!liked)
 
-    // setLikes(useSelector((state) => state.likes))
+        if (liked === false) {
+            return dispatch(addTheLikeToPost(post.id));
+        }
+        
+        if (liked === true) {
+            const Likes = post.Likes
+            let userLike = Likes.find((like) => {
+                return like.user_id === user.id
+            })
 
+            return dispatch(minusTheLikeToPost(userLike));
+        }
+    }
 
     return (
         <>
             <div id='post-interaction-button-container'>
                 <div id='interaction-button'>
-                    <button className="LikeButtonLike"><i className="fa-regular fa-heart fa-1x"></i></button>
+                    <button className={liked ? "LikeButtonLike" : "LikeButtonUnlike"} onClick={handleClick}><i className="fa-regular fa-heart fa-1x"></i></button>
                 </div>
                 <div id='interaction-button'><i className="fa-regular fa-comment fa-1x"></i></div>
                 <div id='interaction-button'><i className="fa-regular fa-paper-plane fa-1x"></i></div>
