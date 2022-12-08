@@ -12,6 +12,7 @@ function Feed() {
         dispatch(loadAllPostsOfUsersFollowed())
     }, [dispatch])
 
+    // let feed = useSelector((state) => Object.values(state?.posts)) || ""
     let feed = useSelector((state) => state?.posts?.post) || ""
     let user = useSelector((state) => state?.session) || ""
 

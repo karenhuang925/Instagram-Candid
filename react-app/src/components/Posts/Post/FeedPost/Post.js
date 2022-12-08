@@ -42,9 +42,11 @@ function Post({ post, user }) {
                 </div>
             </section>
 
+
             <section id='post-image-section'>
                 <ImageComponent images={post.Media} />
             </section>
+
 
             <section className='post-interaction-section'>
                 <FeedPostButtons post={post} user={user}/>
@@ -52,7 +54,7 @@ function Post({ post, user }) {
 
 
             <section className='post-body-section'>
-                <div className='post-detail-likes'>{post.likes} likes</div>
+                <div className='post-detail-likes'>{post.likes} {post.likes == 1 ? 'like' : 'likes'}</div>
 
                 <div className='post-detail-caption-body'>
                     <div id='post-detail-username'>{post.Owner.username}</div>

@@ -13,7 +13,7 @@ def get_like_by_post_id(postId):
     return {'likes': [like.to_dict() for like in likes]}
 
 
-# @login_required
+@login_required
 @like_routes.route('/posts/<int:postId>/likes', methods=['POST'])
 def like_a_post(postId):
     if not Post.query.filter(Post.id == postId).one_or_none():

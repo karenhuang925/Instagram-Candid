@@ -1,64 +1,30 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLike, fetchPlusLike, fetchMinusLike} from "../../../../../../store/likes";
-import { loadAllPostsOfUsersFollowed, addTheLikeToPost } from "../../../../../../store/posts";
+import { addTheLikeToPost, minusTheLikeToPost } from "../../../../../../store/posts";
 import "./FeedPostButtons.css"
 
 function FeedPostButtons({ post, user }) {
     const dispatch = useDispatch();
     const [liked, setLiked] = useState(post.likeStatus)
 
-    let newLikes = useSelector((state) => state?.likes) || ""
-    // const userLike = Likes.filter((like) => {
-        //     like.user_id === user.id
-        // })
-        
-    const Likes = post.Likes
-    let userLike = Likes.find((like) => {
-        return like.user_id === user.id
-    })
-
-
-    // const like = dispatch(fetchLike(post.id))
-
-    // useEffect(() => {
-    //     dispatch(loadAllPostsOfUsersFollowed())
-    // }, [dispatch])
-
-    // useEffect(() => {
-    //     // if (post.likeStatus === false) {
-    //     //     setLiked(false)
-    //     // }
-    //     // else {
-    //     //     setLiked(true)
-    //     // }
-    //     // setLiked(!liked)
-    //     dispatch(fetchLike(post.id))
-    // }, [dispatch])
-
     const handleClick = (e) => {
         e.preventDefault();
-
         setLiked(!liked)
 
-        if (liked === false) return dispatch(addTheLikeToPost(post.id));
-        // await const data = dispatch(fetchPlusLike(post.id))
-        // creat new reducer
+        if (liked === false) {
+            return dispatch(addTheLikeToPost(post.id));
+        }
+        
+        if (liked === true) {
+            const Likes = post.Likes
+            let userLike = Likes.find((like) => {
+                return like.user_id === user.id
+            })
 
-        if(liked === true) return dispatch(fetchMinusLike(userLike).then(dispatch(loadAllPostsOfUsersFollowed())));
+            return dispatch(minusTheLikeToPost(userLike));
+        }
     }
-
-    // const [likes, setLikes]= useState({})
-
-    // useEffect(() => {
-    //     dispatch(fetchLike(post.id))
-    // }, [dispatch, post.id])
-
-    
-
-
 
     return (
         <>
