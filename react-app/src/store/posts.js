@@ -1,6 +1,6 @@
 //Type Key String Literals
 const LOAD_POSTS = "/api/getPosts";
-const LOAD_FEED_POSTS = "/api/getFeedPosts";
+const LOAD_FEED_POSTS = "/api/getFeedFeedPosts";
 const CREATE_POST = "/api/createPost";
 const UPDATE_POST_BY_USER = "/api/updatePost";
 const DELETE_POST_BY_USER = "/api/deletePost";
@@ -66,9 +66,9 @@ export const loadAllPosts = () => async (dispatch) => {
   if (response.ok) {
     const posts = await response.json();
 
-    let allPosts = {};
+    let allPosts = [];
     posts.Posts.forEach((post) => {
-      allPosts[post.id] = post;
+      allPosts.push(post);
     });
 
     dispatch(loadPosts(allPosts));
@@ -81,9 +81,9 @@ export const loadAllCurrentUserPosts = () => async (dispatch) => {
   const response = await fetch("/api/users/current/posts");
   const posts = await response.json();
 
-  let currentUserPosts = {};
+  let currentUserPosts = [];
   posts.Posts.forEach((post) => {
-    currentUserPosts[post.id] = post;
+    currentUserPosts.push(post);
   });
 
   dispatch(loadPosts(currentUserPosts));
@@ -206,7 +206,7 @@ const postReducer = (state = initialState, action) => {
     case LOAD_POSTS:
       newState = {
         ...state,
-        post: action.payload,
+        post: [...action.payload],
       };
       return newState;
 
