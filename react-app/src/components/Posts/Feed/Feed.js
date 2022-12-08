@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { loadAllPostsOfUsersFollowed } from '../../../store/posts'
@@ -8,13 +8,17 @@ import "./Feed.css"
 function Feed() {
     const dispatch = useDispatch()
 
+
+    let feed = useSelector((state) => state?.posts?.post) || ""
+    let user = useSelector((state) => state?.session) || ""
+
     useEffect(() => {
         dispatch(loadAllPostsOfUsersFollowed())
     }, [dispatch])
 
+
+
     // let feed = useSelector((state) => Object.values(state?.posts)) || ""
-    let feed = useSelector((state) => state?.posts?.post) || ""
-    let user = useSelector((state) => state?.session) || ""
 
     if (!feed) {
         return null;
