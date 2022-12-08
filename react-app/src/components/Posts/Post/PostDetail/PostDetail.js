@@ -7,22 +7,25 @@ import {loadCommentsByPostId} from '../../../../store/comments'
 import FeedPostButtons from '../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons';
 import { loadFollowing } from '../../../../store/followers';
 import ViewLikesModal from '../FeedPost/FeedPostComponents/ViewLikesComponent/ViewLikesModal'
+import {fetchLike} from '../../../../store/likes'
+import  ViewReply  from'./ViewReply'
 
 
-
-function PostDetail({postId}) {
+function PostDetail({post, wasLiked, setWasLiked}) {
     const dispatch = useDispatch()
     let user = useSelector((state) => state.session)
 
     useEffect(() => {
-        dispatch(loadPostById(postId))
-        dispatch(loadCommentsByPostId(postId))
-        // dispatch(loadFollowing(user.id))
+        // dispatch(loadPostById(post.id))
+        dispatch(loadCommentsByPostId(post.id))
+        dispatch(fetchLike(post.id))
+        dispatch(loadFollowing(user.id))
     }, [dispatch])
 
-    let post = useSelector((state) => state.singlePost.post)
+    // let post = useSelector((state) => state.singlePost.post)
     let allComments = useSelector((state) => state.comments.comment)
     let following = useSelector((state) => state.follows.following)
+    let likes = useSelector((state) => state.likes.likes)
 
 
     if (!post) {return null;}
@@ -87,10 +90,15 @@ function PostDetail({postId}) {
                                                 <p className='caption-username'>{comment.Owner.username}</p>
                                                 <div >{comment.comment}</div>
                                             </div>
-                                            <div>{diffinhours > 23
-                                                ? <div className='post-time'>{diffindays > 1 ? `${commentdiffindays} DAYS AGO` : `1 DAY AGO`}</div>
-                                                : <div className='post-time'>{diffinhours > 1 ? `${commentdiffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
-                                            }</div>
+                                            <div style={{'display': 'flex', 'alignItems': 'center'}}>
+                                                <div>{diffinhours > 23
+                                                    ? <div className='post-time'>{diffindays > 1 ? `${commentdiffindays}d` : `1d`}</div>
+                                                    : <div className='post-time' >{diffinhours > 1 ? `${commentdiffinhours}h` : `1h`}</div>
+                                                }</div>
+                                                <div className='post-time' id='bold'>Reply</div>
+                                            </div>
+                                            {comment.numOfReplies > 0 &&
+                                                <ViewReply comment={comment}></ViewReply>}
                                         </div>
                                     </div>)
                                 })
@@ -98,7 +106,7 @@ function PostDetail({postId}) {
                         </div>
                     </div>
                     <div className='actionButton'>
-                        <FeedPostButtons post={post} user={user}/>
+                        <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} />
                     </div>
                     <ViewLikesModal post={post}/>
                     <div className='created-at'>{

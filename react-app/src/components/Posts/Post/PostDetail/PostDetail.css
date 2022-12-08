@@ -115,3 +115,8 @@
     padding-left: 6px;
     padding-right: 6px;
 }
+
+#bold{
+    font-weight: 800;
+    margin-left: 10px;
+}

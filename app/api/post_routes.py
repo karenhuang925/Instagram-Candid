@@ -93,7 +93,7 @@ def get_posts_of_users_current_user_follows():
 
     return {"Posts" : [post for post in following_posts]}
 
-    
+
     # return {
     #     "Posts" : [
     #         {
@@ -134,13 +134,13 @@ def get_posts_by_user_id(id):
             "message": "User couldn't be found",
             "statusCode": 404
             }, 404
-    
+
     posts = Post.query.filter(id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
     if not posts:
         return {
             "message": "Posts couldn't be found",
             "statusCode": 404
-            }, 404 
+            }, 404
 
     user_posts = []
     for post in posts:
@@ -196,7 +196,7 @@ def get_posts_by_current_user():
 
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    
+
     posts = Post.query.filter(user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id', 'user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
     if not posts:
         return {
@@ -206,7 +206,7 @@ def get_posts_by_current_user():
 
     user_posts = []
     for post in posts:
-           
+
             allLikes = Like.query.filter(post.id == Like.post_id).all()
             userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
             postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
@@ -327,9 +327,9 @@ def get_post_by_id(id):
             "statusCode": 404
             }, 404
 
-    allLikes = Like.query.filter(post.id == Like.post_id).all() 
+    allLikes = Like.query.filter(post.id == Like.post_id).all()
     userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
-    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
     if not postLikes:
@@ -366,7 +366,7 @@ def get_post_by_id(id):
             "username": post.user.username,
             "previewImage": post.user.preview_image
         }
-    } 
+    }
 
 # Create a Post
 @post_routes.route('/posts', methods=["POST"])
@@ -392,11 +392,11 @@ def create_new_post():
 
     post = Post.query.filter(addedPost['id'] == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
-    allLikes = Like.query.filter(post.id == Like.post_id).all() 
+    allLikes = Like.query.filter(post.id == Like.post_id).all()
     userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
     postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
-    
+
     if not postLikes:
         postLikes = 0
 
@@ -443,7 +443,7 @@ def edit_post(id):
 
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    
+
     caption = request.json['caption']
     location = request.json['location']
 
@@ -467,11 +467,11 @@ def edit_post(id):
 
     post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
-    allLikes = Like.query.filter(post.id == Like.post_id).all() 
+    allLikes = Like.query.filter(post.id == Like.post_id).all()
     userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
     postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
-    
+
     if not postLikes:
         postLikes = 0
 
@@ -518,7 +518,7 @@ def delete_post(id):
 
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    
+
     post = Post.query.filter(id == Post.id).one_or_none()
     if not post:
         return {
