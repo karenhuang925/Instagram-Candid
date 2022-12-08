@@ -6,11 +6,13 @@ import { loadPostById } from '../../../../store/singlepost';
 import {loadCommentsByPostId} from '../../../../store/comments'
 import FeedPostButtons from '../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons';
 import { loadFollowing } from '../../../../store/followers';
+import ViewLikesModal from '../FeedPost/FeedPostComponents/ViewLikesComponent/ViewLikesModal'
+
 
 
 function PostDetail({postId}) {
     const dispatch = useDispatch()
-    // let user = useSelector((state) => state.session)
+    let user = useSelector((state) => state.session)
 
     useEffect(() => {
         dispatch(loadPostById(postId))
@@ -96,9 +98,9 @@ function PostDetail({postId}) {
                         </div>
                     </div>
                     <div className='actionButton'>
-                        <FeedPostButtons post={post}/>
+                        <FeedPostButtons post={post} user={user}/>
                     </div>
-                    <div className='post-detail-likes' Id='inpost' >{post.likes} likes</div>
+                    <ViewLikesModal post={post}/>
                     <div className='created-at'>{
                                     diffinyears > 1
                                     ? <div>{createdAt}</div>
