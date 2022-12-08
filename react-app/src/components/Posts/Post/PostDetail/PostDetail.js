@@ -108,7 +108,10 @@ function PostDetail({post, wasLiked, setWasLiked}) {
                     <div className='actionButton'>
                         <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} />
                     </div>
-                    <ViewLikesModal post={post}/>
+                    <div style={{'paddingLeft': '16px'}}>
+
+                        <ViewLikesModal post={post} id='inpost'/>
+                    </div>
                     <div className='created-at'>{
                                     diffinyears > 1
                                     ? <div>{createdAt}</div>
