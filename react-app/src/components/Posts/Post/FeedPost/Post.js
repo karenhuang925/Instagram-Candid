@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import ImageComponent from "./FeedPostComponents/ImageComponent"
-import FeedPostButtons from './FeedPostComponents/InteractionButtonComponent/FeedPostButtons'
-import "./Post.css"
 import { Link } from 'react-router-dom'
 import { Modal } from '../../../../context/Modal'
+
+import ImageComponent from "./FeedPostComponents/ImageComponent"
+import FeedPostButtons from './FeedPostComponents/InteractionButtonComponent/FeedPostButtons'
+import ViewLikesModal from './FeedPostComponents/ViewLikesComponent'
 import PostDetail from '../PostDetail/PostDetail'
+
+import "./Post.css"
 
 function Post({ post, user }) {
 
@@ -47,7 +50,7 @@ function Post({ post, user }) {
 
 
             <section className='post-body-section'>
-                <div className='post-detail-likes'>{post.likes} {post.likes == 1 ? 'like' : 'likes'}</div>
+                <ViewLikesModal post={post}/>
 
                 <div className='post-detail-caption-body'>
                     <div id='post-detail-username'>{post.Owner.username}</div>
