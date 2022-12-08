@@ -1,6 +1,6 @@
 //Type Key String Literals
 const LOAD_POSTS = "/api/getPosts";
-const LOAD_FEED_POSTS = "/api/getPosts";
+const LOAD_FEED_POSTS = "/api/getFeedPosts";
 const CREATE_POST = "/api/createPost";
 const UPDATE_POST_BY_USER = "/api/updatePost";
 const DELETE_POST_BY_USER = "/api/deletePost";
@@ -95,9 +95,9 @@ export const loadAllPostsByUserId = (userId) => async (dispatch) => {
   const response = await fetch(`/api/users/${userId}/posts`);
   const posts = await response.json();
 
-  let userPosts = {};
+  let userPosts = [];
   posts.Posts.forEach((post) => {
-    userPosts[post.id] = post;
+    userPosts.push(post);
   });
 
   dispatch(loadPosts(userPosts));

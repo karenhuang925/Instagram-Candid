@@ -94,7 +94,6 @@ const AccountPage = () => {
                 <span id="number-3">{Object?.keys(following)?.length}</span>
                 <span>following</span>
               </div>
-              {/* add aggregates */}
             </div>
             <p id="profile-names">
               {account?.first_name} {account?.last_name}
