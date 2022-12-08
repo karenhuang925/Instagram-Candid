@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
+from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db,  User, Like, Post
 
 
@@ -9,8 +10,28 @@ def get_like_by_post_id(postId):
     if not Post.query.filter(Post.id == postId).one_or_none():
         return {"errors": ["Post couldn't be found"]}, 404
 
-    likes = Like.query.filter(Like.post_id == postId).filter(Like.like_status == True).all()
-    return {'likes': [like.to_dict() for like in likes]}
+    likes = Like.query.filter(Like.post_id == postId).filter(Like.like_status == True).options(joinedload(Like.user).options(load_only('id','first_name', 'last_name', 'username', 'preview_image'))).all()
+    # return {'likes': [like.to_dict() for like in likes]}
+
+    return {
+        "Like" : [
+            {
+                "id": like.id,
+                "user_Id": like.user_id,
+                "post_id": like.post_id,
+                "like_status": like.like_status,
+                "created_at": like.created_at,
+                "updated_at": like.updated_at,
+                "Owner": {
+                    "id": like.user.id,
+                    "username": like.user.username,
+                    "first_name": like.user.first_name,
+                    "last_name": like.user.last_name,
+                    "previewImage": like.user.preview_image
+                }
+            } for like in likes
+        ]
+    }
 
 
 @login_required

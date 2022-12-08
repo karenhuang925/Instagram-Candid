@@ -62,7 +62,6 @@ function Post({ post, user }) {
                 {showPostModal && (
                     <Modal onClose={() => setShowPostModal(false)}>
                         <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} />
-                        {/* postId={post.id} */}
                     </Modal>
                 )}
 
