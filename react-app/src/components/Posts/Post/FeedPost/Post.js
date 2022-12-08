@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useState } from 'react'
 import ImageComponent from "./FeedPostComponents/ImageComponent"
 import FeedPostButtons from './FeedPostComponents/InteractionButtonComponent/FeedPostButtons'
 import "./Post.css"
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { Modal } from '../../../../context/Modal'
 import PostDetail from '../PostDetail/PostDetail'
 
-function Post({ post }) {
+function Post({ post, user }) {
 
     let today = Date.parse(new Date())
     let unixTimeZero = Date.parse(post.created_at)
@@ -15,7 +15,7 @@ function Post({ post }) {
     let diffindays = Math.floor((diff) / (24 * 3600 * 1000))
     let diffinhours = Math.floor(diff / (3600 * 1000))
 
-    const [showModal, setShowModal] = useState(false);
+    const [showPostModal, setShowPostModal] = useState(false);
 
     return (
         <div className='individual-post-container'>
@@ -23,18 +23,11 @@ function Post({ post }) {
             <section className='post-header-section'>
                 <div className='post-user-card'>
                     <div id='user-profile-image'>
-                        {/* Need to make user image conditional conditional to display location or null show nothing*/}
-                        {/* <div><i className="fa-regular fa-circle-user fa-2x"></i></div> */}
-                        <img
-                            className='user-preview-image'
-                            src={post.Owner.previewImage}
-                            alt={post.id}
-                        />
+                        {post.Owner.previewImage ? <img className='user-preview-image' src={post.Owner.previewImage} alt={post.id}/> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
                     </div>
                     <div id='post-user-detail'>
-                        {/* Need to make location conditional to display location or null show nothing*/}
                         <div id='user-username'>{post.Owner.username}</div>
-                        <div id='post-location'>{post.location}</div>
+                        {post.location && <div id='post-location'>{post.location}</div>}
                     </div>
                 </div>
                 <div className='post-more-options'>
@@ -42,29 +35,32 @@ function Post({ post }) {
                 </div>
             </section>
 
+
             <section id='post-image-section'>
                 <ImageComponent images={post.Media} />
             </section>
 
+
             <section className='post-interaction-section'>
-                <FeedPostButtons post={post}/>
+                <FeedPostButtons post={post} user={user} />
             </section>
 
 
             <section className='post-body-section'>
-                <div className='post-detail-likes'>{post.likes} likes</div>
+                <div className='post-detail-likes'>{post.likes} {post.likes == 1 ? 'like' : 'likes'}</div>
 
                 <div className='post-detail-caption-body'>
                     <div id='post-detail-username'>{post.Owner.username}</div>
                     <div id='post-detail-caption'>{post.caption}</div>
                 </div>
 
-                <Link className='post-comment-count' onClick={()=>setShowModal(true)}>View all {post.comments} comments</Link>
-                {showModal && (
-                    <Modal onClose={() => setShowModal(false)}>
-                        <PostDetail postId={post.id}/>
+                <Link className='post-comment-count' onClick={() => setShowPostModal(true)}>View all {post.comments} comments</Link>
+                {showPostModal && (
+                    <Modal onClose={() => setShowPostModal(false)}>
+                        <PostDetail postId={post.id} />
                     </Modal>
                 )}
+
                 {diffinhours > 23
                     ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
                     : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
