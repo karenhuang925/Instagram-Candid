@@ -51,45 +51,39 @@ export const minusFollower = (payload) => {
 //   }
 // }
 
-export const fetchFollower =
-  (user_id ) =>
-  async (dispatch) => {
-    const res = await fetch(`/api/users/${user_id}/followers`);
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(loadFollower(data));
-      return data;
-    }
-  };
-export const fetchFollowing =
-  ( user_id ) =>
-  async (dispatch) => {
-    const res = await fetch(`/api/users/${user_id}/following`);
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(loadFollowing(data));
-      return data;
-    }
-  };
-export const fetchSuggestion =
-  ( user_id ) =>
-  async (dispatch) => {
-    const res = await fetch(`/api/users/${user_id}/following/suggestions`);
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(loadSuggestion(data));
-      return data;
-    }
-  };
+export const fetchFollower = (user_id) => async (dispatch) => {
+  const res = await fetch(`/api/users/${user_id}/followers`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadFollower(data));
+    return data;
+  }
+};
+export const fetchFollowing = (user_id) => async (dispatch) => {
+  const res = await fetch(`/api/users/${user_id}/following`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadFollower(data));
+    return data;
+  }
+};
+export const fetchSuggestion = (user_id) => async (dispatch) => {
+  const res = await fetch(`/api/users/${user_id}/following/suggestions`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadFollower(data));
+    return data;
+  }
+};
 export const fetchPlusFollower = (follower) => async (dispatch) => {
   const { userId, followsUserId } = follower;
   const res = await fetch(`/api/users/${userId}/followers`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      follows_user_id: followsUserId
+      follows_user_id: followsUserId,
     }),
   });
   if (res.ok) {
@@ -97,7 +91,7 @@ export const fetchPlusFollower = (follower) => async (dispatch) => {
     dispatch(plusFollower(data));
     return data;
   }
-  console.error()
+  console.error();
 };
 
 export const fetchMinusFollower = (follower) => async (dispatch) => {
@@ -131,10 +125,8 @@ const followerReducer = (state = {}, action) => {
       };
       return newState;
     case GET_FOLLOWING_SUGGESTIONS:
-      newState = {
-        ...state,
-        ...action.payload,
-      };
+      newState = { ...state };
+      newState.suggestions = action.payload;
       return newState;
     case PLUS_FOLLOWER:
       // newState = { ...state };
@@ -142,12 +134,9 @@ const followerReducer = (state = {}, action) => {
       // return newState;
       newState = {
         ...state,
-        following: [
-          ...state.following,
-          action.payload
-        ]
+        following: [...state.following, action.payload],
       };
-      return newState
+      return newState;
     case MINUS_FOLLOWER:
       newState = { ...state };
       newState.following[action.payload.id] = action.payload;

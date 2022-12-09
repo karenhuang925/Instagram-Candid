@@ -10,11 +10,12 @@ import CreatePost from "./components/CreatePost";
 import NavBar from "./components/Starter/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { sessionFunction } from "./store/user";
-// import AccountPage from "./components/AccountPage";
+import AccountPage from "./components/AccountPage";
 // import ProtectedRoute from './components/Starter/auth/ProtectedRoute';
 // import UsersList from './components/Starter/UsersList';
 // import User from './components/Starter/User';
 // import { authenticate } from './store/session';
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,10 +57,12 @@ function App() {
             <Route exact path={"/postform"}>
               <CreatePost />
             </Route>
-
-            {/* <Route path="/profile/:id" exact={true}>
+            <Route path="/my/profile" exact={true}>
+              <ProfilePage />
+            </Route>
+            <Route path="/profile/:id" exact={true}>
               <AccountPage />
-            </Route> */}
+            </Route>
           </Switch>
         </>
       )}
