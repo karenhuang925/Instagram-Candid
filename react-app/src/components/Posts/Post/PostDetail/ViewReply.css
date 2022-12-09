@@ -5,14 +5,14 @@
     /* position: fixed; */
     /* background: rgba(0, 0, 0, 0.834); */
     z-index: 1;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
 
 }
 
 .spinner {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 1px solid;
     border-color: #3d5af1 transparent #3d5af1 transparent;
     border-radius: 50%;

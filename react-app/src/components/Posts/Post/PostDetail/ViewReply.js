@@ -19,7 +19,7 @@ function ViewReply({ comment }) {
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
-            }, 2000);
+            }, 1000);
         }, [showReply]);
 
     function onClickHandler(){
