@@ -65,7 +65,7 @@ function Post({ post, user }) {
                 <Link className='post-comment-count' onClick={() => setShowPostModal(true)}>View all {post.comments} comments</Link>
                 {showPostModal && (
                     <Modal onClose={() => setShowPostModal(false)}>
-                        <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>
+                        <PostDetail  post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>
                     </Modal>
                 )}
 
