@@ -31,12 +31,13 @@ function Post({ post, user }) {
                         {post.Owner.previewImage ? <img className='user-preview-image' src={post.Owner.previewImage} alt={post.id}/> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
                     </div>
                     <div id='post-user-detail'>
+                        {/* Need to create link to username to take to profile page */}
                         <div id='user-username'>{post.Owner.username}</div>
                         {post.location && <div id='post-location'>{post.location}</div>}
                     </div>
                 </div>
                 <div className='post-more-options'>
-                    <div><i className="fa-solid fa-ellipsis fa-1x"></i></div>
+                    <div id="post-more-options-icon"><i className="fa-solid fa-ellipsis fa-1x"></i></div>
                 </div>
             </section>
 

@@ -73,6 +73,7 @@ function ViewLikes({ post }) {
             </div>
 
             <div className="like-by-user-container">
+                {!allPostLikes.length && <div className="no-likes"><span>No Current Likes</span></div>}
                 {allPostLikes.map((like) => {
                     return (
                         <div className="liked-by-user-card" key={like.id}>
