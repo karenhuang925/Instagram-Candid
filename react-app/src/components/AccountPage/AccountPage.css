@@ -83,19 +83,29 @@
 
 #long-hr {
   width: 935px;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
   height: 1px;
   border-width: 0;
   background-color: rgb(220, 220, 220);
   margin-left: 26px;
 }
 
+#short-hr {
+  width: 75px;
+  margin-bottom: 15px;
+  margin-top: 0px;
+  height: 1px;
+  border-width: 0;
+  background-color: black;
+  margin-left: 267.04px;
+}
+
 #post-tab {
   font-size: 12px;
-  border-top: 1px solid black;
+  /* border-top: 1px solid black; */
   padding-top: 20px;
   font-weight: 600;
-  margin-left: 293.04px;
+  margin-left: 5px;
 }
 
 #post-previews {
@@ -106,8 +116,8 @@
   margin-left: 33px;
 }
 
-/* #grid-icon {
-  border-top: 1px solid black;
-  padding-top: 20px;
-  margin-left: 293.04px;
-} */
+#grid-icon {
+  /* border-top: 1px solid black; */
+  /* padding-top: 20px; */
+  margin-left: 273.04px;
+}

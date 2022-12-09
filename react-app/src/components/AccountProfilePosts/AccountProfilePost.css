@@ -6,4 +6,9 @@
   margin-right: 0px;
   object-fit: cover;
   object-position: left top;
+  -webkit-filter: brightness(100%);
+}
+
+#post-preview:hover {
+  -webkit-filter: brightness(70%);
 }

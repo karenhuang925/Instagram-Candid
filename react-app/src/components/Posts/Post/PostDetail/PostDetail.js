@@ -32,16 +32,7 @@ function PostDetail({ postId }) {
   }
   let today = Date.parse(new Date());
   let unixTimeZero = Date.parse(post.created_at);
-
-  if (!post) {
-    return null;
-  }
-  if (!allComments) {
-    return null;
-  }
-  let today = Date.parse(new Date());
-  let unixTimeZero = Date.parse(post.created_at);
-
+  let diff = today - unixTimeZero;
   let diffinyears = Math.floor(diff / (365 * 3600 * 1000));
   let diffinmonths = Math.floor(diff / (30 * 24 * 3600 * 1000));
   let diffindays = Math.floor(diff / (24 * 3600 * 1000));

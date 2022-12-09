@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { loadAllPostsByUserId } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
-import {
-  fetchFollower,
-  fetchFollowing,
-  fetchMinusFollower,
-  fetchPlusFollower,
-} from "../../store/followers";
+import { fetchFollower, fetchFollowing } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
 import "./AccountPage.css";
@@ -66,6 +61,11 @@ const AccountPage = () => {
                   Follow
                 </FollowButton>
               )}
+              {newArr?.includes(sessionUser?.id) && (
+                <FollowButton userId={sessionUser?.id} followsUserId={id}>
+                  Follow
+                </FollowButton>
+              )}
             </div>
             <div id="profile-aggs">
               <div id="post-agg">
@@ -88,13 +88,14 @@ const AccountPage = () => {
           </div>
         </div>
         <hr id="long-hr" />
+        <hr id="short-hr" />
         <i class="fa-solid fa-table-cells" id="grid-icon"></i>
         <span id="post-tab">POSTS</span>
         <div id="post-previews">
           {Object?.keys(posts)?.map((postId) => {
             return <AccountProfilePost key={postId} post={posts[postId]} />;
           })}
-          {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
+          {/* on hover it should show numbers of likes and comments */}
         </div>
         <p className="about-link">About</p>
         {/* link to github repo */}
