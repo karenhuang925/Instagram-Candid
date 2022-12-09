@@ -7,7 +7,7 @@ import { addTheLikeToPost, minusTheLikeToPost } from "../../../../../../store/po
 import PostDetail from "../../../PostDetail/PostDetail";
 import "./FeedPostButtons.css"
 
-function FeedPostButtons({ post, user, wasLiked, setWasLiked}) {
+function FeedPostButtons({ post, user, wasLiked, setWasLiked, inPostDetail }) {
     const dispatch = useDispatch();
     const [liked, setLiked] = useState(post.likeStatus)
     const [showPostModal, setShowPostModal] = useState(false);
@@ -42,10 +42,16 @@ function FeedPostButtons({ post, user, wasLiked, setWasLiked}) {
                 <div id='interaction-button'>
                     <button className={post.likeStatus ? "LikeButtonLike" : "LikeButtonUnlike"} onClick={handleClick}><i className="fa-regular fa-heart fa-1x"></i></button>
                 </div>
-                <Link id='interaction-button' onClick={() => setShowPostModal(true)}><div><i className="fa-regular fa-comment fa-1x"></i></div></Link>
+
+                {inPostDetail
+                    ? <div id='interaction-button'><i className="fa-regular fa-comment fa-1x"></i></div>
+                    : <Link id='interaction-button' onClick={() => setShowPostModal(true)}><div><i className="fa-regular fa-comment fa-1x"></i></div></Link>
+                }
+
+                {/* <Link id='interaction-button' onClick={() => setShowPostModal(true)}><div><i className="fa-regular fa-comment fa-1x"></i></div></Link> */}
                 {showPostModal && (
                     <Modal onClose={() => setShowPostModal(false)}>
-                        <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} />
+                        <PostDetail post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetail={true} />
                     </Modal>
                 )}
 

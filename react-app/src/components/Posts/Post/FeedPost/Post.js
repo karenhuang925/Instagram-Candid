@@ -19,7 +19,8 @@ function Post({ post, user }) {
     let diffinhours = Math.floor(diff / (3600 * 1000))
 
     const [showPostModal, setShowPostModal] = useState(false);
-    let [wasLiked, setWasLiked] = useState(post.likeStatus)
+    let [wasLiked, setWasLiked] = useState(post.likeStatus);
+    // let [inPostDetail, setInPostDetail] = useState(false)
 
     return (
         <div className='individual-post-container'>
@@ -46,7 +47,7 @@ function Post({ post, user }) {
 
 
             <section className='post-interaction-section'>
-                <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} />
+                <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetail={true}/>
             </section>
 
 
@@ -61,7 +62,7 @@ function Post({ post, user }) {
                 <Link className='post-comment-count' onClick={() => setShowPostModal(true)}>View all {post.comments} comments</Link>
                 {showPostModal && (
                     <Modal onClose={() => setShowPostModal(false)}>
-                        <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} />
+                        <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>
                     </Modal>
                 )}
 

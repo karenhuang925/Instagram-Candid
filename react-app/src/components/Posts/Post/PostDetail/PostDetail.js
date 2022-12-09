@@ -11,7 +11,7 @@ import { fetchLike } from '../../../../store/likes'
 import ViewReply from './ViewReply'
 
 
-function PostDetail({ post, wasLiked, setWasLiked }) {
+function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
     const dispatch = useDispatch()
     let user = useSelector((state) => state.session)
 
@@ -107,7 +107,7 @@ function PostDetail({ post, wasLiked, setWasLiked }) {
                         </div>
                     </div>
                     <div className='actionButton'>
-                        <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} />
+                        <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetail={inPostDetails}/>
                     </div>
                     <div className='post-detail-view-like-styling'>
                         <ViewLikesModal post={post} />
