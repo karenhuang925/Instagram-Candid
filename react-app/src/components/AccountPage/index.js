@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { loadAllPostsByUserId } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
@@ -11,9 +11,14 @@ import {
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
 import "./AccountPage.css";
+import { useHistory } from "react-router-dom";
+import FollowButton from "../HomePage/FollowerSuggestions/followButton";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
+  let history = useHistory();
+
+  const [newArr, setNewArr] = useState([]);
 
   const { id } = useParams();
 
@@ -28,29 +33,21 @@ const AccountPage = () => {
   const posts = useSelector((state) => state?.posts?.post) || "";
   const sessionUser = useSelector((state) => state?.session);
   const followers = useSelector((state) => state?.follows?.followers) || "";
-
-  // let newArr = [];
-
-  // followers?.forEach((follow) => {
-  //   newArr.push(follow.user_id);
-  // });
   const following = useSelector((state) => state?.follows?.following) || "";
 
-  if (sessionUser?.id === id) {
-    return <Redirect to="/my/profile" />;
+  useEffect(() => {
+    let arr = [];
+    if (followers) {
+      followers.forEach((follow) => {
+        arr.push(follow.user_id);
+      });
+      setNewArr([...newArr, ...arr]);
+    }
+  }, [followers]);
+
+  if (sessionUser?.id === parseInt(id)) {
+    history.push("/my/profile");
   }
-
-  const followAccount = async (e) => {
-    e.preventDefault();
-
-    await dispatch(fetchPlusFollower(account));
-  };
-
-  const unfollowAccount = async (e) => {
-    e.preventDefault();
-
-    await dispatch(fetchMinusFollower(account));
-  };
 
   return (
     <>
@@ -64,21 +61,10 @@ const AccountPage = () => {
           <div id="profile-right">
             <div id="profile-top-right">
               <span id="profile-username">{account?.username}</span>
-              {/* following.forEach(user => {
-                return ({
-                  user_id === user
-                })
-              }) && */}
-
-              {!followers?.includes(sessionUser?.id) && (
-                <button className="follow-btn" onClick={followAccount}>
+              {!newArr?.includes(sessionUser?.id) && (
+                <FollowButton userId={sessionUser?.id} followsUserId={id}>
                   Follow
-                </button>
-              )}
-              {followers?.includes(sessionUser?.id) && (
-                <button className="follow-btn" onClick={unfollowAccount}>
-                  Unfollow
-                </button>
+                </FollowButton>
               )}
             </div>
             <div id="profile-aggs">
@@ -102,6 +88,7 @@ const AccountPage = () => {
           </div>
         </div>
         <hr id="long-hr" />
+        <i class="fa-solid fa-table-cells" id="grid-icon"></i>
         <span id="post-tab">POSTS</span>
         <div id="post-previews">
           {Object?.keys(posts)?.map((postId) => {
