@@ -38,7 +38,7 @@ def get_posts_of_users_current_user_follows():
 
     following_posts = []
     for following_user_id in all_id_of_following:
-        posts = Post.query.filter(following_user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).all()
+        posts = Post.query.filter(following_user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
         # .order_by(Post.created_at.desc())
         # .order_by(func.random())
         for post in posts:
@@ -88,7 +88,7 @@ def get_posts_of_users_current_user_follows():
             }
 
             following_posts.append(returnPost)
-    random.shuffle(following_posts)
+    # random.shuffle(following_posts)
     following_posts.sort(key = lambda obj: obj['created_at'])
 
     return {"Posts" : [post for post in following_posts]}
