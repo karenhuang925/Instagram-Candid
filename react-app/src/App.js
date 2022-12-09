@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 // import { useDispatch, useSelector } from 'react-redux';
 import HomePage from "./components/HomePage";
-import Index from "./components/alonso/Index";
+import Index from "./components/LandingPage/Index";
 import CreatePost from "./components/CreatePost";
 // import LoginForm from './components/Starter/auth/LoginForm';
 // import SignUpForm from './components/Starter/auth/SignUpForm';

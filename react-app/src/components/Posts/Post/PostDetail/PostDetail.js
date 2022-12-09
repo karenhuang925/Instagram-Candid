@@ -6,6 +6,9 @@ import { loadPostById } from "../../../../store/singlepost";
 import { loadCommentsByPostId } from "../../../../store/comments";
 import FeedPostButtons from "../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons";
 import { loadFollowing } from "../../../../store/followers";
+import ViewLikesModal from "../FeedPost/FeedPostComponents/ViewLikesComponent/ViewLikesModal";
+import { fetchLike } from "../../../../store/likes";
+import ViewReply from "./ViewReply";
 
 function PostDetail({ postId }) {
   const dispatch = useDispatch();
@@ -30,7 +33,14 @@ function PostDetail({ postId }) {
   let today = Date.parse(new Date());
   let unixTimeZero = Date.parse(post.created_at);
 
-  let diff = today - unixTimeZero;
+  if (!post) {
+    return null;
+  }
+  if (!allComments) {
+    return null;
+  }
+  let today = Date.parse(new Date());
+  let unixTimeZero = Date.parse(post.created_at);
 
   let diffinyears = Math.floor(diff / (365 * 3600 * 1000));
   let diffinmonths = Math.floor(diff / (30 * 24 * 3600 * 1000));

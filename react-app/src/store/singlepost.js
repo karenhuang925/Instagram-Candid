@@ -31,7 +31,7 @@ const singlePostReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_A_POST:
       newState = {
-        ...state,
+        // ...state,
         post: { ...action.payload },
       };
       return newState;

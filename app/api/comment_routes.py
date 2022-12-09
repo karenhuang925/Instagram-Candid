@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import db, Comment, Post
+from app.models import db, Comment, Post, Reply
 from sqlalchemy.orm import joinedload, load_only
-
+from sqlalchemy.sql.expression import func
 
 comment_routes = Blueprint('comment', __name__)
 
@@ -21,24 +21,32 @@ def authorization_required(callback):
 def get_comments_by_post_id(post_id):
     if not Post.query.get(post_id):
         return { "errors": ["Post not found"] }, 404
-    comments = Comment.query.filter(Comment.post_id == post_id).options(joinedload(Comment.user).options(load_only('id','username', 'preview_image'))).all()
+    comments = Comment.query.filter(Comment.post_id == post_id).options(\
+        joinedload(Comment.user).options(load_only('id','username', 'preview_image')),\
+        joinedload(Comment.replies).options(load_only('id','comment_id'))\
+        ).all()
     # return {'Comments' : [comment.to_dict() for comment in comments]}
-    print(comments)
+
     comments_plus_users = []
     for comment in comments:
-            returnComment = {
-                "id": comment.id,
-                "user_id": comment.user_id,
-                "comment":comment.comment,
-                "created_at": comment.created_at,
-                "updated_at": comment.updated_at,
-                "Owner": {
-                    "id": comment.user.id,
-                    "username": comment.user.username,
-                    "preview_image": comment.user.preview_image
-                }
+        repliesCount = db.session.query(func.count(Reply.id)).filter(comment.id == Reply.comment_id).scalar()
+        if not repliesCount:
+                repliesCount = 0
+
+        returnComment = {
+            "id": comment.id,
+            "user_id": comment.user_id,
+            "comment":comment.comment,
+            "created_at": comment.created_at,
+            "updated_at": comment.updated_at,
+            "numOfReplies": repliesCount,
+            "Owner": {
+                "id": comment.user.id,
+                "username": comment.user.username,
+                "preview_image": comment.user.preview_image
             }
-            comments_plus_users.append(returnComment)
+        }
+        comments_plus_users.append(returnComment)
     return {"Comments" : [comment for comment in comments_plus_users]}
 
 

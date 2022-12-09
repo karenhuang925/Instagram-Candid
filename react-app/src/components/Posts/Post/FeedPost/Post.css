@@ -22,6 +22,11 @@
     align-items: center;
 }
 
+#post-more-options-icon:hover {
+    color: lightgray;
+    cursor: pointer;
+}
+
 .user-preview-image {
     border-radius: 50%;
     height: 32px;
@@ -112,7 +117,7 @@
 .post-comment-button {
     flex: 0;
     font-family: 'Open Sans', sans-serif;
-    font-weight:600;
+    font-weight: 600;
     border: none;
     color: #4892dd;
     background-color: transparent;
