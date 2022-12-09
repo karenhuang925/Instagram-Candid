@@ -1,0 +1,10 @@
+.post-remove_button {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    padding: 5px 9px;
+    background-color: #0095F6;
+    border-radius: 8%;
+}

@@ -10,6 +10,7 @@ import ViewLikesModal from "../FeedPost/FeedPostComponents/ViewLikesComponent/Vi
 import { fetchLike } from "../../../../store/likes";
 import ViewReply from "./ViewReply";
 
+
 function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
   const dispatch = useDispatch();
   // let user = useSelector((state) => state.session)
@@ -63,6 +64,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
           </div>
           <div>
             <i className="fa-solid fa-ellipsis fa-1x"></i>
+
           </div>
         </div>
 

@@ -5,7 +5,10 @@
 }
 
 .edit-post-header-container {
-    background-color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: bold;
@@ -25,13 +28,20 @@
     height: 800px
 }
 
-.edit-post-image-container {
-    max-width:730px;
+.edit-post-image-outer {
+    max-width: 730px;
     min-width: 300px;
     height: 100%;
     overflow: hidden;
     background-color: gray;
     display: flex;
+}
+
+
+.edit-post-image-container {
+    margin: auto;
+    align-items: center;
+    width: 100%;
 }
 
 .edit-post-details-container {
@@ -56,7 +66,7 @@
     height: 45px;
     width: 45px;
     object-fit: contain;
-    
+
 }
 
 .edit-post-detail-identity {
@@ -66,6 +76,32 @@
     font-size: 16px;
 }
 
-#edit-post-user-username{
+#edit-post-user-username {
     font-weight: bold;
+}
+
+.edit-post-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.edit-post-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.edit-post-form-button {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    padding: 5px 9px;
+    background-color: #0095F6;
+    border-radius: 8%;
 }
