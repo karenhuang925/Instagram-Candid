@@ -38,7 +38,7 @@ def get_posts_of_users_current_user_follows():
 
     following_posts = []
     for following_user_id in all_id_of_following:
-        posts = Post.query.filter(following_user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).all()
+        posts = Post.query.filter(following_user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
         # .order_by(Post.created_at.desc())
         # .order_by(func.random())
         for post in posts:
@@ -88,7 +88,7 @@ def get_posts_of_users_current_user_follows():
             }
 
             following_posts.append(returnPost)
-    random.shuffle(following_posts)
+    # random.shuffle(following_posts)
     following_posts.sort(key = lambda obj: obj['created_at'])
 
     return {"Posts" : [post for post in following_posts]}
@@ -394,7 +394,7 @@ def create_new_post():
 
     allLikes = Like.query.filter(post.id == Like.post_id).all()
     userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
-    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
     if not postLikes:
@@ -469,7 +469,7 @@ def edit_post(id):
 
     allLikes = Like.query.filter(post.id == Like.post_id).all()
     userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
-    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).scalar()
+    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
     if not postLikes:

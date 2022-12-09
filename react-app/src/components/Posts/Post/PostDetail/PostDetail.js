@@ -10,17 +10,17 @@ import ViewLikesModal from "../FeedPost/FeedPostComponents/ViewLikesComponent/Vi
 import { fetchLike } from "../../../../store/likes";
 import ViewReply from "./ViewReply";
 
-function PostDetail({ postId }) {
+function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
   const dispatch = useDispatch();
   // let user = useSelector((state) => state.session)
 
   useEffect(() => {
-    dispatch(loadPostById(postId));
-    dispatch(loadCommentsByPostId(postId));
+    dispatch(loadPostById(post.id));
+    dispatch(loadCommentsByPostId(post.id));
     // dispatch(loadFollowing(user.id))
   }, [dispatch]);
 
-  let post = useSelector((state) => state.singlePost.post);
+  // let post = useSelector((state) => state.singlePost.post);
   let allComments = useSelector((state) => state.comments.comment);
   let following = useSelector((state) => state.follows.following);
 
@@ -30,9 +30,11 @@ function PostDetail({ postId }) {
   if (!allComments) {
     return null;
   }
+
   let today = Date.parse(new Date());
   let unixTimeZero = Date.parse(post.created_at);
   let diff = today - unixTimeZero;
+
   let diffinyears = Math.floor(diff / (365 * 3600 * 1000));
   let diffinmonths = Math.floor(diff / (30 * 24 * 3600 * 1000));
   let diffindays = Math.floor(diff / (24 * 3600 * 1000));
@@ -138,7 +140,13 @@ function PostDetail({ postId }) {
             </div>
           </div>
           <div className="actionButton">
-            <FeedPostButtons post={post} />
+            <FeedPostButtons
+              post={post}
+              user={user}
+              wasLiked={wasLiked}
+              setWasLiked={setWasLiked}
+              inPostDetail={true}
+            />
           </div>
           <div className="post-detail-likes" Id="inpost">
             {post.likes} likes
