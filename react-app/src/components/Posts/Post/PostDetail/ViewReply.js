@@ -14,10 +14,6 @@ function ViewReply({ comment }) {
     const [showReply, setShowReply] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    // useEffect(() => {
-    //     dispatch(loadRepliesByCommentId(comment.id))
-    // }, [dispatch])
-
 
     useEffect(() => {
         setLoading(true);
@@ -46,20 +42,32 @@ function ViewReply({ comment }) {
                             <div className="spinner"></div>
                         </div>
                     ) : (
-                        replies && Object.values(replies).forEach((value) => {
-                                console.log('here')
+                        replies && Object.values(replies).map((value) => {
+                            let today = Date.parse(new Date())
+                            let unixTimeZero = Date.parse(value.created_at)
+
+                            let diff = today - unixTimeZero
+
+                            let diffindays = Math.floor((diff) / (24 * 3600 * 1000))
+                            let diffinhours = Math.floor(diff / (3600 * 1000))
+
                                 return (
-                                    <h1>Hi</h1>
-                                    // <div className='caption-card'>
-                                    //     <h1>Hi</h1>
-                                    //     <img alt='preview' src={value.Owner.previewImage} className='detail-profile-pic'></img>
-                                    //     <div>
-                                    //         <div className='usernameAndCaption'>
-                                    //             <p className='caption-username'>{value.Owner.username}</p>
-                                    //             <div >{value.reply}</div>
-                                    //         </div>
-                                    //     </div>
-                                    // </div>
+                                    <div className='caption-card'>
+                                        <img alt='preview' src={value.Owner.previewImage} className='detail-profile-pic'></img>
+                                        <div>
+                                            <div className='usernameAndCaption'>
+                                                <p className='caption-username'>{value.Owner.username}</p>
+                                                <div >{value.reply}</div>
+                                            </div>
+                                            <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
+                                                <div>{diffinhours > 23
+                                                    ? <div className='post-time'>{diffindays > 1 ? `${diffindays}d` : `1d`}</div>
+                                                    : <div className='post-time' >{diffinhours > 1 ? `${diffinhours}h` : `1h`}</div>
+                                                }</div>
+                                                <div className='post-time' id='bold'>Reply</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     )
                             })
 

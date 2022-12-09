@@ -92,9 +92,9 @@ function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
                                                 <div >{comment.comment}</div>
                                             </div>
                                             <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
-                                                <div>{diffinhours > 23
-                                                    ? <div className='post-time'>{diffindays > 1 ? `${commentdiffindays}d` : `1d`}</div>
-                                                    : <div className='post-time' >{diffinhours > 1 ? `${commentdiffinhours}h` : `1h`}</div>
+                                                <div>{commentdiffinhours > 23
+                                                    ? <div className='post-time'>{commentdiffindays > 1 ? `${commentdiffindays}d` : `1d`}</div>
+                                                    : <div className='post-time' >{commentdiffinhours > 1 ? `${commentdiffinhours}h` : `1h`}</div>
                                                 }</div>
                                                 <div className='post-time' id='bold'>Reply</div>
                                             </div>
