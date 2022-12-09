@@ -19,7 +19,8 @@ function Post({ post, user }) {
     let diffinhours = Math.floor(diff / (3600 * 1000))
 
     const [showPostModal, setShowPostModal] = useState(false);
-    let [wasLiked, setWasLiked] = useState(post.likeStatus)
+    let [wasLiked, setWasLiked] = useState(post.likeStatus);
+    // let [inPostDetail, setInPostDetail] = useState(false)
 
     return (
         <div className='individual-post-container'>
@@ -30,12 +31,13 @@ function Post({ post, user }) {
                         {post.Owner.previewImage ? <img className='user-preview-image' src={post.Owner.previewImage} alt={post.id}/> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
                     </div>
                     <div id='post-user-detail'>
+                        {/* Need to create link to username to take to profile page */}
                         <div id='user-username'>{post.Owner.username}</div>
                         {post.location && <div id='post-location'>{post.location}</div>}
                     </div>
                 </div>
                 <div className='post-more-options'>
-                    <div><i className="fa-solid fa-ellipsis fa-1x"></i></div>
+                    <div id="post-more-options-icon"><i className="fa-solid fa-ellipsis fa-1x"></i></div>
                 </div>
             </section>
 
@@ -46,7 +48,7 @@ function Post({ post, user }) {
 
 
             <section className='post-interaction-section'>
-                <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} />
+                <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetail={true}/>
             </section>
 
 
@@ -61,8 +63,7 @@ function Post({ post, user }) {
                 <Link className='post-comment-count' onClick={() => setShowPostModal(true)}>View all {post.comments} comments</Link>
                 {showPostModal && (
                     <Modal onClose={() => setShowPostModal(false)}>
-                        <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} />
-                        {/* postId={post.id} */}
+                        <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>
                     </Modal>
                 )}
 

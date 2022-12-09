@@ -92,6 +92,10 @@
     flex-direction: column;
 }
 
+.post-detail-view-like-styling {
+    padding-left: 15px;
+}
+
 .postinfo > .actionButton{
     margin-top: 5px;
     margin-right: 6px;

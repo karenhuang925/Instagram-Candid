@@ -1,8 +1,88 @@
 .likes-modal-container {
     display:flex;
+    flex-direction: column;
     background-color:white;
-    width: 450px;
+    width: 430px;
     height: 430px;
     border-radius: 2%;
 }
+
+.likes-modal-title-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    height: 42px;
+    border-bottom-width: 1px;
+    border-bottom: solid;
+    border-bottom-color: lightgray;
+}
+
+.no-likes {
+    display: flex;
+    justify-content: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: gray;
+    padding: 8px;
+}
+
+
+.liked-by-user-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+}
+
+.user-detail-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#like-user-detail-image {
+    height: 54px;
+    width: 54px;
+}
+
+.like-user-preview-image {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    object-fit: contain;
+}
+
+.user-detail-identity {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+
+#like-user-username{
+    font-weight: bold;
+}
+
+#like-user-name {
+    color: gray;
+}
+
+.like-follow-button{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    color:white;
+    padding: 5px 9px;
+    background-color: #0095F6;
+    border-radius: 8%;
+}
+
+
 
