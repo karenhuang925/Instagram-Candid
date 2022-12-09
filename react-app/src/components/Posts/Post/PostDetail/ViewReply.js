@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
 
 import {loadRepliesByCommentId} from '../../../../store/reply'
-import ReactLoading from 'react-loading';
 import './ViewReply.css'
 
 

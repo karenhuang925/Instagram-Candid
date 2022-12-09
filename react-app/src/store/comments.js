@@ -53,7 +53,7 @@ export const loadCommentsByPostId = (id) => async (dispatch) => {
 }
 
 // Create a Comment for a Post based on the Post's Id
-export const createComment = (postId, comment) => async (dispatch) => {
+export const createComment = (comment, postId) => async (dispatch) => {
     const response = await fetch(`/api/posts/${postId}/comments`, {
         method: "POST",
         headers: {
@@ -61,10 +61,12 @@ export const createComment = (postId, comment) => async (dispatch) => {
         },
         body: JSON.stringify(comment)
     });
-    const newComment = await response.json();
 
-    dispatch(createAComment(newComment));
-    return response;
+    if (response.ok) {
+        const newComment = await response.json();
+        dispatch(createAComment(newComment));
+        return newComment;
+    }
 }
 
 // Edit a Comment

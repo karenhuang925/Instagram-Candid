@@ -57,10 +57,11 @@ def post_comment_by_post_id(post_id):
     user_id = current_user.get_id()
     if not Post.query.get(post_id):
         return { "errors": ["Post not found"] }, 404
+    print(request.json)
     comment_data = {
         "user_id": user_id,
         "post_id": post_id,
-        "comment": request.json["comment"]
+        "comment": request.json
     }
     new_comment = Comment(**comment_data)
     db.session.add(new_comment)

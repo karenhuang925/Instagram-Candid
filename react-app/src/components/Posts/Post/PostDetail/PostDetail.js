@@ -9,6 +9,7 @@ import { loadFollowing } from '../../../../store/followers';
 import ViewLikesModal from '../FeedPost/FeedPostComponents/ViewLikesComponent/ViewLikesModal'
 import { fetchLike } from '../../../../store/likes'
 import ViewReply from './ViewReply'
+import CreateCommentForm from '../../../CreateComment/CreateCommentForm'
 
 
 function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
@@ -121,17 +122,7 @@ function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
                                     ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
                                     : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
                     }</div>
-
-                    <div className='addComment'>
-                        <form className='post-comment-form'>
-                            <input
-                                className='post-comment-input'
-                                type='text'
-                                placeholder='Add a comment...'
-                            />
-                            <button className='post-comment-button'>Post</button>
-                        </form>
-                    </div>
+                    <CreateCommentForm className='addComment' postId={post.id}></CreateCommentForm>
                 </div>
             </div>
         </section>
