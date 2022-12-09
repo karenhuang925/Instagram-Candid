@@ -33,8 +33,24 @@
 
 #WriteCaption-id-d1 {
     width: 325px;
+    border-left: 2px solid rgb(76,76,76);
 }
 
 .WriteCaption-d1d {
     margin: 20px 20px;
+}
+
+.MediaPreview-d1d {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    background-color: rgba(0,0,0,0.75);
+}
+
+
+.MediaPreview-d1d:hover {
+    background-color: rgba(0,0,0,0.5);
 }

@@ -25,8 +25,20 @@ function MediaPreview ({ images, setImages }) {
     return (
         <div id="MediaPreview-id-d1">
             <img id="MediaPreview-id-d1i1" src={currentPhoto} />
-            <button id="MediaPreview-id-d1b1" type="button" onClick={(e) => handlePreviousPhoto()}>&lt;</button>
-            <button id="MediaPreview-id-d1b2" type="button" onClick={(e) => handleNextPhoto()}>&gt;</button>
+            {
+                counter > 0 && (
+                    <div id="MediaPreview-id-d1b1" className="MediaPreview-d1d" type="button" onClick={(e) => handlePreviousPhoto()}>
+                        <svg aria-label="Left chevron" class="_ab6-" color="#ffffff" fill="#ffffff" height="16" role="img" viewBox="0 0 24 24" width="16"><polyline fill="none" points="16.502 3 7.498 12 16.502 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                    </div>
+                )
+            }
+            {
+                counter < images.length - 1 && (
+                    <div id="MediaPreview-id-d1b2" className="MediaPreview-d1d" onClick={(e) => handleNextPhoto()}>
+                        <svg aria-label="Right chevron" class="_ab6-" color="#ffffff" fill="#ffffff" height="16" role="img" viewBox="0 0 24 24" width="16"><polyline fill="none" points="8 3 17.004 12 8 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                    </div>
+                )
+            }
         </div>
     );
 }
