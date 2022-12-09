@@ -6,6 +6,7 @@ import { fetchPlusFollower } from '../../../store/followers';
 function FollowButton({ userId, followsUserId }) {
     const dispatch = useDispatch();
     const [followed, setFollowed] = useState(false);
+    
     const handleFollow = async () => {
         await dispatch(fetchPlusFollower({userId, followsUserId}))
         setFollowed(!followed)

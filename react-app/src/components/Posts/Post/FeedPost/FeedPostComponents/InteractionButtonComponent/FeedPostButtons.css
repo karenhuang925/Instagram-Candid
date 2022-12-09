@@ -8,6 +8,8 @@
 #post-interaction-button-container {
     display: flex;
     flex-direction: row;
+    /* align-items: center;
+    justify-content: center; */
     margin: 4px, 0px, 0px;
     padding: 0px, 12px, 6px;
 }
@@ -18,6 +20,7 @@
     align-items: center;
     font-size: 22px;
     padding: 8px;
+    text-decoration: none;
 }
 
 #interaction-button:hover{
