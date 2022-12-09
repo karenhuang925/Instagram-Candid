@@ -10,11 +10,17 @@ import ViewLikesModal from '../FeedPost/FeedPostComponents/ViewLikesComponent/Vi
 import { fetchLike } from '../../../../store/likes'
 import ViewReply from './ViewReply'
 import CreateCommentForm from '../../../CreateComment/CreateCommentForm'
-
+import EditCommentForm from '../../../CreateComment/EditCommentForm'
+import CommentReplyActionModal from '../../../CommentReplyActionModal/CommentReplyActionModal'
 
 function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
     const dispatch = useDispatch()
     let user = useSelector((state) => state.session)
+
+    //comment and reply useState
+    let [contectType, setContentType] = useState('comment')
+    let [actionType, setActionType] = useState('post')
+    let [itemId, setItemId] = useState(0)
 
     useEffect(() => {
         // dispatch(loadPostById(post.id))
@@ -25,13 +31,15 @@ function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
 
     // let post = useSelector((state) => state.singlePost.post)
     let allComments = useSelector((state) => state.comments.comment)
-    let following = useSelector((state) => state.follows.following)
-    let likes = useSelector((state) => state.likes.likes)
+    // let following = useSelector((state) => state.follows.following)
+    // let likes = useSelector((state) => state.likes.likes)
 
 
 
     if (!post) { return null; }
     if (!allComments) { return null; }
+
+    //timedisplay
     let today = Date.parse(new Date())
     let unixTimeZero = Date.parse(post.created_at)
 
@@ -44,6 +52,7 @@ function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
 
     var options = { year: 'numeric', month: 'long', day: 'numeric' };
     let createdAt = new Date(post.created_at).toDateString(undefined, options);
+
 
 
     return (
@@ -73,8 +82,8 @@ function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
                                     <div >{post.caption}</div>
                                 </div>
                                 <div>{diffinhours > 23
-                                    ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
-                                    : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
+                                    ? <div id='bold' className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
+                                    : <div id='bold' className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
                                 }</div>
                             </div>
                         </div>
@@ -93,11 +102,14 @@ function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
                                                 <div >{comment.comment}</div>
                                             </div>
                                             <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
-                                                <div>{commentdiffinhours > 23
-                                                    ? <div className='post-time'>{commentdiffindays > 1 ? `${commentdiffindays}d` : `1d`}</div>
-                                                    : <div className='post-time' >{commentdiffinhours > 1 ? `${commentdiffinhours}h` : `1h`}</div>
+                                                <div >{commentdiffinhours > 23
+                                                    ? <div id='bold' className='post-time'>{commentdiffindays > 1 ? `${commentdiffindays}d` : `1d`}</div>
+                                                    : <div id='bold' className='post-time' >{commentdiffinhours > 1 ? `${commentdiffinhours}h` : `1h`}</div>
                                                 }</div>
                                                 <div className='post-time' id='bold'>Reply</div>
+                                                {comment.user_id == user.id &&
+                                                <CommentReplyActionModal item={comment} setActionType={setActionType} setItemId={setItemId}/>
+                                                }
                                             </div>
                                             {comment.numOfReplies > 0 &&
                                                 <ViewReply comment={comment}></ViewReply>}
@@ -122,7 +134,11 @@ function PostDetail({ post, wasLiked, setWasLiked , inPostDetails}) {
                                     ? <div className='post-time'>{diffindays > 1 ? `${diffindays} DAYS AGO` : `1 DAY AGO`}</div>
                                     : <div className='post-time'>{diffinhours > 1 ? `${diffinhours} HOURS AGO` : `1 HOUR AGO`}</div>
                     }</div>
-                    <CreateCommentForm className='addComment' postId={post.id}></CreateCommentForm>
+                    {actionType == 'post' ? (
+                        <CreateCommentForm className='addComment' itemId={post.id}></CreateCommentForm>
+                    ) : (
+                        <EditCommentForm className='addComment' itemId={itemId} setActionType={setActionType}></EditCommentForm>
+                    )}
                 </div>
             </div>
         </section>

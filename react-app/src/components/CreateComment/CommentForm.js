@@ -3,7 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { createComment, editComment } from '../../store/comments';
 import { useDispatch } from 'react-redux';
 
-const CommentForm = ({ comment, postId, formType }) => {
+const CommentForm = ({ comment, itemId, formType, setActionType }) => {
 
     const dispatch = useDispatch()
     const [redirect, setRedirect] = useState(false);
@@ -22,33 +22,35 @@ const CommentForm = ({ comment, postId, formType }) => {
             setLoading(false);
             }, 1000);
         if (formType === "Post"){
-            dispatch(createComment(commentContent, postId))
+            dispatch(createComment(commentContent, itemId))
             // .then((()=> {
             //     setRedirect(true)}))
-            // .catch(
-            //     async (res) => {
-            //         const data = await res.json();
-            //         if (data && data.errors) setErrors(data.errors);
-            //     }
-            // );
+            .catch(
+                async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                }
+            );
         } else if(formType === "Edit"){
-            dispatch(editComment(commentContent, postId))
+            dispatch(editComment(commentContent, itemId))
+            setActionType('post')
             // .then((()=> {
             //     setRedirect(true)}))
-            // .catch(
-            //     async (res) => {
-            //         const data = await res.json();
-            //         if (data && data.errors) setErrors(data.errors);
-            //     }
-            // );
+            .catch(
+                async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                }
+            );
         }
+        setCommentContent('')
     };
 
     return (
         <form className='post-comment-form'  >
-            {/* <ul >
+            <ul >
                 {errors.map((error, idx) => <li className='error' key={idx}>{error}</li>)}
-            </ul> */}
+            </ul>
             <label>
                 <input
                     placeholder='Add a comment...'

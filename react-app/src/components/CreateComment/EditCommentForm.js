@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams, Route, Switch, Link } from 'react-router-dom';
-import * as spotActions from '../../store/spot';
 import { useDispatch, useSelector } from 'react-redux';
 import CommentForm from  './CommentForm'
 
-const EditCommentForm = () => {
+const EditCommentForm = ({itemId, setActionType }) => {
+    let comment = useSelector(state => state.comments.comment[itemId])
 
-    let comment = useSelector(state => state.comment)
+    if(!comment) return null
 
-    if(spot){
-        return (
-            <CommentForm comment={comment} formType="Edit" />
-        );
-    }
+    return (
+        <CommentForm comment={comment} itemId={itemId} formType="Edit" setActionType={setActionType}/>
+    );
 }
 
 export default EditCommentForm;

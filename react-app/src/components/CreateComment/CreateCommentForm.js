@@ -1,12 +1,12 @@
 import CommentForm from './CommentForm';
 
-const CreateCommentForm = ({postId}) => {
+const CreateCommentForm = ({itemId}) => {
     const comment = {
         comment: ''
     };
 
     return (
-        <CommentForm comment={comment} postId={postId} formType="Post" />
+        <CommentForm comment={comment} itemId={itemId} formType="Post" />
     );
 }
 

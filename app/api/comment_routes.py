@@ -66,7 +66,31 @@ def post_comment_by_post_id(post_id):
     new_comment = Comment(**comment_data)
     db.session.add(new_comment)
     db.session.commit()
-    return new_comment.to_dict()
+
+    addedComment = new_comment.to_dict()
+
+    comment = Comment.query.filter(addedComment['id'] == Comment.id).options(\
+        joinedload(Comment.user).options(load_only('id','username', 'preview_image')),\
+        joinedload(Comment.replies).options(load_only('id','comment_id'))\
+        ).one_or_none()
+
+    repliesCount = db.session.query(func.count(Reply.id)).filter(comment.id == Reply.comment_id).scalar()
+    if not repliesCount:
+        repliesCount = 0
+
+    return {
+        "id": comment.id,
+        "user_id": comment.user_id,
+        "comment":comment.comment,
+        "created_at": comment.created_at,
+        "updated_at": comment.updated_at,
+        "numOfReplies": repliesCount,
+        "Owner": {
+            "id": comment.user.id,
+            "username": comment.user.username,
+            "preview_image": comment.user.preview_image
+        }
+    }
 
 
 # Edit a Comment
@@ -77,11 +101,34 @@ def edit_comment(comment_id):
     if not comment:
         return { "errors": ["Comment not found"] }, 404
     user_id = current_user.get_id()
-    if user_id != comment.user_id:
+    if str(user_id) != str(comment.user_id):
         return { "errors": ["Authorization required"] }, 403
-    comment.comment = request.json["comment"]
+    comment.comment = request.json
     db.session.commit()
-    return comment.to_dict()
+    editedComment = comment.to_dict()
+
+    comment = Comment.query.filter(editedComment['id'] == Comment.id).options(\
+        joinedload(Comment.user).options(load_only('id','username', 'preview_image')),\
+        joinedload(Comment.replies).options(load_only('id','comment_id'))\
+        ).one_or_none()
+
+    repliesCount = db.session.query(func.count(Reply.id)).filter(comment.id == Reply.comment_id).scalar()
+    if not repliesCount:
+        repliesCount = 0
+
+    return {
+        "id": comment.id,
+        "user_id": comment.user_id,
+        "comment":comment.comment,
+        "created_at": comment.created_at,
+        "updated_at": comment.updated_at,
+        "numOfReplies": repliesCount,
+        "Owner": {
+            "id": comment.user.id,
+            "username": comment.user.username,
+            "preview_image": comment.user.preview_image
+        }
+    }
 
 
 # Delete a Comment
@@ -92,7 +139,7 @@ def delete_comment(comment_id):
     if not comment:
         return { "errors": ["Comment not found"] }, 404
     user_id = current_user.get_id()
-    if user_id != comment.user_id:
+    if str(user_id) != str(comment.user_id):
         return { "errors": ["Authorization required"] }, 403
     db.session.delete(comment)
     db.session.commit()
