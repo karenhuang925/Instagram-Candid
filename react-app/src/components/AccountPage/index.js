@@ -1,96 +1,104 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { loadAllPostsByUserId } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
-// import Post from "../Posts/Post";
 import { Redirect, useParams } from "react-router-dom";
 import {
   fetchFollower,
-  // fetchCreateFollower,
+  fetchFollowing,
   fetchMinusFollower,
   fetchPlusFollower,
 } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
+import AccountProfilePost from "../AccountProfilePosts";
+import "./AccountPage.css";
+import { useHistory } from "react-router-dom";
+import FollowButton from "../HomePage/FollowerSuggestions/followButton";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
+  let history = useHistory();
+
+  const [newArr, setNewArr] = useState([]);
 
   const { id } = useParams();
+
   useEffect(() => {
     dispatch(getUserFunction(id));
     dispatch(fetchFollower(id));
+    dispatch(fetchFollowing(id));
     dispatch(loadAllPostsByUserId(id));
-    //       dispatch(loadAllPostsByUserId(accountId));
   }, [dispatch]);
-  const account = useSelector((state) => state.user);
-  //   const posts = Object.values(useSelector((state) => state.posts));
-  //   const sessionUser = useSelector((state) => state.session);
-  //   const followers = Object.values(
-  //     useSelector((state) => state.follows)
-  //   );
-  //   //fix or fix reducer
-  //   const following = Object.values(
-  //     useSelector((state) => state.users[accountId].following)
-  //   );
-  //   //fix
-  //   // if (!sessionUser?.id) {
-  //   //   return <Redirect to="/" />;
-  //   //redirect should return to sign up/log in page, but not sure what url will be
-  //   // } else if (sessionUser?.id === accountId) {
-  //   //   return <Redirect to="/users/current/posts" />;
-  //   // }
-  //   //url might be different on frontend for profile page, worried that will flash below return on load
 
-  //   const followAccount = async (e) => {
-  //     e.preventDefault();
+  const account = useSelector((state) => state?.user);
+  const posts = useSelector((state) => state?.posts?.post) || "";
+  const sessionUser = useSelector((state) => state?.session);
+  const followers = useSelector((state) => state?.follows?.followers) || "";
+  const following = useSelector((state) => state?.follows?.following) || "";
 
-  //     // if (following.includes(accountId)) {
-  //     await dispatch(fetchPlusFollower(accountId));
-  //     // } else if (!following.includes(accountId)) {
-  //     //   await dispatch(fetchCreateFollower(accountId));
-  //     // }
-  //   };
+  useEffect(() => {
+    let arr = [];
+    if (followers) {
+      followers.forEach((follow) => {
+        arr.push(follow.user_id);
+      });
+      setNewArr([...newArr, ...arr]);
+    }
+  }, [followers]);
 
-  //   const unfollowAccount = async (e) => {
-  //     e.preventDefault();
-
-  //     if (!followers.includes(sessionUser?.id))
-  //       await dispatch(fetchMinusFollower(account.id));
-  //   };
+  if (sessionUser?.id === parseInt(id)) {
+    history.push("/my/profile");
+  }
 
   return (
     <>
-      <img src={account?.preview_image} alt="Account Profile Picture" />
-      <p>{account?.username}</p>
-      <p>
-        {account?.first_name} {account?.last_name}
-      </p>
-      {/* {!followers.includes(sessionUser?.id) && (
-        <button onClick={followAccount}>Follow</button>
-      )} */}
-      {/* //       {followers.includes(sessionUser?.id) && ( */}
-      {/* //         <button onClick={unfollowAccount}>Unfollow</button>
-    //       )} */}
-      {/* toggle button depending whether or not follower already */}
-      {/* //       <span>posts</span>
-    //       <span>followers</span>
-    //       <span>following</span>
-    //       {/* add aggregates */}
-      {/* //       <span>{account?.username}</span>
-    //       <p>{account?.biography}</p>
-    //       <span>Posts</span>
-    //       <hr />
-    //       <hr />
-    //       <ul>
-    //         {posts.map((post) => ( */}
-      {/* */}
-      {/* //           <li key={post.id}>
-    //             <Post />
-    //           </li>
-    //         ))} */}{" "}
-      {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
-      {/* //       </ul> */}
-      {/* // <span>About</span> */}
-      {/* link to github repo */}
+      <div id="profile-div">
+        <div id="profile-top">
+          <img
+            src={account?.preview_image}
+            alt="Account Profile Picture"
+            id="profile-pic"
+          />
+          <div id="profile-right">
+            <div id="profile-top-right">
+              <span id="profile-username">{account?.username}</span>
+              {!newArr?.includes(sessionUser?.id) && (
+                <FollowButton userId={sessionUser?.id} followsUserId={id}>
+                  Follow
+                </FollowButton>
+              )}
+            </div>
+            <div id="profile-aggs">
+              <div id="post-agg">
+                <span id="number-1">{Object?.keys(posts)?.length}</span>
+                <span>posts</span>
+              </div>
+              <div id="follower-agg">
+                <span id="number-2">{Object?.keys(followers)?.length}</span>
+                <span>followers</span>
+              </div>
+              <div id="following-agg">
+                <span id="number-3">{Object?.keys(following)?.length}</span>
+                <span>following</span>
+              </div>
+            </div>
+            <p id="profile-names">
+              {account?.first_name} {account?.last_name}
+            </p>
+            <p id="biograph">{account?.biography}</p>
+          </div>
+        </div>
+        <hr id="long-hr" />
+        <i class="fa-solid fa-table-cells" id="grid-icon"></i>
+        <span id="post-tab">POSTS</span>
+        <div id="post-previews">
+          {Object?.keys(posts)?.map((postId) => {
+            return <AccountProfilePost key={postId} post={posts[postId]} />;
+          })}
+          {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
+        </div>
+        <p className="about-link">About</p>
+        {/* link to github repo */}
+      </div>
     </>
   );
 };

@@ -1,66 +1,61 @@
 //Type Key String Literals
-const LOAD_POSTS = "/api/getPosts"
-const LOAD_FEED_POSTS = "/api/getFeedPosts"
-const CREATE_POST = "/api/createPost"
-const UPDATE_POST_BY_USER = "/api/updatePost"
-const DELETE_POST_BY_USER = "/api/deletePost"
-const UPDATE_LIKES_ADD = "/api/updateLikesinPosts/Liked"
-const UPDATE_LIKES_MINUS = "/api/updateLikesinPosts/Unliked"
-
-
+const LOAD_POSTS = "/api/getPosts";
+const LOAD_FEED_POSTS = "/api/getFeedFeedPosts";
+const CREATE_POST = "/api/createPost";
+const UPDATE_POST_BY_USER = "/api/updatePost";
+const DELETE_POST_BY_USER = "/api/deletePost";
+const UPDATE_LIKES_ADD = "/api/updateLikesinPosts/Liked";
+const UPDATE_LIKES_MINUS = "/api/updateLikesinPosts/Unliked";
 
 //Redux action creators
 const loadPosts = (allPosts) => {
   return {
     type: LOAD_POSTS,
-    payload: allPosts
-  }
-}
+    payload: allPosts,
+  };
+};
 
 const loadFeedPosts = (allPosts) => {
   return {
     type: LOAD_FEED_POSTS,
-    payload: allPosts
-  }
-}
+    payload: allPosts,
+  };
+};
 
 const createAPost = (newPost) => {
   return {
     type: CREATE_POST,
-    payload: newPost
-  }
-}
+    payload: newPost,
+  };
+};
 
 const updateAPost = (postEdits) => {
   return {
     type: UPDATE_POST_BY_USER,
-    payload: postEdits
-  }
-}
+    payload: postEdits,
+  };
+};
 
 const deleteAPost = (postId) => {
   return {
     type: DELETE_POST_BY_USER,
-    payload: postId
-  }
-}
+    payload: postId,
+  };
+};
 
 const addToTheLikes = (likeObject) => {
   return {
     type: UPDATE_LIKES_ADD,
-    payload: likeObject
-  }
-}
+    payload: likeObject,
+  };
+};
 
 const minusToTheLikes = (likeObject) => {
   return {
     type: UPDATE_LIKES_MINUS,
-    payload: likeObject
-  }
-}
-
-
-
+    payload: likeObject,
+  };
+};
 
 //Thunk action creators
 
@@ -72,41 +67,41 @@ export const loadAllPosts = () => async (dispatch) => {
     const posts = await response.json();
 
     let allPosts = [];
-    posts.Posts.forEach(post => {
+    posts.Posts.forEach((post) => {
       allPosts.push(post);
     });
 
     return response;
   }
-}
+};
 
 // Get all Posts created by the Current User
 export const loadAllCurrentUserPosts = () => async (dispatch) => {
-  const response = await fetch("api/users/current/posts");
+  const response = await fetch("/api/users/current/posts");
   const posts = await response.json();
 
-  let currentUserPosts = []
-  posts.Posts.forEach(post => {
-    currentUserPosts.push(post)
+  let currentUserPosts = [];
+  posts.Posts.forEach((post) => {
+    currentUserPosts.push(post);
   });
 
   dispatch(loadPosts(currentUserPosts));
   return response;
-}
+};
 
 // Get all Posts by User id
 export const loadAllPostsByUserId = (userId) => async (dispatch) => {
   const response = await fetch(`/api/users/${userId}/posts`);
   const posts = await response.json();
 
-  let userPosts = {}
-  posts.Posts.forEach(post => {
-    userPosts[post.id] = post
+  let userPosts = [];
+  posts.Posts.forEach((post) => {
+    userPosts.push(post);
   });
 
   dispatch(loadPosts(userPosts));
   return response;
-}
+};
 
 // Get all Posts of Users Followed by Current User
 export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
@@ -114,55 +109,54 @@ export const loadAllPostsOfUsersFollowed = () => async (dispatch) => {
 
   const posts = await response.json();
 
-
-  let userPosts = []
-  posts?.Posts?.forEach(post => {
-    userPosts.push(post)
+  let userPosts = [];
+  posts?.Posts?.forEach((post) => {
+    userPosts.push(post);
   });
 
   dispatch(loadFeedPosts(userPosts));
   return response;
-}
+};
 
 // Create a Post
 export const createPost = (post) => async (dispatch) => {
-  const response = await fetch('/api/posts', {
+  const response = await fetch("/api/posts", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(post)
-  })
+    body: JSON.stringify(post),
+  });
   const newPost = await response.json();
   dispatch(createAPost(newPost));
 
   return newPost;
-}
+};
 
 // Edit a Post
 export const editPost = (edits, id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(edits)
+    body: JSON.stringify(edits),
   });
   const updatePost = await response.json();
 
   dispatch(updateAPost(updatePost));
   return response;
-}
+};
 
 // Delete a Post
 export const deletePost = (id) => async (dispatch) => {
   const response = await fetch(`/api/posts/${id}`, {
-    method: "DELETE"
+    method: "DELETE",
   });
 
   dispatch(deleteAPost(id));
   return response;
-}
+};
 
 //Special Thunk Action Reducer
 // EDIT POST - Adds Like to Post by the Current User
@@ -182,7 +176,7 @@ export const minusTheLikeToPost = (like) => async (dispatch) => {
   const res = await fetch(`/api/likes/${id}`, {
     method: "PUT",
     body: JSON.stringify({
-      like_status: false
+      like_status: false,
     }),
   });
   if (res.ok) {
@@ -192,14 +186,10 @@ export const minusTheLikeToPost = (like) => async (dispatch) => {
   }
 };
 
-
-
 //Initial State Object
 const initialState = {
-  post: null
+  post: null,
 };
-
-
 
 //Redux Reducer
 const postReducer = (state = initialState, action) => {
@@ -208,37 +198,30 @@ const postReducer = (state = initialState, action) => {
     case LOAD_FEED_POSTS:
       newState = {
         ...state,
-        post: [...action.payload]
-      }
+        post: [...action.payload],
+      };
       return newState;
 
     case LOAD_POSTS:
       newState = {
         ...state,
-        post: [...action.payload]
-      }
+        post: [...action.payload],
+      };
       return newState;
 
     case CREATE_POST:
       newState = {
         ...state,
-        post: [
-          action.payload,
-          ...state.post,
-        ]
+        post: [action.payload, ...state.post],
       };
-      return newState
+      return newState;
 
     case UPDATE_POST_BY_USER:
       newState = {
         ...state,
-        post: [
-          ...state.post,
-          action.payload
-        ]
+        post: [...state.post, action.payload],
       };
-      return newState
-
+      return newState;
 
     case UPDATE_LIKES_ADD:
       let currentPostIndex;
@@ -247,84 +230,79 @@ const postReducer = (state = initialState, action) => {
       let editedLikesArray;
 
       for (let i = 0; i < state.post.length; i++) {
-        currentPostIndex = i
-        currentPost = state.post[i]
-        currentLikesArray = currentPost['Likes']
+        currentPostIndex = i;
+        currentPost = state.post[i];
+        currentLikesArray = currentPost["Likes"];
 
         if (action.payload.post_id === currentPost.id) {
           editedLikesArray = currentLikesArray.slice();
-          editedLikesArray.push(action.payload)
-          break
+          editedLikesArray.push(action.payload);
+          break;
         }
       }
 
+      currentLikesArray = editedLikesArray;
 
-      currentLikesArray = editedLikesArray
+      currentPost["Likes"] = currentLikesArray;
+      currentPost["likeStatus"] = true;
+      let currentCountOfLikes = currentPost["likes"];
+      currentPost["likes"] = currentCountOfLikes + 1;
 
-      currentPost["Likes"] = currentLikesArray
-      currentPost["likeStatus"] = true
-      let currentCountOfLikes = currentPost['likes']
-      currentPost["likes"] = currentCountOfLikes + 1
+      const newStatePostArray = state.post;
+      newStatePostArray.splice(currentPostIndex, 1, currentPost);
 
-      const newStatePostArray = state.post
-      newStatePostArray.splice(currentPostIndex, 1, currentPost)
-    
       newState = {
         ...state,
         post: [
           ...newStatePostArray,
           // currentPost
-        ]
-      }
-    
-      return newState
-      
+        ],
+      };
+
+      return newState;
+
     case UPDATE_LIKES_MINUS:
       let currentIndex;
       let postToCheck;
       let currentPostLikes;
       let updatedLikesArray;
 
-      for(let i = 0; i < state.post.length; i++) {
+      for (let i = 0; i < state.post.length; i++) {
         currentIndex = i;
-        postToCheck = state.post[i]
-        currentPostLikes = postToCheck["Likes"]
+        postToCheck = state.post[i];
+        currentPostLikes = postToCheck["Likes"];
 
         if (action.payload.post_id === postToCheck.id) {
+          updatedLikesArray = currentPostLikes.filter((like) => {
+            return action.payload.id !== like.id;
+          });
 
-          updatedLikesArray = currentPostLikes.filter((like) =>{
-            return action.payload.id !== like.id 
-          })
-
-          break
+          break;
         }
       }
 
-      currentPostLikes = updatedLikesArray
+      currentPostLikes = updatedLikesArray;
 
-      postToCheck["Likes"] = currentPostLikes
-      postToCheck["likeStatus"] = false
-      let countOfLikes = postToCheck['likes']
-      postToCheck["likes"] = countOfLikes - 1
-      
-      const updatedPostStoreArray = state.post
-      updatedPostStoreArray.splice(currentIndex, 1, postToCheck)
+      postToCheck["Likes"] = currentPostLikes;
+      postToCheck["likeStatus"] = false;
+      let countOfLikes = postToCheck["likes"];
+      postToCheck["likes"] = countOfLikes - 1;
+
+      const updatedPostStoreArray = state.post;
+      updatedPostStoreArray.splice(currentIndex, 1, postToCheck);
 
       newState = {
         ...state,
-        post: [
-          ...updatedPostStoreArray,
-        ]
-      }
-      return newState
-
+        post: [...updatedPostStoreArray],
+      };
+      return newState;
 
     case DELETE_POST_BY_USER:
       newState = {
         ...state,
         post: {
           ...state.post,
-        }
+        },
       };
       delete newState.post[action.payload];
       return newState;
