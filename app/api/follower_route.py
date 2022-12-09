@@ -29,7 +29,8 @@ def follower_suggestion(userId):
 @login_required
 @follower_routes.route('/users/<int:userId>/followers', methods=['POST'])
 def follow_a_user(userId):
-    follows_user_id = request.json["follows_user_id"]
+    print(request.get_json())
+    follows_user_id = request.json['follows_user_id']
 
     if userId == follows_user_id:
         return {"errors": ["User cannot follow themselves"]}, 401

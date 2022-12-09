@@ -17,7 +17,7 @@ const loadAPost = (post) => {
 
 // Get details of a Post from an id
 export const loadPostById = (id) => async (dispatch) => {
-    const response = await fetch(`api/posts/${id}`);
+    const response = await fetch(`/api/posts/${id}`);
     const post = await response.json()
 
     dispatch(loadAPost(post));
@@ -37,8 +37,8 @@ const singlePostReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_A_POST:
             newState = {
-                ...state,
-                post: action.payload
+                // ...state,
+                post: {...action.payload}
             }
             return newState
         default:
