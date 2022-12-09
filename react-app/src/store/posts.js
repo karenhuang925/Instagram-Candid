@@ -224,8 +224,8 @@ const postReducer = (state = initialState, action) => {
       newState = {
         ...state,
         post: [
+          action.payload,
           ...state.post,
-          action.payload
         ]
       };
       return newState
