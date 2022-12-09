@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 //Store
-import { createPost } from "../../store/posts";
+import { createPost, loadAllPosts } from "../../store/posts";
 import { addMediaFunction } from "../../store/media";
 
 // Components
@@ -50,6 +50,7 @@ function CreatePost({ setModal }) {
             mediaData.media_file = images[index]
             await dispatch(addMediaFunction(mediaData))
         }
+        await dispatch(loadAllPosts())
         setLoaded(true)
     }
     return (

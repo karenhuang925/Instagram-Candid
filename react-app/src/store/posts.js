@@ -52,7 +52,6 @@ export const loadAllPosts = () => async (dispatch) => {
       allPosts[post.id] = post;
     });
 
-    dispatch(loadPosts(allPosts));
     return response;
   }
 }
