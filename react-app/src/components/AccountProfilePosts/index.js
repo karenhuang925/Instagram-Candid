@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
 import PostDetail from "../Posts/Post/PostDetail/PostDetail";
 
-const AccountProfilePost = ({ post }) => {
+const AccountProfilePost = ({ post, user }) => {
   const [showPostModal, setShowPostModal] = useState(false);
   // const [hover, setHover] = useState(false);
 
