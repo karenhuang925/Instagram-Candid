@@ -4,9 +4,20 @@ from sqlalchemy import func
 from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db, Follower, Post, User, Like, Comment
-import random
+from app.forms import PostEditForm
+# import random
 
 post_routes = Blueprint('posts', __name__)
+
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
 
 #Still Need to:
     # Need to return Posts ordered by date
@@ -444,9 +455,13 @@ def edit_post(id):
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
-    caption = request.json['caption']
-    location = request.json['location']
+    # caption = request.json['caption']
+    # location = request.json['location']
 
+    form = PostEditForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
     PostEdit = Post.query.filter(id == Post.id).one_or_none()
     if not PostEdit:
         return {
@@ -459,6 +474,9 @@ def edit_post(id):
             "message": "Forbidden",
             "statusCode": 403
             }, 403
+
+    # PostEdit.caption = caption
+    # PostEdit.location = location
 
     PostEdit.caption = caption
     PostEdit.location = location
@@ -509,6 +527,8 @@ def edit_post(id):
             "previewImage": post.user.preview_image
         }
     }
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 
 # Delete a Post
