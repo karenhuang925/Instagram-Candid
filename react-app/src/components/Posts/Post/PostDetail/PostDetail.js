@@ -15,6 +15,7 @@ import CommentReplyActionModal from "../../../CommentReplyActionModal/CommentRep
 
 import EditPostModal from "../EditDeletePost/EditPostComponent/EditPostModal";
 import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
+import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
 
 function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
   let [contectType, setContentType] = useState("comment");
   let [actionType, setActionType] = useState("post");
   let [itemId, setItemId] = useState(0);
+  let [replyTo, setReplyTo] = useState("");
 
   // let post = useSelector((state) => state.singlePost.post)
   let allComments = useSelector((state) => state?.comments?.comment) || "";
@@ -46,6 +48,12 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
 
   var options = { year: "numeric", month: "long", day: "numeric" };
   let createdAt = new Date(post.created_at).toDateString(undefined, options);
+
+  function CreateReply(item) {
+    setContentType("reply");
+    setItemId(item.id);
+    setReplyTo(item.Owner.username);
+  }
 
   return (
     <section className="modal-outer">
@@ -129,32 +137,40 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
                         </p>
                         <div>{comment.comment}</div>
                       </div>
-                      <div>
-                        {diffinhours > 23 ? (
-                          <div className="post-time">
-                            {diffindays > 1
-                              ? `${commentdiffindays} DAYS AGO`
-                              : `1 DAY AGO`}
-                          </div>
-                        ) : (
-                          <div className="post-time">
-                            {diffinhours > 1
-                              ? `${commentdiffinhours} HOURS AGO`
-                              : `1 HOUR AGO`}
-                          </div>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <div>
+                          {commentdiffinhours > 23 ? (
+                            <div id="bold" className="post-time">
+                              {commentdiffindays > 1
+                                ? `${commentdiffindays}d`
+                                : `1d`}
+                            </div>
+                          ) : (
+                            <div id="bold" className="post-time">
+                              {commentdiffinhours > 1
+                                ? `${commentdiffinhours}h`
+                                : `1h`}
+                            </div>
+                          )}
+                        </div>
+                        <div className="post-time" id="bold">
+                          Reply
+                        </div>
+                        {comment.user_id == user.id && (
+                          <CommentReplyActionModal
+                            item={comment}
+                            setActionType={setActionType}
+                            setItemId={setItemId}
+                          />
                         )}
                       </div>
-                      {actionType == "post" ? (
-                        <CreateCommentForm
-                          className="addComment"
-                          itemId={post.id}
-                        ></CreateCommentForm>
-                      ) : (
-                        <EditCommentForm
-                          className="addComment"
-                          itemId={itemId}
-                          setActionType={setActionType}
-                        ></EditCommentForm>
+                      {comment.numOfReplies > 0 && (
+                        <ViewReply
+                          comment={comment}
+                          setContentType={setContentType}
+                          setItemId={setItemId}
+                          setReplyTo={setReplyTo}
+                        ></ViewReply>
                       )}
                     </div>
                   </div>
@@ -191,17 +207,23 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
               </div>
             )}
           </div>
-
-          <div className="addComment">
-            <form className="post-comment-form">
-              <input
-                className="post-comment-input"
-                type="text"
-                placeholder="Add a comment..."
-              />
-              <button className="post-comment-button">Post</button>
-            </form>
-          </div>
+          {contectType == "comment" && actionType == "post" ? (
+            <CreateCommentForm
+              className="addComment"
+              itemId={post.id}
+            ></CreateCommentForm>
+          ) : contectType == "comment" && actionType == "edit" ? (
+            <EditCommentForm
+              className="addComment"
+              itemId={itemId}
+              setActionType={setActionType}
+            ></EditCommentForm>
+          ) : (
+            <CreateReplyForm
+              item={allComments[itemId]}
+              replyTo={replyTo}
+            ></CreateReplyForm>
+          )}
         </div>
       </div>
     </section>
