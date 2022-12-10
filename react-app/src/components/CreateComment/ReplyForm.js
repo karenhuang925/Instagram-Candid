@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loadCommentsByPostId } from "../../store/comments";
-import { createReply } from "../../store/reply";
+import { loadAllPostsOfUsersFollowed } from "../../store/posts";
+import { createReply, loadRepliesByCommentId } from "../../store/reply";
 
-const ReplyForm = ({ reply, itemId, formType }) => {
+const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
   const dispatch = useDispatch();
-  const [replyContent, setReplyContent] = useState(reply.reply);
+
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
@@ -16,10 +16,11 @@ const ReplyForm = ({ reply, itemId, formType }) => {
       setLoading(false);
     }, 1000);
     if (formType === "Post") {
-      dispatch(createReply(itemId, replyContent));
-      // .then(()=>{
-      //     dispatch(loadCommentsByPostId(itemId))
-      // })
+      dispatch(createReply(itemId, replyContent))
+      .then(()=>{
+          dispatch(loadAllPostsOfUsersFollowed())
+          dispatch(loadRepliesByCommentId(itemId))
+      })
     }
     // else if(formType === "Edit"){
     //     dispatch(editComment(replyContent, itemId))
@@ -30,7 +31,6 @@ const ReplyForm = ({ reply, itemId, formType }) => {
 
   return (
     <form className="post-comment-form">
-      <label>
         <input
           className="post-comment-input"
           type="text"
@@ -38,7 +38,6 @@ const ReplyForm = ({ reply, itemId, formType }) => {
           onChange={(e) => setReplyContent(e.target.value)}
           required
         />
-      </label>
       <input
         className="post-comment-button"
         type="submit"

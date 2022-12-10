@@ -49,13 +49,6 @@ const CommentForm = ({ comment, itemId, formType, setActionType }) => {
 
   return (
     <form className="post-comment-form">
-      <ul>
-        {errors.map((error, idx) => (
-          <li className="error" key={idx}>
-            {error}
-          </li>
-        ))}
-      </ul>
       <input
         placeholder="Add a comment..."
         className="post-comment-input"
