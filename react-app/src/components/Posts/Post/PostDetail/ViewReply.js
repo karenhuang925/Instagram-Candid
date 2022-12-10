@@ -8,7 +8,7 @@ import './ViewReply.css'
 
 
 
-function ViewReply({ comment }) {
+function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
     const dispatch = useDispatch()
     const [showReply, setShowReply] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -24,6 +24,12 @@ function ViewReply({ comment }) {
     function onClickHandler(){
         setShowReply(!showReply)
         dispatch(loadRepliesByCommentId(comment.id))
+    }
+
+    function CreateReply(value){
+        setContentType('reply')
+        setItemId(comment.id)
+        setReplyTo(value.Owner.username)
     }
 
     let replies = useSelector((state) => state.replies.reply)
@@ -42,6 +48,7 @@ function ViewReply({ comment }) {
                         </div>
                     ) : (
                         replies && Object.values(replies).map((value) => {
+                            console.log(value)
                             let today = Date.parse(new Date())
                             let unixTimeZero = Date.parse(value.created_at)
 
@@ -63,7 +70,7 @@ function ViewReply({ comment }) {
                                                     ? <div className='post-time' id='bold'>{diffindays > 1 ? `${diffindays}d` : `1d`}</div>
                                                     : <div className='post-time' id='bold'>{diffinhours > 1 ? `${diffinhours}h` : `1h`}</div>
                                                 }</div>
-                                                <div className='post-time' id='bold'>Reply</div>
+                                                <div className='post-time' id='bold' onClick={CreateReply(value)}>Reply</div>
                                             </div>
                                         </div>
                                     </div>
