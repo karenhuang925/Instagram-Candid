@@ -6,7 +6,7 @@ import { createReply } from "../../store/reply";
 
 const ReplyForm = ({ reply, itemId, formType }) => {
   const dispatch = useDispatch();
-
+  const [replyContent, setReplyContent] = useState(reply.reply);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
