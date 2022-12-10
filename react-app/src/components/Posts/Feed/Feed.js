@@ -27,9 +27,9 @@ function Feed() {
     return (
         <section className='feed-section'>
             <section className='post-feed-container'>
-                {feed.map((post) => {
+                {feed?.map((post) => {
                     return (
-                        <Post key={post.id} post={post} user={user}/>
+                        <Post key={post?.id} post={post} user={user}/>
                     )
                 })}
             </section>
