@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./AccountProfilePost.css";
 import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
@@ -16,6 +17,7 @@ const AccountProfilePost = ({ post }) => {
     setHover(false);
   };
 
+  const sessionUser = useSelector((state) => state?.session);
   return (
     <>
       <Link onClick={() => setShowPostModal(true)}>
@@ -30,7 +32,7 @@ const AccountProfilePost = ({ post }) => {
       {hover && <div>Hello</div>}
       {showPostModal && (
         <Modal onClose={() => setShowPostModal(false)}>
-          <PostDetail postId={post.id} />
+          <PostDetail post={post} user={sessionUser} />
         </Modal>
       )}
     </>
