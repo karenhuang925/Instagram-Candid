@@ -27,7 +27,7 @@ function SignUpForm() {
         if((first_name.length < 2) || (first_name.trim().length === 0)) errors.push("- Invalid first name");
         if((last_name.length < 2) || (last_name.trim().length === 0)) errors.push("- Invalid last name");
         if((username.length < 5) || (username.trim().length === 0)) errors.push("- Invalid username");
-        if(!email.includes("@") && !email.endsWith(".com")) errors.push("- Invalid email");
+        if(!email.includes("@") || !email.endsWith(".com")) errors.push("- Invalid email");
         if(password.length < 5) errors.push("- Password length must be greater than 4 characters.");
         if(!preview_image.endsWith(".jpg")) errors.push("- Invalid image format.");
         setFrontendErrors(errors)

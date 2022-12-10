@@ -12,12 +12,13 @@ import ViewReply from "./ViewReply";
 import CreateCommentForm from "../../../CreateComment/CreateCommentForm";
 import EditCommentForm from "../../../CreateComment/EditCommentForm";
 import CommentReplyActionModal from "../../../CommentReplyActionModal/CommentReplyActionModal";
+import { NavLink } from "react-router-dom";
 
 import EditPostModal from "../EditDeletePost/EditPostComponent/EditPostModal";
 import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
 import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
 
-function PostDetail({ post, user, wasLiked, setWasLiked}) {
+function PostDetail({ post, user, wasLiked, setWasLiked }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadPostById(post.id));
@@ -55,6 +56,8 @@ function PostDetail({ post, user, wasLiked, setWasLiked}) {
     setReplyTo(item.Owner.username);
   }
 
+  console.log(post?.Owner?.id)
+
   return (
     <section className="modal-outer">
       <div className="image">
@@ -88,11 +91,13 @@ function PostDetail({ post, user, wasLiked, setWasLiked}) {
         <div className="postinfo">
           <div className="captionAndComments">
             <div className="caption-card">
-              <img
-                alt="preview"
-                src={post.Owner.previewImage}
-                className="detail-profile-pic"
-              ></img>
+              <NavLink to={`/profile/${post?.Owner?.id}`} exact={true}>
+                <img
+                  alt="preview"
+                  src={post.Owner.previewImage}
+                  className="detail-profile-pic"
+                ></img>
+              </NavLink>
               <div>
                 <div className="usernameAndCaption">
                   <p className="caption-username">{post.Owner.username}</p>
@@ -125,11 +130,13 @@ function PostDetail({ post, user, wasLiked, setWasLiked}) {
                 );
                 return (
                   <div key={comment.id} className="caption-card">
-                    <img
-                      alt="preview"
-                      src={comment.Owner.preview_image}
-                      className="detail-profile-pic"
-                    ></img>
+                    <NavLink to={`/profile/${comment?.Owner?.id}`} exact={true}>
+                      <img
+                        alt="preview"
+                        src={comment.Owner.preview_image}
+                        className="detail-profile-pic"
+                      ></img>
+                    </NavLink>
                     <div>
                       <div className="usernameAndCaption">
                         <p className="caption-username">
@@ -153,7 +160,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked}) {
                             </div>
                           )}
                         </div>
-                        <div className="post-time" id="bold">
+                        <div className="post-time" id="bold" onClick={()=>{CreateReply(comment)}}>
                           Reply
                         </div>
                         {comment.user_id == user.id && (
@@ -222,6 +229,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked}) {
             <CreateReplyForm
               item={allComments[itemId]}
               replyTo={replyTo}
+              className="addComment"
             ></CreateReplyForm>
           )}
         </div>

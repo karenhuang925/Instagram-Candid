@@ -50,7 +50,7 @@ const CommentForm = ({ comment, itemId, formType, setActionType }) => {
     }
     setCommentContent("");
   };
-  
+
   useEffect(() => {
     const errors = [];
     if(!commentContent.trim().length) errors.push("Invalid comment")
@@ -60,13 +60,6 @@ const CommentForm = ({ comment, itemId, formType, setActionType }) => {
 
   return (
     <form className="post-comment-form">
-      {/* <ul>
-        {frontendErrors.map((error, idx) => (
-          <li className="error" key={idx}>
-            {error}
-          </li>
-        ))}
-      </ul> */}
       <input
         placeholder="Add a comment..."
         className="post-comment-input"

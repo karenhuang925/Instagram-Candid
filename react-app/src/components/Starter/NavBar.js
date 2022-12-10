@@ -10,18 +10,18 @@ import './NavBar.css'
 
 const Outstyle = {
   height: '100vh',
-  borderRight:'1px solid #eeeeee',
-  width:'250px',
-  display:'flex',
+  borderRight: '1px solid #eeeeee',
+  width: '250px',
+  display: 'flex',
   paddingTop: '8px',
   paddingLeft: '12px',
   paddingRight: '12px',
   paddingBottom: '20px',
   flexDirection: 'column',
-  position:'fixed'
+  position: 'fixed'
 }
-const imageStyle ={
-  width:"110px",
+const imageStyle = {
+  width: "110px",
   paddingTop: '10px',
   paddingBottom: '10px'
 }
@@ -30,48 +30,48 @@ const listStyle = {
   padding: 0,
   margin: 0,
   listStyleType: 'none',
-  display:'flex',
+  display: 'flex',
   flexDirection: 'column',
   boxSizing: 'border-box',
   textDecoration: 'none',
   flexGrow: 1,
-  fontFamily:'Helvetica, Arial, sans-serif',
-  fontWeight:400,
-  fontSize:'16px',
+  fontFamily: 'Helvetica, Arial, sans-serif',
+  fontWeight: 400,
+  fontSize: '16px',
 }
-const iconStyle={
+const iconStyle = {
   marginRight: '15px',
   fontSize: '25px'
 }
 const itemStyle = {
   textDecoration: 'none',
-  outline:'none',
+  outline: 'none',
   color: 'black',
   display: 'inline-flex',
-  alignItems:'center',
+  alignItems: 'center',
   paddingTop: '20px',
   paddingBottom: '20px',
   marginBottom: '5px',
-  marginTop:'5px',
+  marginTop: '5px',
 }
 const lastItemStyle = {
   textDecoration: 'none',
-  outline:'none',
+  outline: 'none',
   color: 'black',
-  marginBottom:'40px',
+  marginBottom: '40px',
   paddingTop: '25px',
   paddingBottom: '25px',
-  marginTop:'5px',
+  marginTop: '5px',
   display: 'inline-flex',
-  alignItems:'center',
-  fontFamily:'Helvetica, Arial, sans-serif',
-  fontWeight:400,
-  fontSize:'1em',
+  alignItems: 'center',
+  fontFamily: 'Helvetica, Arial, sans-serif',
+  fontWeight: 400,
+  fontSize: '1em',
 }
 const profilePic = {
   width: "25px",
   height: '25px',
-  borderRadius:"20px",
+  borderRadius: "20px",
   marginRight: "15px",
   objectFit: "cover",
 }
@@ -89,10 +89,10 @@ const NavBar = () => {
     history.push('/')
   };
 
-  if(!user){
+  if (!user) {
     return null
   }
-  else if (user?.preview_image == undefined || user?.preview_image.length < 10 ){
+  else if (user?.preview_image == undefined || user?.preview_image.length < 10) {
     user.preview_image = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
   }
 
@@ -103,7 +103,7 @@ const NavBar = () => {
         <ul style={listStyle}>
           <li>
             <NavLink to='/' exact={true} activeClassName='active' style={itemStyle}>
-              <i style={iconStyle} className="fa-solid fa-house fa-lg"/>
+              <i style={iconStyle} className="fa-solid fa-house fa-lg" />
               <div>Home</div>
             </NavLink>
           </li>
@@ -115,37 +115,37 @@ const NavBar = () => {
           </li>
           <li >
             <NavLink to='/explore' exact={true} activeClassName='active' style={itemStyle}>
-              <i style={iconStyle} className="fa-regular fa-compass fa-lg"/>
+              <i style={iconStyle} className="fa-regular fa-compass fa-lg" />
               <div>Explore</div>
             </NavLink>
           </li>
           <li >
             <NavLink to='/messages' exact={true} activeClassName='active' style={itemStyle}>
-            <i style={iconStyle} className="fa-brands fa-facebook-messenger fa-lg"></i>
+              <i style={iconStyle} className="fa-brands fa-facebook-messenger fa-lg"></i>
               <div>Messages</div>
             </NavLink>
           </li>
           <li >
             <NavLink to='/notifications' exact={true} activeClassName='active' style={itemStyle}>
-            <i style={iconStyle} className="fa-regular fa-heart fa-lg"/>
+              <i style={iconStyle} className="fa-regular fa-heart fa-lg" />
               <div>Notifications</div>
             </NavLink>
           </li>
           <li >
             <div activeclassname='active' style={itemStyle} onClick={() => setModal(true)}>
-              <i style={iconStyle} className="fa-regular fa-square-plus fa-lg"/>
+              <i style={iconStyle} className="fa-regular fa-square-plus fa-lg" />
               <div>Create</div>
             </div>
             {
               modal && (
                 <Modal onClose={() => setModal(false)}>
-                  <CreatePost { ...{ setModal } }/>
+                  <CreatePost {...{ setModal }} />
                 </Modal>
               )
             }
           </li>
           <li >
-            <NavLink to='/users' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to={`/profile/${user.id}`} exact={true} activeClassName='active' style={itemStyle}>
               <img alt='preview' src={user.preview_image} style={profilePic}></img>
               Profile
             </NavLink>
@@ -157,7 +157,7 @@ const NavBar = () => {
           </li>
         </ul>
         <NavLink to='/more' exact={true} activeClassName='active' style={lastItemStyle} className='more'>
-          <i style={iconStyle} className="fa-solid fa-bars fa-lg"/>
+          <i style={iconStyle} className="fa-solid fa-bars fa-lg" />
           <div>More</div>
         </NavLink>
       </nav>
