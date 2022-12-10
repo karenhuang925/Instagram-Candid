@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 function ImageComponent({ images }) {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const length = images.length;
+    const length = images?.length ? images.length : null
 
     const nextImage = () => {
         setCurrentIndex(currentIndex === length - 1 ? 0 : currentIndex + 1)
