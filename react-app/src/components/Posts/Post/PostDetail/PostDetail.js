@@ -18,7 +18,7 @@ import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
 import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
 import { Link, NavLink } from "react-router-dom";
 
-function PostDetail({ post, user, wasLiked, setWasLiked}) {
+function PostDetail({ post, user, wasLiked, setWasLiked }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadPostById(post.id));
@@ -89,13 +89,13 @@ function PostDetail({ post, user, wasLiked, setWasLiked}) {
         <div className="postinfo">
           <div className="captionAndComments">
             <div className="caption-card">
-              <Link to={`/profile/${post.Owner.id}`}>
+              <NavLink to={`/profile/${post?.Owner?.id}`}>
                 <img
                   alt="preview"
-                  src={post.Owner.previewImage}
+                  src={post?.Owner?.previewImage}
                   className="detail-profile-pic"
                 ></img>
-              </Link>
+              </NavLink>
               <div>
                 <div className="usernameAndCaption">
                   <p className="caption-username">{post.Owner.username}</p>
