@@ -16,6 +16,7 @@ import CommentReplyActionModal from "../../../CommentReplyActionModal/CommentRep
 import EditPostModal from "../EditDeletePost/EditPostComponent/EditPostModal";
 import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
 import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
+import { Link, NavLink } from "react-router-dom";
 
 function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
   const dispatch = useDispatch();
@@ -88,11 +89,13 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
         <div className="postinfo">
           <div className="captionAndComments">
             <div className="caption-card">
-              <img
-                alt="preview"
-                src={post.Owner.previewImage}
-                className="detail-profile-pic"
-              ></img>
+              <Link to={`/profile/${post.Owner.id}`}>
+                <img
+                  alt="preview"
+                  src={post.Owner.previewImage}
+                  className="detail-profile-pic"
+                ></img>
+              </Link>
               <div>
                 <div className="usernameAndCaption">
                   <p className="caption-username">{post.Owner.username}</p>
@@ -125,11 +128,13 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
                 );
                 return (
                   <div key={comment.id} className="caption-card">
-                    <img
-                      alt="preview"
-                      src={comment.Owner.preview_image}
-                      className="detail-profile-pic"
-                    ></img>
+                    <NavLink to={`/profile/${comment?.Owner?.id}`}>
+                      <img
+                        alt="preview"
+                        src={comment?.Owner?.preview_image}
+                        className="detail-profile-pic"
+                      ></img>
+                    </NavLink>
                     <div>
                       <div className="usernameAndCaption">
                         <p className="caption-username">
