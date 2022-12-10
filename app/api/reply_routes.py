@@ -7,8 +7,8 @@ reply_routes = Blueprint('reply', __name__)
 
 #Still Need to:
     # Need to return Replies ordered by date
-    # Test Create, Edit, Delete routes and adjust code - 
-    # Include Authenticate/Authorization capability - 
+    # Test Create, Edit, Delete routes and adjust code -
+    # Include Authenticate/Authorization capability -
         # Need to make sure user is logged in in order to be complete requests
         # Need to make sure query exists
         # Need to make sure user owns post and authorized to make changes
@@ -23,7 +23,7 @@ def get_replies_for_comment(id):
         return {
             "message": "Replies couldn't be found",
             "statusCode": 404
-            }, 404 
+            }, 404
 
     return {
         "Replies" : [
@@ -48,22 +48,19 @@ def get_replies_for_comment(id):
 @reply_routes.route('/comments/<int:id>/replies', methods=["POST"])
 @login_required
 def create_new_reply(id):
+    user_id = current_user.get_id()
 
-    currentuser = current_user.to_dict()
-    user_id = currentuser['id']
-
-    user_reply = request.json['reply']
-    
     new_reply = Reply(
         user_id = user_id,
         comment_id = id,
-        reply = user_reply
+        reply = request.json
     )
 
     db.session.add(new_reply)
     db.session.commit()
 
     return new_reply.to_dict()
+
 
 # Edit a Reply
 @reply_routes.route('/replies/<int:id>', methods=["PUT"])
@@ -72,7 +69,7 @@ def edit_reply(id):
 
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    
+
     edit_reply = request.json['reply']
 
     reply = Reply.query.filter(id == Reply.id).one_or_none()
@@ -87,7 +84,7 @@ def edit_reply(id):
             "message": "Forbidden",
             "statusCode": 403
             }, 403
-    
+
     reply.reply = edit_reply
 
     db.session.commit()
@@ -102,7 +99,7 @@ def delete_reply(id):
 
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
-    
+
     reply = Reply.query.filter(id == Reply.id).one_or_none()
     if not reply:
         return {
@@ -115,7 +112,7 @@ def delete_reply(id):
             "message": "Forbidden",
             "statusCode": 403
             }, 403
-    
+
     db.session.delete(reply)
     db.session.commit()
 
