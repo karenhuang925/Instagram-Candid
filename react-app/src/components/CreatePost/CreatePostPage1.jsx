@@ -5,8 +5,10 @@ import "./style/CreatePostPage1.css";
 function CreatePostPage1({ images, setImages }) {
     const [inputs, setInputs] = useState([]);
     const handleAddInput = () => {
-        const inputsNewInput = [...inputs, []];
-        setInputs(inputsNewInput)
+        if(inputs.length < 5) {
+            const inputsNewInput = [...inputs, []];
+            setInputs(inputsNewInput)
+        }
     }
     const handleOnChange = (e, index) => {
         const inputsOnChange = [...inputs];
@@ -29,15 +31,15 @@ function CreatePostPage1({ images, setImages }) {
                 {
                     inputs?.map((data, index) => {
                         return (
-                            <div>
-                                <input type="text" value={data} onChange={(e) => handleOnChange(e, index)}/>
-                                <button type="button" onClick={(e) => handleDelete(e, index)}>x</button>
+                            <div className="CreatePostPage1-d1f1d">
+                                <input className="CreatePostPage1-d1f1d"  type="text" value={data} onChange={(e) => handleOnChange(e, index)}/>
+                                <button className="CreatePostPage1-d1f1d1b" onClick={(e) => handleDelete(e, index)}>x</button>
                             </div>
                         )
                     })
                 }
-                <button type="button" onClick={(e) => handleAddInput(e)}>New Photo...</button>
             </form>
+            <button id="CreatePostPage1-d1b1" type="button" onClick={(e) => handleAddInput(e)}>New Photo...</button>
         </div>
     );
 }

@@ -9,9 +9,11 @@
 
 
 #CreatePost-id-d1d1 {
+    height: 50px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
+    align-items: center;
     border-bottom: 2px solid rgb(76,76,76);
     padding: 10px;
     box-sizing: border-box;
