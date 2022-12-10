@@ -6,15 +6,18 @@ import ViewFollower from "./ViewFollower"
 
 import "./ViewFollowerModal.css"
 
-function ViewFollowerModal({ post }) {
+function ViewFollowerModal({ post, followers }) {
     const [showFollowerModal, setFollowerModal] = useState(false)
 
     return (
         <>
-            <Link className='post-detail-likes' onClick={() => setFollowerModal(true)}><div>Followers</div></Link>
+            <Link className='post-detail-likes' onClick={() => setFollowerModal(true)}>
+                <span id="number-2">{Object?.keys(followers)?.length}</span>
+                <span>followers</span>
+            </Link>
             {showFollowerModal && (
-                <Modal onClose={() => setLikesModal(false)}>
-                    <ViewFollower post={post}/>
+                <Modal onClose={() => setFollowerModal(false)}>
+                    <ViewFollower post={post} />
                 </Modal>
             )}
         </>

@@ -15,7 +15,7 @@ function ViewFollower({ post }) {
 
     const allFollowers = useSelector((state) => state?.likes?.Like) || ''
 
-    if (!allPostLikes) return null
+    if (!allFollowers) return null
 
     return (
         <div className="likes-modal-container">
@@ -27,10 +27,10 @@ function ViewFollower({ post }) {
             </div>
 
             <div className="like-by-user-container">
-                {!allPostLikes.length && <div className="no-likes"><span>No Current Likes</span></div>}
-                {allPostLikes.map((like) => {
+                {!allFollowers.length && <div className="no-likes"><span>No Current Likes</span></div>}
+                {allFollowers.map((follower) => {
                     return (
-                        <div className="liked-by-user-card" key={like.id}>
+                        <div className="liked-by-user-card" key={follower.id}>
 
                             <div className="user-detail-container">
                                 <div id="like-user-detail-image">
