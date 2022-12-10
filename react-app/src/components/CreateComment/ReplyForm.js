@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loadCommentsByPostId } from "../../store/comments";
@@ -6,11 +6,15 @@ import { createReply } from "../../store/reply";
 
 const ReplyForm = ({ reply, itemId, formType }) => {
   const dispatch = useDispatch();
+
+  const [frontendErrors, setFrontendErrors] = useState([]);
+
   const [replyContent, setReplyContent] = useState(reply.reply);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(frontendErrors.length > 0) return
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -27,6 +31,14 @@ const ReplyForm = ({ reply, itemId, formType }) => {
     // }
     setReplyContent("");
   };
+
+  
+  useEffect(() => {
+    const errors = [];
+    if(!replyContent.trim().length) errors.push("Invalid reply")
+    setFrontendErrors(errors);
+  }, [replyContent]);
+
 
   return (
     <form className="post-comment-form">

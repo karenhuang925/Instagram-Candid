@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { createComment, editComment } from "../../store/comments";
 import { useDispatch } from "react-redux";
 import { loadAllPostsOfUsersFollowed } from "../../store/posts";
 
 const CommentForm = ({ comment, itemId, formType, setActionType }) => {
+
   const dispatch = useDispatch();
+
+  const [frontendErrors, setFrontendErrors] = useState([]);
+
   const [redirect, setRedirect] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.comment);
-  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // if(redirect){return ( <Redirect to={`/spots`} />)}
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(frontendErrors.length > 0) return
     // setErrors([]);
     // let newComment = { ...comment, comment:commentContent, postId};
     setLoading(true);
@@ -46,16 +50,23 @@ const CommentForm = ({ comment, itemId, formType, setActionType }) => {
     }
     setCommentContent("");
   };
+  
+  useEffect(() => {
+    const errors = [];
+    if(!commentContent.trim().length) errors.push("Invalid comment")
+    setFrontendErrors(errors);
+  }, [commentContent]);
+
 
   return (
     <form className="post-comment-form">
-      <ul>
-        {errors.map((error, idx) => (
+      {/* <ul>
+        {frontendErrors.map((error, idx) => (
           <li className="error" key={idx}>
             {error}
           </li>
         ))}
-      </ul>
+      </ul> */}
       <input
         placeholder="Add a comment..."
         className="post-comment-input"
