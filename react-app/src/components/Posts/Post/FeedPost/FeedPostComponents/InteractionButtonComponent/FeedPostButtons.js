@@ -18,8 +18,10 @@ function FeedPostButtons({ post, user, wasLiked, setWasLiked, inPostDetail }) {
     // }
 
 
+
     const handleClick = (e) => {
         e.preventDefault();
+
         setLiked(!liked)
         if (wasLiked === false) {
             setWasLiked(!wasLiked)

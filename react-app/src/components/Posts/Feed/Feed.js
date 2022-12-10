@@ -27,11 +27,16 @@ function Feed() {
     return (
         <section className='feed-section'>
             <section className='post-feed-container'>
-                {feed?.map((post) => {
-                    return (
-                        <Post key={post?.id} post={post} user={user}/>
-                    )
-                })}
+                {!feed  && (
+                    <div className='post-feed-no-following'>Currently No Following</div>
+                )}
+
+                {feed?.length > 0 &&
+                    feed?.map((post) => {
+                        return (
+                            <Post key={post?.id} post={post} user={user} />
+                        )
+                    })}
             </section>
         </section>
     )

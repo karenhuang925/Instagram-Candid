@@ -61,8 +61,8 @@ const ProfilePage = () => {
         <i class="fa-solid fa-table-cells" id="grid-icon"></i>
         <span id="post-tab">POSTS</span>
         <div id="post-previews">
-          {Object?.keys(posts)?.map((postId) => {
-            return <AccountProfilePost key={postId} post={posts[postId]} />;
+          {posts?.map((post) => {
+            return <AccountProfilePost key={post.id} post={post} />;
           })}
         </div>
         <a
