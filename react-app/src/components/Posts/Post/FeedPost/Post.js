@@ -12,14 +12,14 @@ import "./Post.css"
 function Post({ post, user }) {
 
     let today = Date.parse(new Date())
-    let unixTimeZero = Date.parse(post.created_at)
+    let unixTimeZero = Date.parse(post?.created_at)
 
     let diff = today - unixTimeZero
     let diffindays = Math.floor((diff) / (24 * 3600 * 1000))
     let diffinhours = Math.floor(diff / (3600 * 1000))
 
     const [showPostModal, setShowPostModal] = useState(false);
-    let [wasLiked, setWasLiked] = useState(post.likeStatus);
+    let [wasLiked, setWasLiked] = useState(post?.likeStatus);
     // let [inPostDetail, setInPostDetail] = useState(false)
 
     return (
@@ -28,12 +28,12 @@ function Post({ post, user }) {
             <section className='post-header-section'>
                 <div className='post-user-card'>
                     <div id='user-profile-image'>
-                        {post.Owner.previewImage ? <img className='user-preview-image' src={post.Owner.previewImage} alt={post.id}/> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
+                        {post?.Owner?.previewImage ? <img className='user-preview-image' src={post?.Owner?.previewImage} alt={post?.id}/> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
                     </div>
                     <div id='post-user-detail'>
                         {/* Need to create link to username to take to profile page */}
-                        <div id='user-username'>{post.Owner.username}</div>
-                        {post.location && <div id='post-location'>{post.location}</div>}
+                        <div id='user-username'>{post?.Owner?.username}</div>
+                        {post?.location && <div id='post-location'>{post?.location}</div>}
                     </div>
                 </div>
                 <div className='post-more-options'>
@@ -43,7 +43,7 @@ function Post({ post, user }) {
 
 
             <section id='post-image-section'>
-                <ImageComponent images={post.Media} />
+                <ImageComponent images={post?.Media} />
             </section>
 
 
@@ -57,11 +57,11 @@ function Post({ post, user }) {
                 <ViewLikesModal post={post}/>
 
                 <div className='post-detail-caption-body'>
-                    <div id='post-detail-username'>{post.Owner.username}</div>
-                    <div id='post-detail-caption'>{post.caption}</div>
+                    <div id='post-detail-username'>{post?.Owner?.username}</div>
+                    <div id='post-detail-caption'>{post?.caption}</div>
                 </div>
 
-                <Link className='post-comment-count' onClick={() => setShowPostModal(true)}>View all {post.comments} comments</Link>
+                <Link className='post-comment-count' onClick={() => setShowPostModal(true)}>View all {post?.comments} comments</Link>
                 {showPostModal && (
                     <Modal onClose={() => setShowPostModal(false)}>
                         <PostDetail  post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>

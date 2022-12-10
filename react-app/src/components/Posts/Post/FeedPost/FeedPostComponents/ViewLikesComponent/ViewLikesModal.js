@@ -11,7 +11,7 @@ function ViewLikesModal({ post }) {
 
     return (
         <>
-            <Link className='post-detail-likes' onClick={() => setLikesModal(true)}><div>{post.likes} {post.likes == 1 ? 'like' : 'likes'}</div></Link>
+            <Link className='post-detail-likes' onClick={() => setLikesModal(true)}><div>{post?.likes} {post?.likes == 1 ? 'like' : 'likes'}</div></Link>
             {showLikesModal && (
                 <Modal onClose={() => setLikesModal(false)}>
                     <ViewLikes post={post}/>

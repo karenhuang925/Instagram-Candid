@@ -9,7 +9,7 @@ import "./FeedPostButtons.css"
 
 function FeedPostButtons({ post, user, wasLiked, setWasLiked, inPostDetail }) {
     const dispatch = useDispatch();
-    const [liked, setLiked] = useState(post.likeStatus)
+    const [liked, setLiked] = useState(post?.likeStatus)
     const [showPostModal, setShowPostModal] = useState(false);
     // let liked = useSelector(state => state.posts.post[post.id].likeStatus)
 
@@ -18,18 +18,20 @@ function FeedPostButtons({ post, user, wasLiked, setWasLiked, inPostDetail }) {
     // }
 
 
+
     const handleClick = (e) => {
         e.preventDefault();
+
         setLiked(!liked)
         if (wasLiked === false) {
             setWasLiked(!wasLiked)
-            return dispatch(addTheLikeToPost(post.id));
+            return dispatch(addTheLikeToPost(post?.id));
         }
 
         if (wasLiked === true) {
-            const Likes = post.Likes
+            const Likes = post?.Likes
             let userLike = Likes.find((like) => {
-                return like.user_id === user.id
+                return like?.user_id === user?.id
             })
             setWasLiked(!wasLiked)
             return dispatch(minusTheLikeToPost(userLike));
@@ -40,7 +42,7 @@ function FeedPostButtons({ post, user, wasLiked, setWasLiked, inPostDetail }) {
         <>
             <div id='post-interaction-button-container'>
                 <div id='interaction-button'>
-                    <button className={post.likeStatus ? "LikeButtonLike" : "LikeButtonUnlike"} onClick={handleClick}><i className="fa-regular fa-heart fa-1x"></i></button>
+                    <button className={post?.likeStatus ? "LikeButtonLike" : "LikeButtonUnlike"} onClick={handleClick}><i className="fa-regular fa-heart fa-1x"></i></button>
                 </div>
 
                 {inPostDetail

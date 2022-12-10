@@ -17,8 +17,8 @@ function EditPost({ post, onSubmit }) {
 
 
     useEffect(() => {
-        console.log(post.id)
-        dispatch(loadPostById(post.id))
+        console.log(post?.id)
+        dispatch(loadPostById(post?.id))
         // dispatch(sessionFunction())
     }, [dispatch])
 
@@ -27,6 +27,7 @@ function EditPost({ post, onSubmit }) {
 
     const [caption, setCaption] = useState(currentPost?.caption)
     const [location, setLocation] = useState(currentPost?.location)
+    const [errors, setErrors] = useState([]);
 
 
     const handleSubmit = (e) => {
@@ -37,11 +38,25 @@ function EditPost({ post, onSubmit }) {
             location
         }
 
+        setErrors([])
+
         // return dispatch(editPost(postEdit, currentPost.id)).then(dispatch(loadAllPostsOfUsersFollowed()))
-        return dispatch(editPost(postEdit, currentPost.id)).then(() => { 
-            dispatch(loadPostById(currentPost.id));
-            onSubmit();
-        })
+        return dispatch(editPost(postEdit, currentPost?.id)).
+            then(() => {
+                dispatch(loadPostById(currentPost?.id));
+                setCaption('');
+                setLocation('')
+                onSubmit();
+            })
+            // .catch (async (res) =>{
+            //     const data = await res.json;
+            //     if (data && data.errors) {
+            //         setErrors(data.errors)
+            //     }
+            //     else {
+            //         setErrors([data.message])
+            //     }
+            // })
         // dispatch(editPost(postEdit))
         // return dispatch(loadPostById(currentPost.id))
     }
@@ -88,7 +103,7 @@ function EditPost({ post, onSubmit }) {
                                 type="text"
                                 value={caption}
                                 onChange={(e) => setCaption(e.target.value)}
-                                placeholder={currentPost?.caption}
+                                // placeholder={currentPost?.caption}
                             />
                         </label>
 
@@ -101,7 +116,7 @@ function EditPost({ post, onSubmit }) {
                                 type="text"
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
-                                placeholder={currentPost?.location}
+                                // placeholder={currentPost?.location}
                             />
                         </label>
 
