@@ -134,6 +134,18 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
                           </div>
                         )}
                       </div>
+                      {actionType == "post" ? (
+                        <CreateCommentForm
+                          className="addComment"
+                          itemId={post.id}
+                        ></CreateCommentForm>
+                      ) : (
+                        <EditCommentForm
+                          className="addComment"
+                          itemId={itemId}
+                          setActionType={setActionType}
+                        ></EditCommentForm>
+                      )}
                     </div>
                   </div>
                 );

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { loadAllPostsByUserId } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchFollower, fetchFollowing } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
+import VariationofKarensFollowButton from "../VariationofKarensFollowBtn";
 import "./AccountPage.css";
 import { useHistory } from "react-router-dom";
 import FollowButton from "../HomePage/FollowerSuggestions/followButton";
@@ -57,14 +58,20 @@ const AccountPage = () => {
             <div id="profile-top-right">
               <span id="profile-username">{account?.username}</span>
               {!newArr?.includes(sessionUser?.id) && (
-                <FollowButton userId={sessionUser?.id} followsUserId={id}>
+                <variationofKarensFollowBtn
+                  userId={sessionUser?.id}
+                  followsUserId={id}
+                >
                   Follow
-                </FollowButton>
+                </variationofKarensFollowBtn>
               )}
               {newArr?.includes(sessionUser?.id) && (
-                <FollowButton userId={sessionUser?.id} followsUserId={id}>
-                  Follow
-                </FollowButton>
+                <VariationofKarensFollowButton
+                  userId={sessionUser?.id}
+                  followsUserId={id}
+                >
+                  Following
+                </VariationofKarensFollowButton>
               )}
             </div>
             <div id="profile-aggs">

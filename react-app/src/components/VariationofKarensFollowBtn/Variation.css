@@ -1,0 +1,10 @@
+.follow-btn {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 13px;
+  font-size: 14px;
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
