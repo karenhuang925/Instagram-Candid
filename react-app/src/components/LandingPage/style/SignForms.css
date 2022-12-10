@@ -1,18 +1,26 @@
 #SignForms-id-d1 {
     width: 350px;
     height: auto;
-    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 25px;
 }
 
 
 #SignForms-id-d1d1 {
-    width: 348px;
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
+    margin-bottom: 10px;
+    border: 1px solid rgb(219,219,219);
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
 }
 
 #SignForms-id-d1d1i1 {
@@ -21,21 +29,27 @@
 }
 
 #SignForms-id-d1d2 {
-    width: 348px;
-    height: 41px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-}
-
-#SignForms-id-d1d3 {
     width: 100%;
-    height: 102px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10px 0px;
+    border: 1px solid rgb(219,219,219);
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+#SignForms-id-d1d3 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px
 }
 
 .SignForms-d1d3d1i {
@@ -48,4 +62,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.SignForms-d1d2-forms {
+    color: #4892dd;
+    font-size: small;
+    font-weight: bold
+}
+
+.SignForms-d1d2-forms:hover {
+    color: rgb(60,60,60);
 }
