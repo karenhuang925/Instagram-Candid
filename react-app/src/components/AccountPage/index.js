@@ -78,10 +78,10 @@ const AccountPage = () => {
                 <span>posts</span>
               </div>
               <div id="follower-agg">
-                {/* <span id="number-2">{Object?.keys(followers)?.length}</span>
-                <span>followers</span> */}
+                <span id="number-2">{Object?.keys(followers)?.length}</span>
+                <span>followers</span>
 
-                <ViewFollowerModal followers={followers} />
+                {/* <ViewFollowerModal post={post} followers={followers} /> */}
 
               </div>
               <div id="following-agg">

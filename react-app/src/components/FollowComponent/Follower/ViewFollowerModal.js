@@ -7,6 +7,8 @@ import ViewFollower from "./ViewFollower"
 import "./ViewFollowerModal.css"
 
 function ViewFollowerModal({ post, followers }) {
+
+
     const [showFollowerModal, setFollowerModal] = useState(false)
 
     return (
@@ -17,7 +19,7 @@ function ViewFollowerModal({ post, followers }) {
             </Link>
             {showFollowerModal && (
                 <Modal onClose={() => setFollowerModal(false)}>
-                    <ViewFollower post={post} />
+                    <ViewFollower post={post} followers={followers}/>
                 </Modal>
             )}
         </>
