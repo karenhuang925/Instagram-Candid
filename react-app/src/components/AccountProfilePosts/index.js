@@ -7,6 +7,7 @@ import PostDetail from "../Posts/Post/PostDetail/PostDetail";
 
 const AccountProfilePost = ({ post, user }) => {
   const [showPostModal, setShowPostModal] = useState(false);
+  let [wasLiked, setWasLiked] = useState(post?.likeStatus);
   // const [hover, setHover] = useState(false);
 
   // const handleMouseOver = () => {
@@ -45,7 +46,7 @@ const AccountProfilePost = ({ post, user }) => {
       </Link>
       {showPostModal && (
         <Modal onClose={() => setShowPostModal(false)}>
-          <PostDetail post={post} user={sessionUser} />
+          <PostDetail post={post} user={sessionUser} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>
         </Modal>
       )}
     </>

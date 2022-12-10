@@ -4,10 +4,23 @@ from sqlalchemy import func
 from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db, Follower, Post, User, Like, Comment
+from app.forms import PostEditForm
+# import random
 import random
 import datetime
 
 post_routes = Blueprint('posts', __name__)
+
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    print(errorMessages)
+    return errorMessages
 
 #Still Need to:
     # Need to return Posts ordered by date
@@ -95,9 +108,9 @@ def get_posts_of_users_current_user_follows():
     # following_posts.sort(key = lambda obj: obj['created_at'])
     return {"Posts" : [post for post in sortedArray]}
     # random.shuffle(following_posts)
-    following_posts.sort(key = lambda obj: obj['created_at'])
+    # following_posts.sort(key = lambda obj: obj['created_at'])
 
-    return {"Posts" : [post for post in following_posts]}
+    # return {"Posts" : [post for post in following_posts]}
 
 
     # return {
@@ -446,7 +459,7 @@ def create_new_post():
 @post_routes.route('/posts/<int:id>', methods=["PUT"])
 @login_required
 def edit_post(id):
-
+    
     currentuser = current_user.to_dict()
     user_id = currentuser['id']
 
@@ -515,6 +528,85 @@ def edit_post(id):
             "previewImage": post.user.preview_image
         }
     }
+
+    # currentuser = current_user.to_dict()
+    # user_id = currentuser['id']
+
+    # # caption = request.json['caption']
+    # # location = request.json['location']
+
+    # form = PostEditForm()
+    # form['csrf_token'].data = request.cookies['csrf_token']
+
+    # PostEdit = Post.query.filter(id == Post.id).one_or_none()
+    # if not PostEdit:
+    #     return {
+    #         "message": "Post couldn't be found",
+    #         "statusCode": 404
+    #         }, 404
+
+    # if not (PostEdit.user_id == user_id):
+    #     return {
+    #         "message": "Forbidden",
+    #         "statusCode": 403
+    #         }, 403
+
+    # if form.validate_on_submit():
+
+    # # PostEdit.caption = caption
+    # # PostEdit.location = location
+
+    #     PostEdit.caption = form.data['caption']
+    #     PostEdit.location = form.data['location']
+
+    #     db.session.commit()
+
+    #     post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
+
+    #     allLikes = Like.query.filter(post.id == Like.post_id).all()
+    #     userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
+    #     postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
+    #     postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+
+    #     if not postLikes:
+    #         postLikes = 0
+
+    #     if not postComments:
+    #         postComments = 0
+
+    #     if not userLike:
+    #         postLikeStatus = False
+    #     else:
+    #         aLike = userLike.to_dict()
+    #         postLikeStatus = aLike['like_status']
+
+    #     return {
+    #         "id": post.id,
+    #         "userId": post.user_id,
+    #         "caption": post.caption,
+    #         "location": post.location,
+    #         "likes": postLikes,
+    #         "comments": postComments,
+    #         "likeStatus": postLikeStatus,
+    #         "created_at": post.created_at,
+    #         "updated_at": post.updated_at,
+    #         "Likes" : [like.to_dict() for like in allLikes],
+    #         "Media" : [
+    #             {
+    #                 "id": media.id,
+    #                 "user_id": media.user_id,
+    #                 "media_file": media.media_file,
+    #                 "type": media.type
+    #             } for media in post.medias
+    #                 ],
+    #         "Owner": {
+    #             "id": post.user.id,
+    #             "username": post.user.username,
+    #             "previewImage": post.user.preview_image
+    #         }
+    #     }
+    # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
 
 
 # Delete a Post

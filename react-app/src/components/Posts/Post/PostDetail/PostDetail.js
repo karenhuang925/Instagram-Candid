@@ -18,7 +18,7 @@ import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
 import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
 import { Link, NavLink } from "react-router-dom";
 
-function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
+function PostDetail({ post, user, wasLiked, setWasLiked}) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadPostById(post.id));
