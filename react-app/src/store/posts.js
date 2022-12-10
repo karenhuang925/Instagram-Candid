@@ -71,6 +71,7 @@ export const loadAllPosts = () => async (dispatch) => {
       allPosts.push(post);
     });
 
+    dispatch(loadPosts(allPosts));
     return response;
   }
 };
