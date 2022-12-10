@@ -24,8 +24,6 @@ def signup():
 @user_routes.route('/login', methods=["POST"])
 def login():
     user_info = request.json
-    print(user_info)
-    print("raaaaw")
     credential = user_info["credential"]
     password = user_info["password"]
     user = User.query.filter((User.email == credential) | (User.username == credential)).first()
