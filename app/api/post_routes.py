@@ -5,6 +5,7 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db, Follower, Post, User, Like, Comment
 import random
+import datetime
 
 post_routes = Blueprint('posts', __name__)
 
@@ -37,6 +38,7 @@ def get_posts_of_users_current_user_follows():
     all_id_of_following.append(user_id)
 
     following_posts = []
+
     for following_user_id in all_id_of_following:
         posts = Post.query.filter(following_user_id == Post.user_id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).order_by(Post.created_at.desc()).all()
         # .order_by(Post.created_at.desc())
@@ -88,6 +90,10 @@ def get_posts_of_users_current_user_follows():
             }
 
             following_posts.append(returnPost)
+    sortedArray = sorted(following_posts, key=lambda x: x['created_at'], reverse=True)
+    # random.shuffle(following_posts)
+    # following_posts.sort(key = lambda obj: obj['created_at'])
+    return {"Posts" : [post for post in sortedArray]}
     # random.shuffle(following_posts)
     following_posts.sort(key = lambda obj: obj['created_at'])
 
