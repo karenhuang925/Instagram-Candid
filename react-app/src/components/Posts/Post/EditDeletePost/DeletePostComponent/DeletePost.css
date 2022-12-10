@@ -1,10 +1,13 @@
-.post-remove_button {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
+.post-remove-button {
+    font-size: 20px;
     color: white;
-    padding: 5px 9px;
     background-color: #0095F6;
-    border-radius: 8%;
+    border: none;
+    border-radius: 10%;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.post-remove-button:hover {
+    background-color: #0473bc;
 }

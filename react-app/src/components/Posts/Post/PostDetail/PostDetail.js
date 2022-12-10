@@ -10,6 +10,9 @@ import ViewLikesModal from "../FeedPost/FeedPostComponents/ViewLikesComponent/Vi
 import { fetchLike } from "../../../../store/likes";
 import ViewReply from "./ViewReply";
 
+import EditPostModal from "../EditDeletePost/EditPostComponent/EditPostModal"
+import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost"
+
 
 function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
   const dispatch = useDispatch();
@@ -63,8 +66,10 @@ function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
             <p className="location">{post.location}</p>
           </div>
           <div>
-            <i className="fa-solid fa-ellipsis fa-1x"></i>
-
+            {post.userId === user.id ? <>
+              <DeletePost post={post} />
+              <EditPostModal post={post} />
+            </> : <i className="fa-solid fa-ellipsis fa-1x"></i>}
           </div>
         </div>
 
