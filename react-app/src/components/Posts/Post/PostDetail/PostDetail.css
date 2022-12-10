@@ -120,3 +120,7 @@
     margin-right: 20px;
     padding-bottom: 0px;
 }
+
+.post-detail-likes#inpost {
+    padding-left: 16px;
+}
