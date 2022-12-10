@@ -49,6 +49,9 @@ const AccountPage = () => {
     history.push("/my/profile");
   }
 
+  // George-added this for contitional safety
+  if (!posts) return null
+
   return (
     <>
       <div id="profile-div">
