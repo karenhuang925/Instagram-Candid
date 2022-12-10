@@ -51,7 +51,7 @@ function App() {
         <>
           <NavBar />
           <Switch>
-            <Route exact path={"/homepage"}>
+            <Route exact path={"/"}>
               <HomePage />
             </Route>
             <Route exact path={"/postform"}>

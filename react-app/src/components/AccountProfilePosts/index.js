@@ -5,8 +5,12 @@ import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
 import PostDetail from "../Posts/Post/PostDetail/PostDetail";
 
+<<<<<<< HEAD
 const AccountProfilePost = ({ post }) => {
   console.log(post, "HERE")
+=======
+const AccountProfilePost = ({ post, user }) => {
+>>>>>>> 568698753e8f1e24a7bbaa154549863d63da64d5
   const [showPostModal, setShowPostModal] = useState(false);
   let [wasLiked, setWasLiked] = useState(post?.likeStatus);
   // const [hover, setHover] = useState(false);

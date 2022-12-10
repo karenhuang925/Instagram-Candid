@@ -101,7 +101,13 @@ const AccountPage = () => {
             return <AccountProfilePost key={postId} post={posts[postId]} />;
           })} */}
           {posts?.map((post) => {
-            return <AccountProfilePost key={post.id} post={post} />;
+            return (
+              <AccountProfilePost
+                key={post.id}
+                post={post}
+                user={sessionUser}
+              />
+            );
           })}
         </div>
         <a

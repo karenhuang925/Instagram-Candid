@@ -1,5 +1,3 @@
-import { csrfFetch } from "./csrf";
-
 const initialState = null;
 const CURRENT_SESSION = "session/current";
 const LOGIN_SESSION = "session/login";
@@ -50,6 +48,21 @@ export const logInFunction = (data) => async (dispatch) => {
     body: JSON.stringify(data),
   });
   const responseJSON = await response.json();
+  if(responseJSON.errors) return responseJSON;
+  dispatch(logInAction(responseJSON));
+  return responseJSON;
+};
+
+export const logInDemouserFunction = () => async (dispatch) => {
+  const response = await fetch("/api/users/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/JSON" },
+    body: JSON.stringify({
+      "credential": "demouser",
+      "password": "password1234"
+    })
+  });
+  const responseJSON = await response.json();
   dispatch(logInAction(responseJSON));
   return responseJSON;
 };
@@ -61,6 +74,7 @@ export const signUpFunction = (data) => async (dispatch) => {
     body: JSON.stringify(data),
   });
   const responseJSON = await response.json();
+  if(responseJSON.errors) return responseJSON;
   dispatch(signUpAction(responseJSON));
   return responseJSON;
 };
