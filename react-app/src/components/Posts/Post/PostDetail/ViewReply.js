@@ -70,7 +70,7 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
                                                     ? <div className='post-time' id='bold'>{diffindays > 1 ? `${diffindays}d` : `1d`}</div>
                                                     : <div className='post-time' id='bold'>{diffinhours > 1 ? `${diffinhours}h` : `1h`}</div>
                                                 }</div>
-                                                <div className='post-time' id='bold' onClick={CreateReply(value)}>Reply</div>
+                                                <div className='post-time' id='bold' onClick={()=>CreateReply(value)}>Reply</div>
                                             </div>
                                         </div>
                                     </div>

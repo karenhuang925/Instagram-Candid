@@ -160,7 +160,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
                             </div>
                           )}
                         </div>
-                        <div className="post-time" id="bold">
+                        <div className="post-time" id="bold" onClick={()=>{CreateReply(comment)}}>
                           Reply
                         </div>
                         {comment.user_id == user.id && (
@@ -229,6 +229,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
             <CreateReplyForm
               item={allComments[itemId]}
               replyTo={replyTo}
+              className="addComment"
             ></CreateReplyForm>
           )}
         </div>

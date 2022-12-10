@@ -6,6 +6,7 @@ import ImageComponent from "./FeedPostComponents/ImageComponent"
 import FeedPostButtons from './FeedPostComponents/InteractionButtonComponent/FeedPostButtons'
 import ViewLikesModal from './FeedPostComponents/ViewLikesComponent'
 import PostDetail from '../PostDetail/PostDetail'
+import CreateCommentForm from '../../../CreateComment/CreateCommentForm.js'
 
 import "./Post.css"
 
@@ -49,7 +50,7 @@ function Post({ post, user }) {
 
             <section className='post-interaction-section'>
                 <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetail={true}/>
-                
+
             </section>
 
 
@@ -75,16 +76,9 @@ function Post({ post, user }) {
             </section>
 
 
-            <section className='post-comment-section'>
-                <form className='post-comment-form'>
-                    <input
-                        className='post-comment-input'
-                        type='text'
-                        placeholder='Add a comment...'
-                    />
-                    <button className='post-comment-button'>Post</button>
-                </form>
-            </section>
+            <CreateCommentForm
+                itemId={post.id}
+            ></CreateCommentForm>
 
         </div>
     )
