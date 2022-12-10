@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loadAllPostsOfUsersFollowed } from "../../store/posts";
-import { createReply } from "../../store/reply";
+import { createReply, loadRepliesByCommentId } from "../../store/reply";
 
 const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
       dispatch(createReply(itemId, replyContent))
       .then(()=>{
           dispatch(loadAllPostsOfUsersFollowed())
+          dispatch(loadRepliesByCommentId(itemId))
       })
     }
     // else if(formType === "Edit"){
