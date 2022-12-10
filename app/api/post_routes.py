@@ -461,7 +461,6 @@ def edit_post(id):
     form = PostEditForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    if form.validate_on_submit():
     PostEdit = Post.query.filter(id == Post.id).one_or_none()
     if not PostEdit:
         return {
@@ -475,58 +474,60 @@ def edit_post(id):
             "statusCode": 403
             }, 403
 
+    if form.validate_on_submit():
+
     # PostEdit.caption = caption
     # PostEdit.location = location
 
-    PostEdit.caption = caption
-    PostEdit.location = location
+        PostEdit.caption = form.data['caption']
+        PostEdit.location = form.data['location']
 
-    db.session.commit()
+        db.session.commit()
 
-    post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
+        post = Post.query.filter(id == Post.id).options(joinedload(Post.medias).options(load_only('id','user_id', 'type', 'media_file')), joinedload(Post.user).options(load_only('id','username', 'preview_image'))).one_or_none()
 
-    allLikes = Like.query.filter(post.id == Like.post_id).all()
-    userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
-    postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
-    postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
+        allLikes = Like.query.filter(post.id == Like.post_id).all()
+        userLike = Like.query.filter(post.id == Like.post_id).filter(user_id == Like.user_id).one_or_none()
+        postLikes = db.session.query(func.count(Like.id)).filter(post.id == Like.post_id).filter(Like.like_status == True).scalar()
+        postComments = db.session.query(func.count(Comment.id)).filter(post.id == Comment.post_id).scalar()
 
-    if not postLikes:
-        postLikes = 0
+        if not postLikes:
+            postLikes = 0
 
-    if not postComments:
-        postComments = 0
+        if not postComments:
+            postComments = 0
 
-    if not userLike:
-        postLikeStatus = False
-    else:
-        aLike = userLike.to_dict()
-        postLikeStatus = aLike['like_status']
+        if not userLike:
+            postLikeStatus = False
+        else:
+            aLike = userLike.to_dict()
+            postLikeStatus = aLike['like_status']
 
-    return {
-        "id": post.id,
-        "userId": post.user_id,
-        "caption": post.caption,
-        "location": post.location,
-        "likes": postLikes,
-        "comments": postComments,
-        "likeStatus": postLikeStatus,
-        "created_at": post.created_at,
-        "updated_at": post.updated_at,
-        "Likes" : [like.to_dict() for like in allLikes],
-        "Media" : [
-            {
-                "id": media.id,
-                "user_id": media.user_id,
-                "media_file": media.media_file,
-                "type": media.type
-            } for media in post.medias
-                ],
-        "Owner": {
-            "id": post.user.id,
-            "username": post.user.username,
-            "previewImage": post.user.preview_image
+        return {
+            "id": post.id,
+            "userId": post.user_id,
+            "caption": post.caption,
+            "location": post.location,
+            "likes": postLikes,
+            "comments": postComments,
+            "likeStatus": postLikeStatus,
+            "created_at": post.created_at,
+            "updated_at": post.updated_at,
+            "Likes" : [like.to_dict() for like in allLikes],
+            "Media" : [
+                {
+                    "id": media.id,
+                    "user_id": media.user_id,
+                    "media_file": media.media_file,
+                    "type": media.type
+                } for media in post.medias
+                    ],
+            "Owner": {
+                "id": post.user.id,
+                "username": post.user.username,
+                "previewImage": post.user.preview_image
+            }
         }
-    }
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
