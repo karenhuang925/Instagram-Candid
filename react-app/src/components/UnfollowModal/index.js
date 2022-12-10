@@ -8,6 +8,7 @@ import "./UnfollowModal.css";
 function UnfollowModal({ userId, followsUserId }) {
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState("true");
+  const [showUnfollowModal, setShowUnfollowModal] = useState(true);
 
   useEffect(() => {
     dispatch(getUserFunction(userId));
@@ -18,6 +19,7 @@ function UnfollowModal({ userId, followsUserId }) {
   const handleUnfollow = async () => {
     await dispatch(fetchMinusFollower({ userId, followsUserId }));
     setFollowed(!followed);
+    setShowUnfollowModal(false);
   };
 
   return (

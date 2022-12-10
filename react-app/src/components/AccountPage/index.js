@@ -5,9 +5,10 @@ import { useParams } from "react-router-dom";
 import { fetchFollower, fetchFollowing } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
-import VariationofKarensFollowButton from "../VariationofKarensFollowBtn";
 import "./AccountPage.css";
 import { useHistory } from "react-router-dom";
+import FollowButton2 from "../Variation2";
+import FollowButton from "../VariationofKarensFollowBtn";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -60,16 +61,10 @@ const AccountPage = () => {
             <div id="profile-top-right">
               <span id="profile-username">{account?.username}</span>
               {!newArr?.includes(sessionUser?.id) && (
-                <variationofKarensFollowBtn
-                  userId={sessionUser?.id}
-                  followsUserId={id}
-                />
+                <FollowButton userId={sessionUser?.id} followsUserId={id} />
               )}
               {newArr?.includes(sessionUser?.id) && (
-                <VariationofKarensFollowButton
-                  userId={sessionUser?.id}
-                  followsUserId={id}
-                />
+                <FollowButton2 userId={sessionUser?.id} followsUserId={id} />
               )}
             </div>
             <div id="profile-aggs">
