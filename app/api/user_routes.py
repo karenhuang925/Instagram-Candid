@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user, login_user, logout_user
-from app.models import db, User
+from app.models import db, User, Post, Follower
 
 user_routes = Blueprint('users', __name__)
 
@@ -56,3 +56,9 @@ def session():
 def user(id):
     user = User.query.get(id)
     return user.safe_info()
+
+
+# GET user by id
+@user_routes.route('/test')
+def test_route():
+    return "test"
