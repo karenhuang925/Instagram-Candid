@@ -1,6 +1,6 @@
 //Type Key String Literals
 const LOAD_POSTS = "/api/getPosts";
-const LOAD_FEED_POSTS = "/api/getFeedFeedPosts";
+const LOAD_FEED_POSTS = "/api/getFeedPosts";
 const CREATE_POST = "/api/createPost";
 const UPDATE_POST_BY_USER = "/api/updatePost";
 const DELETE_POST_BY_USER = "/api/deletePost";
@@ -212,15 +212,87 @@ const postReducer = (state = initialState, action) => {
     case CREATE_POST:
       newState = {
         ...state,
-        post: [action.payload, ...state.post],
+        post: [
+          {
+            ...action.payload,
+            Likes: [...action.payload.Likes],
+            Media: [...action.payload.Media],
+            Owner: { ...action.payload.Owner }
+          },
+          ...state.post
+        ],
       };
       return newState;
 
     case UPDATE_POST_BY_USER:
+      // let copyOfState = [...state.post]
+      // let postWithEdits 
+      // let updatedPost = {...action.payload}
+      // updatedPost["Likes"] = [...action.payload.Likes]
+      // updatedPost["Media"] = [...action.payload.Media]
+      // updatedPost["Owner"] = {...action.payload.Owner}
+      // newPostRender["caption"] = 
+      // let thisPost;
+      // let indexInState;
+
+
+      for (let i = 0; i < state.post.length; i++) {
+        // thisPost = state.post[i];
+        // indexInState = i
+
+        if (state.post[i].id === action.payload.id) {
+          state.post[i] = { ...action.payload };
+          state.post[i]["Likes"] = [...action.payload.Likes]
+          state.post[i]["Media"] = [...action.payload.Media]
+          state.post[i]["Owner"] = { ...action.payload.Owner }
+          break
+        }
+      }
+
       newState = {
         ...state,
-        post: [...state.post, action.payload],
+        post: [
+          ...state.post
+        ]
       };
+
+      // const object = {
+      //   One_A: true,
+      //   One_B: true,
+      //   One_C: {
+      //     Two_A: true,
+      //     Two_B: {
+      //       Three_A: true,
+      //     },
+      //   },
+      // }
+
+      // const newObject = {
+      //   ...object,
+      //   One_C: {
+      //     ...object.One_C,
+      //     Two_B: {
+      //       ...object.One_C.Two_B
+      //     }
+      //   },
+      // }
+
+
+      // newState = {
+      //   ...state,
+      //   post: [
+      //     ...state.post,
+      //     state.post[i] = {
+      //       ...state.post[i] = action.payload
+      //     }
+      //   ]
+      // };
+
+      // newState = {
+      //   ...state,
+      //   post: [...state.post, action.payload],
+      // };
+
       return newState;
 
     case UPDATE_LIKES_ADD:
@@ -298,13 +370,23 @@ const postReducer = (state = initialState, action) => {
       return newState;
 
     case DELETE_POST_BY_USER:
+
+      let postIndex;
+
+      for (let i = 0; i < state.post.length; i++) {
+        if (state.post[i].id === action.payload) {
+          postIndex = i;
+          break
+        }
+      }
+
       newState = {
         ...state,
-        post: {
+        post: [
           ...state.post,
-        },
+        ],
       };
-      delete newState.post[action.payload];
+      delete newState.post[postIndex];
       return newState;
 
     default:

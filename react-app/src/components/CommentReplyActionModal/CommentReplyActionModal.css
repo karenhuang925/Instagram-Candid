@@ -1,0 +1,38 @@
+.comment-action-dot{
+    text-decoration: None;
+    align-self: flex-start;
+}
+
+.action-outer{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.comment-action-button{
+    color: rgb(211, 18, 76);
+    font-size: 15px;
+    font-weight: 500;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border: 1px solid #f2f2f2;
+
+}
+
+.comment-action-button#one{
+    background-color: white;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom: 1px solid #f2f2f2;
+}
+.comment-action-button#two{
+    background-color: white;
+}
+.comment-action-button#three{
+    border-top: 1px solid #f2f2f2;
+    color: gray;
+    background-color: white;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
