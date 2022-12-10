@@ -1,0 +1,61 @@
+#follow-btn {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 13px;
+  font-size: 14px;
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#following-btn {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 13px;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: 1px solid rgb(220, 220, 220);
+  cursor: pointer;
+}
+
+#unfollow-modal {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 430px;
+  height: 150px;
+  border-radius: 2%;
+}
+
+#unfollow-modal-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 15px;
+  border-bottom-width: 1px;
+  border-bottom: solid;
+  border-bottom-color: lightgray;
+}
+
+#following-profile-pic {
+  height: 56px;
+  width: 56px;
+  border-radius: 50%;
+  margin-right: 100.83px;
+  margin-left: 100.83px;
+  object-fit: cover;
+  object-position: left top;
+}
+
+#unfollow-link {
+  padding: 15px;
+  text-decoration: none;
+  color: black;
+}

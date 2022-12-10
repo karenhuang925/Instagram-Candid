@@ -31,8 +31,8 @@ def follower_suggestion(userId):
 def follow_a_user(userId):
     print(request.get_json())
     follows_user_id = request.json['follows_user_id']
-
-    if userId == follows_user_id:
+    print(userId, "HELLO", follows_user_id)
+    if str(userId) == str(follows_user_id):
         return {"errors": ["User cannot follow themselves"]}, 401
 
     user = User.query.filter(User.id == follows_user_id).one_or_none()
@@ -63,7 +63,7 @@ def follow_a_user(userId):
 @follower_routes.route('/users/<int:userId>/followers', methods=['PUT'])
 def unfollow_a_user(userId):
     user_id = current_user.get_id()
-    if not user_id == userId:
+    if not str(user_id) == str(userId):
         return {'errors': ['Unauthorized']}
     follows_user_id = request.json["follows_user_id"]
 

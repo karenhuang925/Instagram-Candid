@@ -6,7 +6,7 @@ const CreateCommentForm = ({itemId}) => {
     };
 
     return (
-        <CommentForm comment={comment} itemId={itemId} formType="Post" />
+        <CommentForm comment={comment} itemId={itemId} formType="Post"/>
     );
 }
 
