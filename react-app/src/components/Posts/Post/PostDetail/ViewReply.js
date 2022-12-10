@@ -31,10 +31,10 @@ function ViewReply({ comment }) {
     return (
         <>
             {!showReply ? (
-            <div className='post-time' id='bold' onClick={onClickHandler}> ----  View replies({comment.numOfReplies})</div>
+            <div className='post-time' id='viewAndHide' onClick={onClickHandler}> ----  View replies({comment.numOfReplies})</div>
             ) : (
             <section>
-                <div className='post-time' id='bold' onClick={onClickHandler}> ----  Hide replies({comment.numOfReplies})</div>
+                <div className='post-time' id='viewAndHide' onClick={onClickHandler}> ----  Hide replies({comment.numOfReplies})</div>
                 <div>
                     {loading ? (
                         <div className="loader-container">
@@ -60,8 +60,8 @@ function ViewReply({ comment }) {
                                             </div>
                                             <div style={{ 'display': 'flex', 'alignItems': 'center' }}>
                                                 <div>{diffinhours > 23
-                                                    ? <div className='post-time'>{diffindays > 1 ? `${diffindays}d` : `1d`}</div>
-                                                    : <div className='post-time' >{diffinhours > 1 ? `${diffinhours}h` : `1h`}</div>
+                                                    ? <div className='post-time' id='bold'>{diffindays > 1 ? `${diffindays}d` : `1d`}</div>
+                                                    : <div className='post-time' id='bold'>{diffinhours > 1 ? `${diffinhours}h` : `1h`}</div>
                                                 }</div>
                                                 <div className='post-time' id='bold'>Reply</div>
                                             </div>

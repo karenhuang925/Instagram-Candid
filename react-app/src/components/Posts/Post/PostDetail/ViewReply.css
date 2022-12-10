@@ -27,3 +27,12 @@
         transform: rotate(360deg);
     }
 }
+
+#viewAndHide{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    font-size: 13px;
+    margin-right: 20px;
+    padding-bottom: 0px;
+}

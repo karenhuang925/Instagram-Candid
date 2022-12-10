@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Modal } from "../../context/Modal";
 import './CommentReplyActionModal.css'
 import {deleteComment} from '../../store/comments'
+import {loadAllPostsOfUsersFollowed} from '../../store/posts'
 
 function CommentReplyActionModal({ item, aciontType, setActionType, setItemId }) {
     const dispatch = useDispatch()
@@ -17,7 +18,9 @@ function CommentReplyActionModal({ item, aciontType, setActionType, setItemId })
     }
     const deleteOnclick =()=> {
         setActionModal(false)
-        dispatch(deleteComment(item.id))
+        dispatch(deleteComment(item.id)).then(()=>{
+            dispatch(loadAllPostsOfUsersFollowed())
+        })
     }
 
     return (

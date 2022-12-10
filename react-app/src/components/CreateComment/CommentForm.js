@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { createComment, editComment } from '../../store/comments';
 import { useDispatch } from 'react-redux';
+import { loadAllPostsOfUsersFollowed } from '../../store/posts'
 
 const CommentForm = ({ comment, itemId, formType, setActionType }) => {
 
@@ -22,26 +23,28 @@ const CommentForm = ({ comment, itemId, formType, setActionType }) => {
             setLoading(false);
             }, 1000);
         if (formType === "Post"){
-            dispatch(createComment(commentContent, itemId))
+            dispatch(createComment(commentContent, itemId)).then(()=>{
+                dispatch(loadAllPostsOfUsersFollowed())
+            })
             // .then((()=> {
             //     setRedirect(true)}))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
+            // .catch(
+            //     async (res) => {
+            //         const data = await res.json();
+            //         if (data && data.errors) setErrors(data.errors);
+            //     }
+            // );
         } else if(formType === "Edit"){
             dispatch(editComment(commentContent, itemId))
             setActionType('post')
             // .then((()=> {
             //     setRedirect(true)}))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
+            // .catch(
+            //     async (res) => {
+            //         const data = await res.json();
+            //         if (data && data.errors) setErrors(data.errors);
+            //     }
+            // );
         }
         setCommentContent('')
     };
