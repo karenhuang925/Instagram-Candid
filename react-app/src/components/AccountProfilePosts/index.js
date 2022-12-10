@@ -7,15 +7,41 @@ import PostDetail from "../Posts/Post/PostDetail/PostDetail";
 
 const AccountProfilePost = ({ post }) => {
   const [showPostModal, setShowPostModal] = useState(false);
+  // const [hover, setHover] = useState(false);
+
+  // const handleMouseOver = () => {
+  //   setHover(true);
+  // };
+
+  // const handleMouseOut = () => {
+  //   setHover(false);
+  // };
+
   const sessionUser = useSelector((state) => state?.session);
+
   return (
     <>
-      <Link onClick={() => setShowPostModal(true)}>
-        <img
-          id="post-preview"
-          src={post?.Media[0].media_file}
-          alt="Post Image Preview"
-        />
+      <Link
+        style={{ display: "inline-flex" }}
+        onClick={() => setShowPostModal(true)}
+      >
+        <div id="parent-div">
+          <img
+            id="post-preview"
+            src={post?.Media[0].media_file}
+            alt="Post Image Preview"
+            // onMouseOver={handleMouseOver}
+            // onMouseOut={handleMouseOut}
+          />
+          {/* {hover && ( */}
+          <div id="post-overlay">
+            <i id="white-heart" class="fa-solid fa-heart"></i>
+            <span id="like-count">{post?.likes}</span>
+            <i id="white-comment" class="fa-solid fa-comment"></i>
+            <span id="comment-count">{post?.comments}</span>
+          </div>
+          {/* )} */}
+        </div>
       </Link>
       {showPostModal && (
         <Modal onClose={() => setShowPostModal(false)}>

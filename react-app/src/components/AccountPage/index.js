@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { loadAllPostsByUserId } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useParams } from "react-router-dom";
-import {
-  fetchFollower,
-  fetchFollowing,
-  fetchMinusFollower,
-  fetchPlusFollower,
-} from "../../store/followers";
+import { useParams } from "react-router-dom";
+import { fetchFollower, fetchFollowing } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
 import "./AccountPage.css";
 import { useHistory } from "react-router-dom";
-import FollowButton from "../HomePage/FollowerSuggestions/followButton";
+import FollowButton2 from "../Variation2";
+import FollowButton from "../VariationofKarensFollowBtn";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -50,7 +46,7 @@ const AccountPage = () => {
   }
 
   // George-added this for contitional safety
-  if (!posts) return null
+  if (!posts) return null;
 
   return (
     <>
@@ -65,9 +61,10 @@ const AccountPage = () => {
             <div id="profile-top-right">
               <span id="profile-username">{account?.username}</span>
               {!newArr?.includes(sessionUser?.id) && (
-                <FollowButton userId={sessionUser?.id} followsUserId={id}>
-                  Follow
-                </FollowButton>
+                <FollowButton userId={sessionUser?.id} followsUserId={id} />
+              )}
+              {newArr?.includes(sessionUser?.id) && (
+                <FollowButton2 userId={sessionUser?.id} followsUserId={id} />
               )}
             </div>
             <div id="profile-aggs">
@@ -91,6 +88,7 @@ const AccountPage = () => {
           </div>
         </div>
         <hr id="long-hr" />
+        <hr id="short-hr" />
         <i class="fa-solid fa-table-cells" id="grid-icon"></i>
         <span id="post-tab">POSTS</span>
         <div id="post-previews">
@@ -100,10 +98,14 @@ const AccountPage = () => {
           {posts?.map((post) => {
             return <AccountProfilePost key={post.id} post={post} />;
           })}
-          {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
         </div>
-        <p className="about-link">About</p>
-        {/* link to github repo */}
+        <a
+          href="https://github.com/karenhuang925/Instagram-Candid"
+          target={"_blank"}
+          id="about-link"
+        >
+          <p id="about-paragraph">About</p>
+        </a>
       </div>
     </>
   );
