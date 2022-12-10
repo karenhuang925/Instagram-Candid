@@ -6,6 +6,7 @@ import ImageComponent from "./FeedPostComponents/ImageComponent"
 import FeedPostButtons from './FeedPostComponents/InteractionButtonComponent/FeedPostButtons'
 import ViewLikesModal from './FeedPostComponents/ViewLikesComponent'
 import PostDetail from '../PostDetail/PostDetail'
+import EditPostModal from '../EditDeletePost/EditModal'
 
 import "./Post.css"
 
@@ -49,6 +50,7 @@ function Post({ post, user }) {
 
             <section className='post-interaction-section'>
                 <FeedPostButtons post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetail={true}/>
+                <EditPostModal post={post}/>
             </section>
 
 
@@ -63,7 +65,7 @@ function Post({ post, user }) {
                 <Link className='post-comment-count' onClick={() => setShowPostModal(true)}>View all {post.comments} comments</Link>
                 {showPostModal && (
                     <Modal onClose={() => setShowPostModal(false)}>
-                        <PostDetail  post={post} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>
+                        <PostDetail  post={post} user={user} wasLiked={wasLiked} setWasLiked={setWasLiked} inPostDetails={true}/>
                     </Modal>
                 )}
 

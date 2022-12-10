@@ -1,0 +1,113 @@
+#profile-div {
+  margin: auto;
+  width: 975px;
+}
+
+#profile-top {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+  margin-bottom: 130px;
+  /* remove margin-bottom if have stories */
+}
+
+#profile-pic {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  margin-right: 100.83px;
+  margin-left: 100.83px;
+  object-fit: cover;
+  object-position: left top;
+}
+
+#profile-right {
+  display: flex;
+  flex-direction: column;
+  width: 613.34px;
+  /* justify-content: space-between; */
+}
+
+#profile-top-right {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#profile-username {
+  font-size: 20pt;
+  margin-right: 20px;
+}
+
+.follow-btn {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 13px;
+  font-size: 14px;
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#profile-aggs {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
+  width: 413.34px;
+}
+
+#number-1 {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+#number-2 {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+#number-3 {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+#profile-names {
+  margin: 0px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#biograph {
+  margin-top: 0px;
+}
+
+#long-hr {
+  width: 935px;
+  margin-bottom: 15px;
+  height: 1px;
+  border-width: 0;
+  background-color: rgb(220, 220, 220);
+  margin-left: 26px;
+}
+
+#post-tab {
+  font-size: 12px;
+  border-top: 1px solid black;
+  padding-top: 20px;
+  font-weight: 600;
+  margin-left: 293.04px;
+}
+
+#post-previews {
+  margin-top: 20px;
+}
+
+.about-link {
+  margin-left: 33px;
+}
+
+/* #grid-icon {
+  border-top: 1px solid black;
+  padding-top: 20px;
+  margin-left: 293.04px;
+} */
