@@ -77,6 +77,7 @@ export const fetchSuggestion = (user_id) => async (dispatch) => {
 };
 export const fetchPlusFollower = (follower) => async (dispatch) => {
   const { userId, followsUserId } = follower;
+  console.log();
   const res = await fetch(`/api/users/${userId}/followers`, {
     method: "POST",
     headers: {
@@ -95,11 +96,15 @@ export const fetchPlusFollower = (follower) => async (dispatch) => {
 };
 
 export const fetchMinusFollower = (follower) => async (dispatch) => {
-  const { user_id, follows_user_id } = follower;
-  const res = await fetch(`/api/users/${user_id}/followers`, {
+  const { userId, followsUserId } = follower;
+  console.log(userId, "HELLO", followsUserId);
+  const res = await fetch(`/api/users/${userId}/followers`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      follows_user_id,
+      follows_user_id: followsUserId,
     }),
   });
   if (res.ok) {

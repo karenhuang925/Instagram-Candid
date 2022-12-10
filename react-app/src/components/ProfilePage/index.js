@@ -21,6 +21,8 @@ const ProfilePage = () => {
     dispatch(loadAllCurrentUserPosts());
   }, [dispatch]);
 
+  if (!posts) return null;
+
   return (
     <>
       <div id="profile-div">
@@ -55,15 +57,21 @@ const ProfilePage = () => {
           </div>
         </div>
         <hr id="long-hr" />
+        <hr id="short-hr" />
+        <i class="fa-solid fa-table-cells" id="grid-icon"></i>
         <span id="post-tab">POSTS</span>
         <div id="post-previews">
           {Object?.keys(posts)?.map((postId) => {
             return <AccountProfilePost key={postId} post={posts[postId]} />;
           })}
-          {/* posts should be wrapped in a link to the modal, on hover it should show numbers of likes and comments */}
         </div>
-        <p className="about-link">About</p>
-        {/* link to github repo */}
+        <a
+          href="https://github.com/karenhuang925/Instagram-Candid"
+          target={"_blank"}
+          id="about-link"
+        >
+          <p id="about-paragraph">About</p>
+        </a>
       </div>
     </>
   );
