@@ -20,18 +20,23 @@ function Feed() {
 
     // let feed = useSelector((state) => Object.values(state?.posts)) || ""
 
-    if (!feed) {
-        return null;
-    }
+    // if (!feed) {
+    //     return null;
+    // }
 
     return (
         <section className='feed-section'>
             <section className='post-feed-container'>
-                {feed.map((post) => {
-                    return (
-                        <Post key={post.id} post={post} user={user}/>
-                    )
-                })}
+                {feed.length === 0  && (
+                    <div className='post-feed-no-following'>Add Suggested Followers</div>
+                )}
+
+                {feed?.length > 0 &&
+                    feed?.map((post) => {
+                        return (
+                            <Post key={post?.id} post={post} user={user} />
+                        )
+                    })}
             </section>
         </section>
     )

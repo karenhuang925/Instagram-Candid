@@ -17,7 +17,7 @@ import EditPostModal from "../EditDeletePost/EditPostComponent/EditPostModal";
 import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
 import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
 
-function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
+function PostDetail({ post, user, wasLiked, setWasLiked}) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadPostById(post.id));
