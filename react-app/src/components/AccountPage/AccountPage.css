@@ -101,7 +101,12 @@
   margin-top: 20px;
 }
 
-.about-link {
+#about-link {
+  text-decoration: none;
+  color: black;
+}
+
+#about-paragraph {
   margin-left: 33px;
 }
 

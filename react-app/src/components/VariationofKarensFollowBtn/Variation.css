@@ -1,4 +1,4 @@
-.follow-btn {
+#follow-btn {
   font-family: inherit;
   font-weight: bold;
   padding: 5px 13px;
@@ -7,4 +7,17 @@
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+#following-btn {
+  font-family: inherit;
+  font-weight: bold;
+  padding: 5px 13px;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: 1px solid rgb(220, 220, 220);
+  cursor: pointer;
 }

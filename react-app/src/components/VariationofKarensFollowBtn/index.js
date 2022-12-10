@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Modal } from "../../context/Modal";
 import { fetchPlusFollower } from "../../store/followers";
+import UnfollowModal from "../UnfollowModal";
 import "./Variation.css";
 
 function FollowButton({ userId, followsUserId }) {
@@ -24,13 +25,14 @@ function FollowButton({ userId, followsUserId }) {
   if (followed) {
     return (
       <>
-        <button onClick={() => setShowUnfollowModal(true)}>
-          Following <i class="fa-solid fa-angle-down"></i>
+        <button id="following-btn" onClick={() => setShowUnfollowModal(true)}>
+          <span>Following </span>
+          <i class="fa-solid fa-angle-down"></i>
         </button>
         {showUnfollowModal && (
           <Modal onClose={() => setShowUnfollowModal(false)}>
             <UnfollowModal />
-            //missing postId prop
+            {/* maybe need props */}
           </Modal>
         )}
       </>

@@ -8,7 +8,6 @@ import AccountProfilePost from "../AccountProfilePosts";
 import VariationofKarensFollowButton from "../VariationofKarensFollowBtn";
 import "./AccountPage.css";
 import { useHistory } from "react-router-dom";
-import FollowButton from "../HomePage/FollowerSuggestions/followButton";
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -46,7 +45,7 @@ const AccountPage = () => {
   }
 
   // George-added this for contitional safety
-  if (!posts) return null
+  if (!posts) return null;
 
   return (
     <>
@@ -64,17 +63,13 @@ const AccountPage = () => {
                 <variationofKarensFollowBtn
                   userId={sessionUser?.id}
                   followsUserId={id}
-                >
-                  Follow
-                </variationofKarensFollowBtn>
+                />
               )}
               {newArr?.includes(sessionUser?.id) && (
                 <VariationofKarensFollowButton
                   userId={sessionUser?.id}
                   followsUserId={id}
-                >
-                  Following
-                </VariationofKarensFollowButton>
+                />
               )}
             </div>
             <div id="profile-aggs">
@@ -108,10 +103,14 @@ const AccountPage = () => {
           {posts?.map((post) => {
             return <AccountProfilePost key={post.id} post={post} />;
           })}
-          {/* on hover it should show numbers of likes and comments */}
         </div>
-        <p className="about-link">About</p>
-        {/* link to github repo */}
+        <a
+          href="https://github.com/karenhuang925/Instagram-Candid"
+          target={"_blank"}
+          id="about-link"
+        >
+          <p id="about-paragraph">About</p>
+        </a>
       </div>
     </>
   );
