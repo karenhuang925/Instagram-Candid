@@ -1,12 +1,14 @@
 import ReplyForm from './ReplyForm';
+import { useState } from 'react';
 
 const CreateReplyForm = ({item, replyTo}) => {
     const reply = {
         reply: `@${replyTo} `
     };
 
+    const [replyContent, setReplyContent] = useState(reply.reply);
     return (
-        <ReplyForm reply={reply} itemId={item.id} formType="Post" contentType='reply'/>
+        <ReplyForm itemId={item.id} formType="Post" contentType='reply'replyContent={replyContent} setReplyContent={setReplyContent}/>
     );
 }
 
