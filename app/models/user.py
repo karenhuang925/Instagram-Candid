@@ -22,13 +22,13 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    posts = db.relationship('Post', back_populates='user')
-    medias = db.relationship('Media', back_populates='user')
-    comments = db.relationship('Comment', back_populates='user')
-    replies = db.relationship('Reply', back_populates='user')
-    likes = db.relationship('Like', back_populates='user')
+    posts = db.relationship('Post', back_populates='user', cascade="all, delete-orphan")
+    medias = db.relationship('Media', back_populates='user', cascade="all, delete-orphan")
+    comments = db.relationship('Comment', back_populates='user', cascade="all, delete-orphan")
+    replies = db.relationship('Reply', back_populates='user', cascade="all, delete-orphan")
+    likes = db.relationship('Like', back_populates='user', cascade="all, delete-orphan")
 
-    current_user = db.relationship('Follower', back_populates='this_user', foreign_keys='Follower.user_id')
+    current_user = db.relationship('Follower', back_populates='this_user', foreign_keys='Follower.user_id',  cascade="all, delete-orphan")
 
 
 
