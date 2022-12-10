@@ -9,27 +9,28 @@ import { loadFollowing } from "../../../../store/followers";
 import ViewLikesModal from "../FeedPost/FeedPostComponents/ViewLikesComponent/ViewLikesModal";
 import { fetchLike } from "../../../../store/likes";
 import ViewReply from "./ViewReply";
+import CreateCommentForm from "../../../CreateComment/CreateCommentForm";
+import EditCommentForm from "../../../CreateComment/EditCommentForm";
+import CommentReplyActionModal from "../../../CommentReplyActionModal/CommentReplyActionModal";
 
 function PostDetail({ post, user, wasLiked, setWasLiked, inPostDetail }) {
   const dispatch = useDispatch();
-  // let user = useSelector((state) => state.session)
-
   useEffect(() => {
     dispatch(loadPostById(post.id));
     dispatch(loadCommentsByPostId(post.id));
-    // dispatch(loadFollowing(user.id))
+    dispatch(loadFollowing(user.id));
+    dispatch(fetchLike(post.id));
   }, [dispatch]);
 
-  // let post = useSelector((state) => state.singlePost.post);
-  let allComments = useSelector((state) => state.comments.comment);
-  let following = useSelector((state) => state.follows.following);
+  //comment and reply useState
+  let [contectType, setContentType] = useState("comment");
+  let [actionType, setActionType] = useState("post");
+  let [itemId, setItemId] = useState(0);
 
-  if (!post) {
-    return null;
-  }
-  if (!allComments) {
-    return null;
-  }
+  // let post = useSelector((state) => state.singlePost.post)
+  let allComments = useSelector((state) => state.comments.comment);
+  // let following = useSelector((state) => state.follows.following)
+  // let likes = useSelector((state) => state.likes.likes)
 
   let today = Date.parse(new Date());
   let unixTimeZero = Date.parse(post.created_at);
