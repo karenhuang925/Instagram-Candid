@@ -90,17 +90,14 @@ def get_posts_of_users_current_user_follows():
             }
 
             following_posts.append(returnPost)
-<<<<<<< HEAD
     sortedArray = sorted(following_posts, key=lambda x: x['created_at'], reverse=True)
     # random.shuffle(following_posts)
     # following_posts.sort(key = lambda obj: obj['created_at'])
     return {"Posts" : [post for post in sortedArray]}
-=======
     # random.shuffle(following_posts)
     following_posts.sort(key = lambda obj: obj['created_at'])
 
     return {"Posts" : [post for post in following_posts]}
->>>>>>> 9178277e240ade21f66eab2124cb00a5f0bed92e
 
 
     # return {
