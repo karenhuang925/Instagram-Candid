@@ -44,12 +44,13 @@ export const loadRepliesByCommentId = (id) => async (dispatch) => {
     const response = await fetch(`/api/comments/${id}/replies`);
     const replies = await response.json();
 
-    let allRepliesForComment = {};
-    replies.Replies.forEach((reply) => {
-        allRepliesForComment[reply.id] = reply
-    });
+    // let allRepliesForComment = {};
+    // replies.Replies.forEach((reply) => {
+    //     allRepliesForComment[reply.id] = reply
+    // });
 
-    dispatch(loadRepliesForAComment(allRepliesForComment));
+    // dispatch(loadRepliesForAComment(allRepliesForComment));
+    dispatch(loadRepliesForAComment({id,replies}));
     return response;
 }
 
@@ -73,7 +74,7 @@ export const createReply = (commentId, reply) => async (dispatch) => {
     });
 
     dispatch(createAReply(commentReplies[newReply.id]));
-    return response;
+    return addedReply;
 }
 
 // Edit a Reply
@@ -112,9 +113,7 @@ export const deleteReply = (id) => async (dispatch) => {
 
 
 //Initial State Object
-const initialState = {
-    reply: null
-  };
+const initialState = {};
 
 
 
@@ -125,18 +124,23 @@ const replyReducer = (state = initialState, action) => {
         case LOAD_REPLIES:
             newState = {
                 ...state,
-                reply: action.payload
+                [action.payload.id]: [...action.payload.replies.Replies]
             }
             return newState;
         case CREATE_REPLY:
-            newState = {
-                ...state,
-                reply: {
-                    ...state.reply,
-                    [action.payload.id]: action.payload
+            if(!state[action.payload.comment_id]){
+                newState = {
+                    ...state,
+                    [action.payload.comment_id]: [action.payload]
                 }
+                return newState;
+            } else{
+                newState = {
+                    ...state,
+                    [action.payload.comment_id]: [...state[action.payload.comment_id], action.payload]
+                }
+                return newState;
             }
-            return newState;
         case UPDATE_REPLY_BY_USER:
             newState = {
                 ...state,

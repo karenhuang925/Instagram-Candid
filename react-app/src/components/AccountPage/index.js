@@ -27,7 +27,7 @@ const AccountPage = () => {
     dispatch(fetchFollowing(id));
     dispatch(loadAllPostsByUserId(id));
   }, [dispatch]);
-  
+
   useEffect(() => {
     dispatch(getUserFunction(id));
     dispatch(fetchFollower(id));
@@ -47,7 +47,7 @@ const AccountPage = () => {
       followers.forEach((follow) => {
         arr.push(follow.user_id);
       });
-      setNewArr([...newArr, ...arr]);
+      setNewArr([...arr]);
     }
   }, [followers]);
 
@@ -70,12 +70,12 @@ const AccountPage = () => {
           <div id="profile-right">
             <div id="profile-top-right">
               <span id="profile-username">{account?.username}</span>
-              {/* {!newArr?.includes(sessionUser?.id) && (
+              {!newArr?.includes(sessionUser?.id) && (
                 <FollowButton userId={sessionUser?.id} followsUserId={id} />
               )}
               {newArr?.includes(sessionUser?.id) && (
                 <FollowButton2 userId={sessionUser?.id} followsUserId={id} />
-              )} */}
+              )}
             </div>
             <div id="profile-aggs">
               <div id="post-agg">
