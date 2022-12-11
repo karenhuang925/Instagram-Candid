@@ -14,8 +14,8 @@ function CreatePostPage1({ images, setImages }) {
     const handleOnChange = (e, index) => {
         const inputsOnChange = [...inputs];
         inputsOnChange[index][0] = e.target.value;
-        if(inputsOnChange[index][0].endsWith(".jpg")) inputsOnChange[index][1] = false;
-        if(!inputsOnChange[index][0].endsWith(".jpg")) inputsOnChange[index][1] = true;
+        if(inputsOnChange[index][0].includes(".jpg")) inputsOnChange[index][1] = false;
+        if(!inputsOnChange[index][0].includes(".jpg")) inputsOnChange[index][1] = true;
         setInputs(inputsOnChange);
     }
 
@@ -30,13 +30,14 @@ function CreatePostPage1({ images, setImages }) {
         for(let index = 0; index < inputs.length; index++) {
             if(inputs[index][1]) counter++;
         }
-        console.log(counter)
         if(counter === 0) {
             const newArray = [];
             for(let index = 0; index < inputs.length; index++) {
                 newArray.push(inputs[index][0])
             }
             setImages(newArray);
+        } else {
+            setImages([]);
         }
     }, [inputs])
 
