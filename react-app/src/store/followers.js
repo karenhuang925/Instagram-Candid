@@ -137,7 +137,7 @@ const followerReducer = (state = {}, action) => {
       // return newState;
       newState = {
         ...state,
-        following: [...state.following, action.payload],
+        followers: [...state.followers, action.payload],
       };
       return newState;
     case MINUS_FOLLOWER:
