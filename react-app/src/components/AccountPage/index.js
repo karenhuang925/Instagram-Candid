@@ -10,7 +10,8 @@ import { useHistory } from "react-router-dom";
 import FollowButton2 from "../Variation2";
 import FollowButton from "../VariationofKarensFollowBtn";
 
-import ViewFollowerModal from "../FollowComponent/Follower/ViewFollowerModal";
+import ViewFollowerModal from "../FollowComponent/Follower/ViewFollowerModal"
+import ViewFollowingModal from "../FollowComponent/Following/ViewFollowingModal"
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -82,15 +83,17 @@ const AccountPage = () => {
                 <span>posts</span>
               </div>
               <div id="follower-agg">
-                {!followers ? <span id="number-2">0</span> : <span id="number-2">{Object?.keys(followers)?.length}</span>}
-                <span>followers</span>
+                <ViewFollowerModal user={account}/>
+                {/* {!followers ? <span id="number-2">0</span> : <span id="number-2">{Object?.keys(followers)?.length}</span>}
+                <span>followers</span> */}
 
                 {/* <ViewFollowerModal post={post} followers={followers} /> */}
 
               </div>
               <div id="following-agg">
-                {!following ? <span id="number-3">0</span> : <span id="number-2">{Object?.keys(following)?.length}</span>}
-                <span>following</span>
+                <ViewFollowingModal user={account}/>
+                {/* {!following ? <span id="number-3">0</span> : <span id="number-2">{Object?.keys(following)?.length}</span>}
+                <span>following</span> */}
               </div>
             </div>
             <p id="profile-names">

@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFollower, fetchFollowing } from "../../store/followers";
 import { getUserFunction } from "../../store/userV1";
 import AccountProfilePost from "../AccountProfilePosts";
+import ViewFollowerModal from "../FollowComponent/Follower/ViewFollowerModal";
+import ViewFollowingModal from "../FollowComponent/Following/ViewFollowingModal";
+
 import "../AccountPage/AccountPage.css";
 
 const ProfilePage = () => {
@@ -43,14 +46,16 @@ const ProfilePage = () => {
                 <span>posts</span>
               </div>
               <div id="follower-agg">
-                {!followers ? <span id="number-1">0</span> : <span id="number-2">{Object?.keys(followers)?.length}</span>}
+                <ViewFollowerModal user={sessionUser}/>
+                {/* {!followers ? <span id="number-1">0</span> : <span id="number-2">{Object?.keys(followers)?.length}</span>} */}
                 {/* <span id="number-2">{Object?.keys(followers)?.length}</span> */}
-                <span>followers</span>
+                {/* <span>followers</span> */}
               </div>
               <div id="following-agg">
-                {!following ? <span id="number-1">0</span> : <span id="number-2">{Object?.keys(following)?.length}</span>}
+                <ViewFollowingModal user={sessionUser}/>
+                {/* {!following ? <span id="number-1">0</span> : <span id="number-2">{Object?.keys(following)?.length}</span>} */}
                 {/* <span id="number-3">{Object?.keys(following)?.length}</span> */}
-                <span>following</span>
+                {/* <span>following</span> */}
               </div>
             </div>
             <p id="profile-names">
