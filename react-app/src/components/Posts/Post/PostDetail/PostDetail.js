@@ -81,7 +81,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
                 <EditPostModal post={post} />
               </>
             ) : (
-              <i className="fa-solid fa-ellipsis fa-1x"></i>
+              <i id='post-more-options-icon' className="fa-solid fa-ellipsis fa-1x"></i>
             )}
           </div>
         </div>
