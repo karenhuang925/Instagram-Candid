@@ -11,7 +11,7 @@ const CreateReplyForm = ({item, replyTo, postId}) => {
     // },[replyTo])
 
     return (
-        <ReplyForm itemId={item.id} formType="Post" replyTo={replyTo} postId={postId}/>
+        <ReplyForm itemId={item.id} formType="Post" replyTo={replyTo} postId={postId} />
     );
 }
 

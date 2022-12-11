@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./PostDetail.css";
 import ImageComponent from "../FeedPost/FeedPostComponents/ImageComponent/index";
@@ -49,6 +49,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
 
   var options = { year: "numeric", month: "long", day: "numeric" };
   let createdAt = new Date(post?.created_at).toDateString(undefined, options);
+
 
   function CreateReply(item) {
     setContentType("reply");
