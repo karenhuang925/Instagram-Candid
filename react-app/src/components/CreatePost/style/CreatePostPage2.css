@@ -10,14 +10,12 @@
     justify-content: center;
     align-items: center;
     background-color: black;
+    overflow: hidden;
 }
 
 #MediaPreview-id-d1i1 {
-    width: 725px;
+    width: 100%;
     height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #MediaPreview-id-d1b1 {
