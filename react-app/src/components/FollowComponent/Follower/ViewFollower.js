@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFollower } from "../../../store/followers";
@@ -34,11 +35,15 @@ function ViewFollower({ post, user }) {
 
                             <div className="user-detail-container">
                                 <div id="like-user-detail-image">
-                                    {follower?.Owner?.preview_image ? <img className='like-user-preview-image' src={follower?.Owner?.preview_image} alt={follower?.id} /> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
+                                    <NavLink style={{ color: 'black', textDecoration: 'none' }} to={`/profile/${follower?.Owner?.id}`} exact={true} activeClassName='active'>
+                                        {follower?.Owner?.preview_image ? <img className='like-user-preview-image' src={follower?.Owner?.preview_image} alt={follower?.id} /> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
+                                    </NavLink>
                                 </div>
 
                                 <div className="user-detail-identity">
-                                    <div id="like-user-username">{follower?.Owner?.username}</div>
+                                    <NavLink style={{ color: 'black', textDecoration: 'none' }} to={`/profile/${follower?.Owner?.id}`} exact={true} activeClassName='active'>
+                                        <div id="like-user-username">{follower?.Owner?.username}</div>
+                                    </NavLink>
                                     <div id="like-user-name">{follower?.Owner?.first_name} {follower?.Owner?.last_name}</div>
                                 </div>
                             </div>
