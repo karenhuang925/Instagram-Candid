@@ -37,7 +37,7 @@ function CreatePost() {
             <div id="CreatePost-id-d1d1">
                 { (currentPage > 0 && currentPage < postPages.length - 1) && <div className="CreatePost-d1d1b1" type="button" onClick={() => handleBack()} style={{gridColumn: 1}}><svg aria-label="Back" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="2.909" x2="22.001" y1="12.004" y2="12.004"></line><polyline fill="none" points="9.276 4.726 2.001 12.004 9.276 19.274" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg></div> }
                 <span style={{gridColumn: 2}}>Create new post</span>
-                { currentPage < postPages.length - 2 && <div className="CreatePost-d1d1d" onClick={() => handleNext()} style={{gridColumn: 3}}>Next</div> }
+                { (currentPage < postPages.length - 2 && images.length > 0) && <div className="CreatePost-d1d1d" onClick={() => handleNext()} style={{gridColumn: 3}}>Next</div> }
                 { currentPage === postPages.length - 2 && <div className="CreatePost-d1d1d" onClick={() => handleShare()} style={{gridColumn: 3}}>Share</div> }
             </div>
             <div id="CreatePost-id-d1d2">
