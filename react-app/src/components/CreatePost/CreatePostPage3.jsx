@@ -5,19 +5,15 @@ import { addMediaFunction } from "../../store/media";
 import "./style/CreatePostPage3.css";
 
 function CreatePostPage3({ images, caption, location }) {
-    console.log({ images, caption, location })
     const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch()
     useEffect(() => {
         (async () => {
-            
-            console.log("111111111")
             const postData = {
                 caption,
                 location
             }
-            const newPost = await dispatch(createPost(postData))
-            console.log("222222222")
+            const newPost = await dispatch(createPost(postData));
             const mediaData = {
                 post_id: newPost.id,
                 user_id: newPost.user_id,
@@ -27,9 +23,7 @@ function CreatePostPage3({ images, caption, location }) {
                 mediaData.media_file = images[index]
                 await dispatch(addMediaFunction(mediaData))
             }
-            console.log("333333333")
             dispatch(loadAllPostsOfUsersFollowed())
-            console.log("4444444444")
             setLoaded(true)
         })();
     }, []);

@@ -77,7 +77,6 @@ export const fetchSuggestion = (user_id) => async (dispatch) => {
 };
 export const fetchPlusFollower = (follower) => async (dispatch) => {
   const { userId, followsUserId } = follower;
-  console.log();
   const res = await fetch(`/api/users/${userId}/followers`, {
     method: "POST",
     headers: {
@@ -97,7 +96,6 @@ export const fetchPlusFollower = (follower) => async (dispatch) => {
 
 export const fetchMinusFollower = (follower) => async (dispatch) => {
   const { userId, followsUserId } = follower;
-  console.log(userId, "HELLO", followsUserId);
   const res = await fetch(`/api/users/${userId}/followers`, {
     method: "PUT",
     headers: {
@@ -143,8 +141,16 @@ const followerReducer = (state = {}, action) => {
       };
       return newState;
     case MINUS_FOLLOWER:
-      newState = { ...state };
-      newState.following[action.payload.id] = action.payload;
+      // for(let i = 0; i < state.followers.length; i++){
+      //   if(state.followers[i].id === action.payload.id){
+      //     state.followers.splice(i, 1)
+      //   }
+      // }
+      newState = {
+        ...state,
+        followers: [...state.followers]};
+      // newState.followers[action.payload.id] = action.payload;
+      delete newState.followers[action.payload]
       return newState;
     default:
       return state;

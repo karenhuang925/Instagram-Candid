@@ -12,8 +12,8 @@ import ViewReply from "./ViewReply";
 import CreateCommentForm from "../../../CreateComment/CreateCommentForm";
 import EditCommentForm from "../../../CreateComment/EditCommentForm";
 import CommentReplyActionModal from "../../../CommentReplyActionModal/CommentReplyActionModal";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, Link } from "react-router-dom";
+import { loadRepliesByCommentId } from "../../../../store/reply";
 import EditPostModal from "../EditDeletePost/EditPostComponent/EditPostModal";
 import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
 import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
@@ -28,7 +28,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
   }, [dispatch]);
 
   //comment and reply useState
-  let [contectType, setContentType] = useState("comment");
+  let [contentType, setContentType] = useState("comment");
   let [actionType, setActionType] = useState("post");
   let [itemId, setItemId] = useState(0);
   let [replyTo, setReplyTo] = useState("");
@@ -56,8 +56,6 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
     setReplyTo(item.Owner.username);
   }
 
-  console.log(post?.Owner?.id);
-
   return (
     <section className="modal-outer">
       <div className="image">
@@ -83,7 +81,10 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
                 <EditPostModal post={post} />
               </>
             ) : (
-              <i className="fa-solid fa-ellipsis fa-1x"></i>
+              <i
+                id="post-more-options-icon"
+                className="fa-solid fa-ellipsis fa-1x"
+              ></i>
             )}
           </div>
         </div>
@@ -160,7 +161,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
                             </div>
                           )}
                         </div>
-                        <div
+                        <Link
                           className="post-time"
                           id="bold"
                           onClick={() => {
@@ -168,7 +169,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
                           }}
                         >
                           Reply
-                        </div>
+                        </Link>
                         {comment.user_id == user.id && (
                           <CommentReplyActionModal
                             item={comment}
@@ -221,12 +222,12 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
               </div>
             )}
           </div>
-          {contectType == "comment" && actionType == "post" ? (
+          {contentType == "comment" && actionType == "post" ? (
             <CreateCommentForm
               className="addComment"
               itemId={post.id}
             ></CreateCommentForm>
-          ) : contectType == "comment" && actionType == "edit" ? (
+          ) : contentType == "comment" && actionType == "edit" ? (
             <EditCommentForm
               className="addComment"
               itemId={itemId}
@@ -237,6 +238,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
               item={allComments[itemId]}
               replyTo={replyTo}
               className="addComment"
+              postId={post.id}
             ></CreateReplyForm>
           )}
         </div>
