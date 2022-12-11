@@ -17,7 +17,6 @@ function EditPost({ post, onSubmit }) {
 
 
     useEffect(() => {
-        console.log(post?.id)
         dispatch(loadPostById(post?.id))
         // dispatch(sessionFunction())
     }, [dispatch])

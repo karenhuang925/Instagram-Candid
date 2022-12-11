@@ -20,7 +20,6 @@ function FollowButton2({ userId, followsUserId }) {
   const account = useSelector((state) => state?.user);
 
   const handleUnfollow = async () => {
-    console.log(userId, "BYE", followsUserId);
     await dispatch(fetchMinusFollower({ userId, followsUserId })).then(() => {
       dispatch(fetchFollower(followsUserId));
     });

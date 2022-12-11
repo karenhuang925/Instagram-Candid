@@ -48,7 +48,6 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
                         </div>
                     ) : (
                         replies && Object.values(replies).map((value) => {
-                            console.log(value)
                             let today = Date.parse(new Date())
                             let unixTimeZero = Date.parse(value.created_at)
 

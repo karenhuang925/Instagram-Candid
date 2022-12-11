@@ -56,8 +56,6 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
     setReplyTo(item.Owner.username);
   }
 
-  console.log(post?.Owner?.id)
-
   return (
     <section className="modal-outer">
       <div className="image">
