@@ -32,7 +32,7 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
         setReplyTo(value.Owner.username)
     }
 
-    let replies = useSelector((state) => state.replies.reply)
+    let replies = useSelector((state) => state.replies[comment.id])
 
     return (
         <>
@@ -57,7 +57,7 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
                             let diffinhours = Math.floor(diff / (3600 * 1000))
 
                                 return (
-                                    <div className='caption-card'>
+                                    <div className='caption-card' key={value.id}>
                                         <img alt='preview' src={value.Owner.previewImage} className='detail-profile-pic'></img>
                                         <div>
                                             <div className='usernameAndCaption'>

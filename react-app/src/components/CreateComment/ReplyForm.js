@@ -21,7 +21,6 @@ const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
       dispatch(createReply(itemId, replyContent))
       .then(()=>{
           dispatch(loadAllPostsOfUsersFollowed())
-          dispatch(loadRepliesByCommentId(itemId))
       })
     }
     // else if(formType === "Edit"){
@@ -31,7 +30,7 @@ const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
     setReplyContent("");
   };
 
-  
+
   useEffect(() => {
     const errors = [];
     if(!replyContent.trim().length) errors.push("Invalid reply")
