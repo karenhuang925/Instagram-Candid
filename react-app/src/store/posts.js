@@ -82,8 +82,8 @@ export const loadAllCurrentUserPosts = () => async (dispatch) => {
   const posts = await response.json();
 
   let currentUserPosts = [];
-  posts.Posts.forEach((post) => {
-    currentUserPosts.push(post);
+  posts?.Posts?.forEach((post) => {
+    currentUserPosts?.push(post);
   });
 
   dispatch(loadPosts(currentUserPosts));
@@ -96,8 +96,8 @@ export const loadAllPostsByUserId = (userId) => async (dispatch) => {
   const posts = await response.json();
 
   let userPosts = [];
-  posts.Posts.forEach((post) => {
-    userPosts.push(post);
+  posts?.Posts?.forEach((post) => {
+    userPosts?.push(post);
   });
 
   dispatch(loadPosts(userPosts));

@@ -6,7 +6,7 @@ import { loadPostById } from "../../../../store/singlepost";
 import { loadCommentsByPostId } from "../../../../store/comments";
 import FeedPostButtons from "../FeedPost/FeedPostComponents/InteractionButtonComponent/FeedPostButtons";
 import { loadFollowing } from "../../../../store/followers";
-import ViewLikesModal from "../FeedPost/FeedPostComponents/ViewLikesComponent/ViewLikesModal";
+import ViewLikesModal from "../FeedPost/FeedPostComponents/ViewLikesComponent";
 import { fetchLike } from "../../../../store/likes";
 import ViewReply from "./ViewReply";
 import CreateCommentForm from "../../../CreateComment/CreateCommentForm";
@@ -202,7 +202,8 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
             />
           </div>
           <div className="post-detail-likes" Id="inpost">
-            {post.likes} likes
+            <ViewLikesModal post={post}/>
+            {/* {post.likes} likes */}
           </div>
           <div className="created-at">
             {diffinyears > 1 ? (

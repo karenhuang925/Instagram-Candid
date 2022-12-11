@@ -35,12 +35,12 @@ const AccountProfilePost = ({ post, user }) => {
             // onMouseOut={handleMouseOut}
           />
           {/* {hover && ( */}
-          <div id="post-overlay">
+          {/* <div id="post-overlay">
             <i id="white-heart" class="fa-solid fa-heart"></i>
             <span id="like-count">{post?.likes}</span>
             <i id="white-comment" class="fa-solid fa-comment"></i>
             <span id="comment-count">{post?.comments}</span>
-          </div>
+          </div> */}
           {/* )} */}
         </div>
       </Link>
