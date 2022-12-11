@@ -26,6 +26,13 @@ const AccountPage = () => {
     dispatch(fetchFollowing(id));
     dispatch(loadAllPostsByUserId(id));
   }, [dispatch]);
+  
+  useEffect(() => {
+    dispatch(getUserFunction(id));
+    dispatch(fetchFollower(id));
+    dispatch(fetchFollowing(id));
+    dispatch(loadAllPostsByUserId(id));
+  }, [id]);
 
   const account = useSelector((state) => state?.user);
   const posts = useSelector((state) => state?.posts?.post) || "";
