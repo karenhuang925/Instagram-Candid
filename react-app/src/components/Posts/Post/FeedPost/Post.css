@@ -24,7 +24,7 @@
 
 #post-more-options-icon:hover {
     color: lightgray;
-    cursor: pointer;
+    cursor: not-allowed;
 }
 
 .user-preview-image {
