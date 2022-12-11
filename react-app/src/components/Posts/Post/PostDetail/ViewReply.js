@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
-
-import {loadRepliesByCommentId} from '../../../../store/reply'
+import { loadPostById } from '../../../../store/singlepost'
+import { loadRepliesByCommentId } from '../../../../store/reply'
 import './ViewReply.css'
 
 
@@ -21,6 +21,10 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
             }, 1000);
         }, [showReply]);
 
+    // useEffect(() => {
+    //     dispatch(loadRepliesByCommentId(comment.id))
+    // }, [comment]);
+
     function onClickHandler(){
         setShowReply(!showReply)
         dispatch(loadRepliesByCommentId(comment.id))
@@ -33,6 +37,10 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
     }
 
     let replies = useSelector((state) => state.replies[comment.id])
+
+    // useEffect(()=>{
+    //     dispatch(loadRepliesByCommentId(comment.id))
+    // }, [replies])
 
     return (
         <>
@@ -69,7 +77,7 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
                                                     ? <div className='post-time' id='bold'>{diffindays > 1 ? `${diffindays}d` : `1d`}</div>
                                                     : <div className='post-time' id='bold'>{diffinhours > 1 ? `${diffinhours}h` : `1h`}</div>
                                                 }</div>
-                                                <div className='post-time' id='bold' onClick={()=>CreateReply(value)}>Reply</div>
+                                                <Link className='post-time' id='bold' onClick={()=>CreateReply(value)}>Reply</Link>
                                             </div>
                                         </div>
                                     </div>

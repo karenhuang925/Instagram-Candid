@@ -128,11 +128,19 @@ const replyReducer = (state = initialState, action) => {
             }
             return newState;
         case CREATE_REPLY:
-            newState = {
-                ...state,
-                [action.payload.comment_id]: [...state[action.payload.comment_id], action.payload]
+            if(!state[action.payload.comment_id]){
+                newState = {
+                    ...state,
+                    [action.payload.comment_id]: [action.payload]
+                }
+                return newState;
+            } else{
+                newState = {
+                    ...state,
+                    [action.payload.comment_id]: [...state[action.payload.comment_id], action.payload]
+                }
+                return newState;
             }
-            return newState;
         case UPDATE_REPLY_BY_USER:
             newState = {
                 ...state,
