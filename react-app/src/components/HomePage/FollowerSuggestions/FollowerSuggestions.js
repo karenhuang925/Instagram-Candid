@@ -45,7 +45,6 @@ function FollowerSuggestion() {
             <div className='suggest-list'>
                 <div className='title-flex'>
                     <p className='title-suggest'>Suggestions For You</p>
-                    <Link className='action-link seeall' >See All</Link>
                 </div>
                     {followerSuggest.map((suggestion)=>{
                         if (suggestion?.preview_image.length < 10){

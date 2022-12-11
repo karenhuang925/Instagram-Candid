@@ -24,6 +24,8 @@ function Post({ post, user }) {
     let [wasLiked, setWasLiked] = useState(post?.likeStatus);
     // let [inPostDetail, setInPostDetail] = useState(false)
 
+
+
     return (
         <div className='individual-post-container'>
 
