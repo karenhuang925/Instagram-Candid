@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loadAllPostsOfUsersFollowed } from "../../store/posts";
@@ -7,9 +7,11 @@ import { loadCommentsByPostId } from "../../store/comments";
 
 const ReplyForm = ({ itemId, formType, postId, replyTo}) => {
   const dispatch = useDispatch();
+  const replyReference = useRef(null);
 
   useEffect(()=>{
     setReplyContent(`@${replyTo} `)
+    replyReference.current.focus()
   },[replyTo])
 
   const [frontendErrors, setFrontendErrors] = useState([]);
@@ -52,6 +54,7 @@ const ReplyForm = ({ itemId, formType, postId, replyTo}) => {
           value={replyContent}
           onChange={(e) => setReplyContent(e.target.value)}
           required
+          ref={replyReference}
         />
       <input
         className="post-comment-button"

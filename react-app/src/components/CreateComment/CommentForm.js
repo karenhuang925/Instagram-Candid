@@ -4,7 +4,7 @@ import { createComment, editComment } from "../../store/comments";
 import { useDispatch } from "react-redux";
 import { loadAllPostsOfUsersFollowed } from "../../store/posts";
 
-const CommentForm = ({ comment, itemId, formType, setActionType }) => {
+const CommentForm = ({ comment, itemId, formType, setActionType, commentReference }) => {
 
   const dispatch = useDispatch();
 
@@ -13,6 +13,7 @@ const CommentForm = ({ comment, itemId, formType, setActionType }) => {
   const [redirect, setRedirect] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.comment);
   const [loading, setLoading] = useState(false);
+
 
   // if(redirect){return ( <Redirect to={`/spots`} />)}
   const handleSubmit = (e) => {
@@ -67,6 +68,7 @@ const CommentForm = ({ comment, itemId, formType, setActionType }) => {
         value={commentContent}
         onChange={(e) => setCommentContent(e.target.value)}
         required
+        ref={commentReference}
       />
       <input
         className="post-comment-button"
