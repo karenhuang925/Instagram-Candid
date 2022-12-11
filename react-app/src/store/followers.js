@@ -63,7 +63,7 @@ export const fetchFollowing = (user_id) => async (dispatch) => {
   const res = await fetch(`/api/users/${user_id}/following`);
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadFollower(data));
+    dispatch(loadFollowing(data));
     return data;
   }
 };
@@ -137,7 +137,7 @@ const followerReducer = (state = {}, action) => {
       // return newState;
       newState = {
         ...state,
-        following: [...state.following, action.payload],
+        followers: [...state.followers, action.payload],
       };
       return newState;
     case MINUS_FOLLOWER:
@@ -148,9 +148,10 @@ const followerReducer = (state = {}, action) => {
       // }
       newState = {
         ...state,
-        followers: [...state.followers]};
+        followers: [...state.followers],
+      };
       // newState.followers[action.payload.id] = action.payload;
-      delete newState.followers[action.payload]
+      delete newState.followers[action.payload];
       return newState;
     default:
       return state;
