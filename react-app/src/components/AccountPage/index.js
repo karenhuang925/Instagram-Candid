@@ -26,7 +26,7 @@ const AccountPage = () => {
     dispatch(fetchFollowing(id));
     dispatch(loadAllPostsByUserId(id));
   }, [dispatch]);
-  
+
   useEffect(() => {
     dispatch(getUserFunction(id));
     dispatch(fetchFollower(id));
@@ -78,24 +78,40 @@ const AccountPage = () => {
             </div>
             <div id="profile-aggs">
               <div id="post-agg">
-                {!posts ? <span id="number-1">0</span> : <span id="number-1">{Object?.keys(posts)?.length}</span>}
+                {!posts ? (
+                  <span id="number-1">0</span>
+                ) : (
+                  <span id="number-1">{Object?.keys(posts)?.length}</span>
+                )}
                 <span>posts</span>
               </div>
               <div id="follower-agg">
-                {!followers ? <span id="number-2">0</span> : <span id="number-2">{Object?.keys(followers)?.length}</span>}
+                {!followers ? (
+                  <span id="number-2">0</span>
+                ) : (
+                  <span id="number-2">{Object?.keys(followers)?.length}</span>
+                )}
                 <span>followers</span>
 
                 {/* <ViewFollowerModal post={post} followers={followers} /> */}
               </div>
               <div id="following-agg">
-                {!following ? <span id="number-3">0</span> : <span id="number-2">{Object?.keys(following)?.length}</span>}
+                {!following ? (
+                  <span id="number-3">0</span>
+                ) : (
+                  <span id="number-2">{Object?.keys(following)?.length}</span>
+                )}
                 <span>following</span>
               </div>
             </div>
             <p id="profile-names">
               {account?.first_name} {account?.last_name}
             </p>
-            {!account?.biography ? <p id="biograph">Welcome</p> : <p id="biograph">{account?.biography}</p>}
+            {!account?.biography ? (
+              <p id="biograph">Welcome</p>
+            ) : (
+              <p id="biograph">{account?.biography}</p>
+            )}
             {/* <p id="biograph">{account?.biography}</p> */}
           </div>
         </div>
@@ -104,13 +120,15 @@ const AccountPage = () => {
         <i class="fa-solid fa-table-cells" id="grid-icon"></i>
         <span id="post-tab">POSTS</span>
         <div id="post-previews">
-          {posts?.length === 0 ? <div className="account-no-posts"> No Posts Created </div> :
+          {posts?.length === 0 ? (
+            <div className="account-no-posts"> No Posts Created </div>
+          ) : (
             <>
               {posts?.map((post) => {
                 return <AccountProfilePost key={post?.id} post={post} />;
               })}
             </>
-          }
+          )}
           {/* {Object?.keys(posts)?.map((postId) => {
             return <AccountProfilePost key={postId} post={posts[postId]} />;
           })} */}

@@ -17,7 +17,6 @@ import { NavLink } from "react-router-dom";
 import EditPostModal from "../EditDeletePost/EditPostComponent/EditPostModal";
 import DeletePost from "../EditDeletePost/DeletePostComponent/DeletePost";
 import CreateReplyForm from "../../../CreateComment/CreateReplyForm";
-import { Link, NavLink } from "react-router-dom";
 
 function PostDetail({ post, user, wasLiked, setWasLiked }) {
   const dispatch = useDispatch();
@@ -202,7 +201,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
             />
           </div>
           <div className="post-detail-likes" Id="inpost">
-            <ViewLikesModal post={post}/>
+            <ViewLikesModal post={post} />
             {/* {post.likes} likes */}
           </div>
           <div className="created-at">

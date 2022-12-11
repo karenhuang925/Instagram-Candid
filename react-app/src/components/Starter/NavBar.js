@@ -162,7 +162,7 @@ const NavBar = () => {
               <div>Notifications (coming)</div>
             </NavLink>
           </li>
-          <li>
+          <li id="pointer-cursor">
             <div
               activeclassname="active"
               style={itemStyle}
@@ -194,6 +194,15 @@ const NavBar = () => {
               ></img>
               Profile
             </NavLink>
+          </li>
+          <li>
+            <a
+              href="https://github.com/karenhuang925/Instagram-Candid"
+              target={"_blank"}
+              style={itemStyle}
+            >
+              About
+            </a>
           </li>
           <li>
             <Link onClick={onLogout} to="/" style={itemStyle}>
