@@ -21,6 +21,11 @@
     border-bottom-color: lightgray;
 }
 
+.like-by-user-container {
+    overflow-y: scroll;
+    height: 430px;
+}
+
 .no-likes {
     display: flex;
     justify-content: center;
