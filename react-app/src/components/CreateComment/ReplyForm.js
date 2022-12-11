@@ -3,12 +3,18 @@ import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loadAllPostsOfUsersFollowed } from "../../store/posts";
 import { createReply, loadRepliesByCommentId } from "../../store/reply";
+import { loadCommentsByPostId } from "../../store/comments";
 
-const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
+const ReplyForm = ({ itemId, formType, postId, replyTo}) => {
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    setReplyContent(`@${replyTo} `)
+  },[replyTo])
 
   const [frontendErrors, setFrontendErrors] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [replyContent, setReplyContent] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,8 +26,7 @@ const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
     if (formType === "Post") {
       dispatch(createReply(itemId, replyContent))
       .then(()=>{
-          dispatch(loadAllPostsOfUsersFollowed())
-          dispatch(loadRepliesByCommentId(itemId))
+          dispatch(loadCommentsByPostId(postId))
       })
     }
     // else if(formType === "Edit"){
@@ -31,7 +36,7 @@ const ReplyForm = ({ itemId, formType, setReplyContent, replyContent }) => {
     setReplyContent("");
   };
 
-  
+
   useEffect(() => {
     const errors = [];
     if(!replyContent.trim().length) errors.push("Invalid reply")
