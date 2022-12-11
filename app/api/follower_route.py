@@ -1,18 +1,59 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
+from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db,  User, Follower
 
 follower_routes = Blueprint('follower', __name__)
 
 @follower_routes.route('/users/<int:userId>/followers')
 def follower_detail(userId):
-    followers = Follower.query.filter(Follower.follows_user_id == userId).filter(Follower.following_status == True)
-    return {'followers': [follower.to_dict() for follower in followers]}
+    followers = Follower.query.filter(Follower.follows_user_id == userId).filter(Follower.following_status == True).options(joinedload(User.current_user).options(load_only('id','first_name', 'last_name', 'username', 'preview_image'))).all()
+    return {
+        'followers': [
+            {
+                'id': follower.id,
+                'user_id': follower.user_id,
+                'follows_user_id': follower.follows_user_id,
+                'following_status': follower.following_status,
+                'created_at': follower.created_at,
+                'updated_at': follower.updated_at,
+                'Owner': {
+                    'id': follower.current_user.id,
+                    'first_name': follower.current_user.first_name,
+                    'last_name': follower.current_user.last_name,
+                    'username': follower.current_user.username,
+                    'preview_image': follower.current_user.preview_image
+                }
+            } for follower in followers
+        ]
+    }
+    # return {'followers': [follower.to_dict() for follower in followers]}
 
 @follower_routes.route('/users/<int:userId>/following')
 def following_detail(userId):
-    following = Follower.query.filter(Follower.user_id == userId).filter(Follower.following_status == True)
-    return {'following': [follower.to_dict() for follower in following]}
+    following = Follower.query.filter(Follower.user_id == userId).filter(Follower.following_status == True).options(joinedload(User.current_user).options(load_only('id','first_name', 'last_name', 'username', 'preview_image'))).all()
+    
+    return {
+        'followers': [
+            {
+                'id': follows.id,
+                'user_id': follows.user_id,
+                'follows_user_id': follows.follows_user_id,
+                'following_status': follows.following_status,
+                'created_at': follows.created_at,
+                'updated_at': follows.updated_at,
+                'Owner': {
+                    'id': follows.current_user.id,
+                    'first_name': follows.current_user.first_name,
+                    'last_name': follows.current_user.last_name,
+                    'username': follows.current_user.username,
+                    'preview_image': follows.current_user.preview_image
+                }
+            } for follows in following
+        ]
+    }
+
+    # return {'following': [follower.to_dict() for follower in following]}
 
 @follower_routes.route('/users/<int:userId>/following/suggestions')
 def follower_suggestion(userId):

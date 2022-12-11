@@ -14,8 +14,8 @@ function CreatePostPage1({ images, setImages }) {
     const handleOnChange = (e, index) => {
         const inputsOnChange = [...inputs];
         inputsOnChange[index][0] = e.target.value;
-        if(inputsOnChange[index][0].endsWith(".jpg")) inputsOnChange[index][1] = false;
-        if(!inputsOnChange[index][0].endsWith(".jpg")) inputsOnChange[index][1] = true;
+        if(inputsOnChange[index][0].endsWith("")) inputsOnChange[index][1] = false;
+        if(!inputsOnChange[index][0].endsWith("")) inputsOnChange[index][1] = true;
         setInputs(inputsOnChange);
     }
 
