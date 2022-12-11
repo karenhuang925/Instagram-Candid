@@ -39,7 +39,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
   // let likes = useSelector((state) => state.likes.likes)
 
   let today = Date.parse(new Date());
-  let unixTimeZero = Date.parse(post.created_at);
+  let unixTimeZero = Date.parse(post?.created_at);
   let diff = today - unixTimeZero;
 
   let diffinyears = Math.floor(diff / (365 * 3600 * 1000));
@@ -48,34 +48,34 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
   let diffinhours = Math.floor(diff / (3600 * 1000));
 
   var options = { year: "numeric", month: "long", day: "numeric" };
-  let createdAt = new Date(post.created_at).toDateString(undefined, options);
+  let createdAt = new Date(post?.created_at).toDateString(undefined, options);
 
   function CreateReply(item) {
     setContentType("reply");
-    setItemId(item.id);
-    setReplyTo(item.Owner.username);
+    setItemId(item?.id);
+    setReplyTo(item?.Owner?.username);
   }
 
   return (
     <section className="modal-outer">
       <div className="image">
         <div className="imageComp">
-          <ImageComponent images={post.Media}></ImageComponent>
+          <ImageComponent images={post?.Media}></ImageComponent>
         </div>
       </div>
       <div className="info">
         <div className="userinfo">
           <img
             alt="preview"
-            src={post.Owner.previewImage}
+            src={post?.Owner?.previewImage}
             className="detail-profile-pic"
           ></img>
           <div class="usernameAndLocation">
-            <p className="username">{post.Owner.username}</p>
-            <p className="location">{post.location}</p>
+            <p className="username">{post?.Owner?.username}</p>
+            <p className="location">{post?.location}</p>
           </div>
           <div>
-            {post.userId === user.id ? (
+            {post?.userId === user?.id ? (
               <>
                 <DeletePost post={post} />
                 <EditPostModal post={post} />
@@ -192,7 +192,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
               inPostDetail={true}
             />
           </div>
-          <div className="post-detail-likes" Id="inpost">
+          <div className="post-detail-likes" id="inpost">
             <ViewLikesModal post={post}/>
             {/* {post.likes} likes */}
           </div>
