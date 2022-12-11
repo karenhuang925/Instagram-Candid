@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { fetchLike } from "../../../../../../../store/likes";
 import { getUserFunction } from "../../../../../../../store/userV1";
 
@@ -80,11 +81,15 @@ function ViewLikes({ post }) {
 
                             <div className="user-detail-container">
                                 <div id="like-user-detail-image">
-                                    {like.Owner.previewImage ? <img className='like-user-preview-image' src={like.Owner.previewImage} alt={like.id} /> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
+                                    <NavLink style={{ color: 'black', textDecoration: 'none' }} to={`/profile/${like?.Owner?.id}`} exact={true} activeClassName='active'>
+                                        {like.Owner.previewImage ? <img className='like-user-preview-image' src={like.Owner.previewImage} alt={like.id} /> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
+                                    </NavLink>
                                 </div>
 
                                 <div className="user-detail-identity">
-                                    <div id="like-user-username">{like.Owner.username}</div>
+                                    <NavLink style={{ color: 'black', textDecoration: 'none' }} to={`/profile/${like?.Owner?.id}`} exact={true} activeClassName='active'>
+                                        <div id="like-user-username">{like.Owner.username}</div>
+                                    </NavLink>
                                     <div id="like-user-name">{like.Owner.first_name} {like.Owner.last_name}</div>
                                 </div>
                             </div>

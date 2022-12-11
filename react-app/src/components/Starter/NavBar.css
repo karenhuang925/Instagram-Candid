@@ -24,6 +24,10 @@ li:hover{
     width: 250px
 }
 
+#pointer-cursor {
+    cursor: pointer;
+}
+
 .disabled{
     cursor: not-allowed;
 }

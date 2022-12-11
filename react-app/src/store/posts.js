@@ -374,8 +374,9 @@ const postReducer = (state = initialState, action) => {
 
       let postIndex;
 
-      for (let i = 0; i < state.post.length; i++) {
-        if (state.post[i].id === action.payload) {
+      for (let i = 0; i < state?.post?.length; i++) {
+        if (state?.post[i]?.id === action.payload) {
+
           postIndex = i;
           break
         }
@@ -387,7 +388,9 @@ const postReducer = (state = initialState, action) => {
           ...state.post,
         ],
       };
-      delete newState.post[postIndex];
+
+      // delete newState.post[postIndex];
+      newState.post.splice(postIndex, 1)
       return newState;
 
     default:

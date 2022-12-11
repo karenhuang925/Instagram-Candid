@@ -31,14 +31,16 @@ function Post({ post, user }) {
 
             <section className='post-header-section'>
                 <div className='post-user-card'>
-                    <NavLink to={`/profile/${post?.userId}`} exact={true} activeClassName='active'>
+                    <NavLink style={{ color: 'black', textDecoration: 'none' }} to={`/profile/${post?.userId}`} exact={true} activeClassName='active'>
                         <div id='user-profile-image'>
                             {post?.Owner?.previewImage ? <img className='user-preview-image' src={post?.Owner?.previewImage} alt={post?.id} /> : <div><i className="fa-regular fa-circle-user fa-2x"></i></div>}
                         </div>
                     </NavLink>
                     <div id='post-user-detail'>
                         {/* Need to create link to username to take to profile page */}
-                        <div id='user-username'>{post?.Owner?.username}</div>
+                        <NavLink style={{ color: 'black', textDecoration: 'none' }} to={`/profile/${post?.userId}`} exact={true} activeClassName='active'>
+                            <div id='user-username'>{post?.Owner?.username}</div>
+                        </NavLink>
                         {post?.location && <div id='post-location'>{post?.location}</div>}
                     </div>
                 </div>
@@ -63,7 +65,9 @@ function Post({ post, user }) {
                 <ViewLikesModal post={post} />
 
                 <div className='post-detail-caption-body'>
-                    <div id='post-detail-username'>{post?.Owner?.username}</div>
+                    <NavLink style={{ color: 'black', textDecoration: 'none' }} to={`/profile/${post?.userId}`} exact={true} activeClassName='active'>
+                        <div id='post-detail-username'>{post?.Owner?.username}</div>
+                    </NavLink>
                     <div id='post-detail-caption'>{post?.caption}</div>
                 </div>
 

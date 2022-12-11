@@ -1,18 +1,70 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
+from sqlalchemy.orm import relationship, sessionmaker, joinedload, load_only
 from app.models import db,  User, Follower
 
 follower_routes = Blueprint('follower', __name__)
 
 @follower_routes.route('/users/<int:userId>/followers')
 def follower_detail(userId):
-    followers = Follower.query.filter(Follower.follows_user_id == userId).filter(Follower.following_status == True)
-    return {'followers': [follower.to_dict() for follower in followers]}
+
+    followers = Follower.query.filter(Follower.follows_user_id == userId).filter(Follower.following_status == True).all()
+    update_followers = []
+
+    for follower in followers:
+       
+        user = User.query.filter(User.id == follower.user_id ).one_or_none()
+
+        editfollower = {
+            'id': follower.id,
+            'user_id': follower.user_id,
+            'follows_user_id': follower.follows_user_id,
+            'following_status': follower.following_status,
+            'created_at': follower.created_at,
+            'updated_at': follower.updated_at,
+            'Owner': {
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'username': user.username,
+                'preview_image': user.preview_image
+            }
+        }
+        update_followers.append(editfollower)
+    return {'followers': [follower for follower in update_followers]}
+
 
 @follower_routes.route('/users/<int:userId>/following')
 def following_detail(userId):
-    following = Follower.query.filter(Follower.user_id == userId).filter(Follower.following_status == True)
-    return {'following': [follower.to_dict() for follower in following]}
+
+    following = Follower.query.filter(Follower.user_id == userId).filter(Follower.following_status == True).all()
+    update_following = []
+
+    for follows in following:
+
+        user = User.query.filter(User.id == follows.follows_user_id ).one_or_none()
+
+        editfollowing = {
+            'id': follows.id,
+            'user_id': follows.user_id,
+            'follows_user_id': follows.follows_user_id,
+            'following_status': follows.following_status,
+            'created_at': follows.created_at,
+            'updated_at': follows.updated_at,
+            'Owner': {
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'username': user.username,
+                'preview_image': user.preview_image
+            }
+        }
+        update_following.append(editfollowing)
+    return {'following': [follows for follows in update_following]}
+    
+
+
+    # return {'following': [follower.to_dict() for follower in following]}
 
 @follower_routes.route('/users/<int:userId>/following/suggestions')
 def follower_suggestion(userId):
