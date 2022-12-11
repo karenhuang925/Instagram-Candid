@@ -43,9 +43,9 @@ function ViewFollower({ post, user }) {
                                 </div>
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <button className="like-follow-button">Follow</button>
-                            </div>
+                            </div> */}
 
                         </div>
                     )
