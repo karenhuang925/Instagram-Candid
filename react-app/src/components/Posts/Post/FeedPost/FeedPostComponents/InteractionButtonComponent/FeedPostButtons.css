@@ -47,3 +47,13 @@
     color: lightgray;
     cursor: pointer;
 }
+
+#interaction-button-disable{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    padding: 8px;
+    text-decoration: none;
+    cursor: not-allowed;
+}

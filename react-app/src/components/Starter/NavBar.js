@@ -102,33 +102,33 @@ const NavBar = () => {
         <img style={imageStyle} alt='logo' src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/840px-Instagram_logo.svg.png" />
         <ul style={listStyle}>
           <li>
-            <NavLink to='/' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/' exact={true} activeClassName='active' style={itemStyle} >
               <i style={iconStyle} className="fa-solid fa-house fa-lg" />
               <div>Home</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/posts' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/posts' exact={true} activeClassName='active' className='disabled' style={itemStyle} >
               <i style={iconStyle} className="fa-solid fa-magnifying-glass fa-lg"></i>
-              <div>Search</div>
+              <div>Search (coming)</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/explore' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/explore' exact={true} activeClassName='active'className='disabled' style={itemStyle}>
               <i style={iconStyle} className="fa-regular fa-compass fa-lg" />
-              <div>Explore</div>
+              <div>Explore (coming)</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/messages' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/messages' exact={true} activeClassName='active'className='disabled'style={itemStyle}>
               <i style={iconStyle} className="fa-brands fa-facebook-messenger fa-lg"></i>
-              <div>Messages</div>
+              <div>Messages (coming)</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/notifications' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/notifications' exact={true} activeClassName='active'className='disabled' style={itemStyle}>
               <i style={iconStyle} className="fa-regular fa-heart fa-lg" />
-              <div>Notifications</div>
+              <div>Notifications (coming)</div>
             </NavLink>
           </li>
           <li >
