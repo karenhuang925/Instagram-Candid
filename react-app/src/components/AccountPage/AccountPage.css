@@ -101,6 +101,14 @@
   margin-top: 20px;
 }
 
+.account-no-posts {
+  display: flex;
+  justify-content: center;
+  font-size: large;
+  font-weight: bold;
+  color: lightgray;
+}
+
 #about-link {
   text-decoration: none;
   color: black;
