@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { createPost, loadAllPosts,loadAllPostsOfUsersFollowed } from "../../store/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from 'react-router-dom'
+import { createPost, loadAllPostsByUserId,loadAllPostsOfUsersFollowed } from "../../store/posts";
 import { addMediaFunction } from "../../store/media";
 import "./style/CreatePostPage3.css";
 
 function CreatePostPage3({ images, caption, location }) {
+    const user = useSelector((state) => state?.session);
     const [loaded, setLoaded] = useState(false);
     const dispatch = useDispatch()
+    const locationReact = useLocation();
     useEffect(() => {
         (async () => {
             const postData = {
@@ -23,7 +26,11 @@ function CreatePostPage3({ images, caption, location }) {
                 mediaData.media_file = images[index]
                 await dispatch(addMediaFunction(mediaData))
             }
-            dispatch(loadAllPostsOfUsersFollowed())
+            const route = locationReact.pathname
+            if(route === "/my/profile") {
+                dispatch(loadAllPostsByUserId(user.id))
+            }
+            if(route === "/") dispatch(loadAllPostsOfUsersFollowed())
             setLoaded(true)
         })();
     }, []);
