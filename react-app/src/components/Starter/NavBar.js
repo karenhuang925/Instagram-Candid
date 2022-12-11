@@ -102,33 +102,33 @@ const NavBar = () => {
         <img style={imageStyle} alt='logo' src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/840px-Instagram_logo.svg.png" />
         <ul style={listStyle}>
           <li>
-            <NavLink to='/' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/' exact={true} activeClassName='active' style={itemStyle} >
               <i style={iconStyle} className="fa-solid fa-house fa-lg" />
               <div>Home</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/posts' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/not-found-search'  className='disabled' style={itemStyle} >
               <i style={iconStyle} className="fa-solid fa-magnifying-glass fa-lg"></i>
-              <div>Search</div>
+              <div>Search (coming)</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/explore' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/not-found-explore' className='disabled' style={itemStyle}>
               <i style={iconStyle} className="fa-regular fa-compass fa-lg" />
-              <div>Explore</div>
+              <div>Explore (coming)</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/messages' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/not-found-message' className='disabled' style={itemStyle}>
               <i style={iconStyle} className="fa-brands fa-facebook-messenger fa-lg"></i>
-              <div>Messages</div>
+              <div>Messages (coming)</div>
             </NavLink>
           </li>
           <li >
-            <NavLink to='/notifications' exact={true} activeClassName='active' style={itemStyle}>
+            <NavLink to='/not-found-notification' className='disabled' style={itemStyle}>
               <i style={iconStyle} className="fa-regular fa-heart fa-lg" />
-              <div>Notifications</div>
+              <div>Notifications (coming)</div>
             </NavLink>
           </li>
           <li >
@@ -156,7 +156,7 @@ const NavBar = () => {
             </Link>
           </li>
         </ul>
-        <NavLink to='/more' exact={true} activeClassName='active' style={lastItemStyle} className='more'>
+        <NavLink to='/not-found-more' activeClassName='active' style={lastItemStyle} className='disabled'>
           <i style={iconStyle} className="fa-solid fa-bars fa-lg" />
           <div>More</div>
         </NavLink>

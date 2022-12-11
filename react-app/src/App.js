@@ -16,6 +16,7 @@ import AccountPage from "./components/AccountPage";
 // import User from './components/Starter/User';
 // import { authenticate } from './store/session';
 import ProfilePage from "./components/ProfilePage";
+import NotFound from "./components/NotFoundPage/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +63,9 @@ function App() {
             </Route>
             <Route path="/profile/:id" exact={true}>
               <AccountPage />
+            </Route>
+            <Route>
+              <NotFound/>
             </Route>
           </Switch>
         </>

@@ -46,7 +46,7 @@ function FeedPostButtons({ post, user, wasLiked, setWasLiked, inPostDetail }) {
                 </div>
 
                 {inPostDetail
-                    ? <div id='interaction-button'><i className="fa-regular fa-comment fa-1x"></i></div>
+                    ? <div id='interaction-button-disable'><i className="fa-regular fa-comment fa-1x"></i></div>
                     : <Link id='interaction-button' onClick={() => setShowPostModal(true)}><div><i className="fa-regular fa-comment fa-1x"></i></div></Link>
                 }
 
@@ -57,11 +57,11 @@ function FeedPostButtons({ post, user, wasLiked, setWasLiked, inPostDetail }) {
                     </Modal>
                 )}
 
-                <div id='interaction-button'><i className="fa-regular fa-paper-plane fa-1x"></i></div>
+                <div id='interaction-button-disable' ><i className="fa-regular fa-paper-plane fa-1x"></i></div>
             </div>
 
             <div id='post-interaction-button-container'>
-                <div id='interaction-button'><i className="fa-regular fa-bookmark fa-1x"></i></div>
+                <div id='interaction-button-disable' ><i className="fa-regular fa-bookmark fa-1x"></i></div>
             </div>
         </>
     )

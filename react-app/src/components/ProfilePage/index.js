@@ -38,22 +38,26 @@ const ProfilePage = () => {
             </div>
             <div id="profile-aggs">
               <div id="post-agg">
-                <span id="number-1">{Object?.keys(posts)?.length}</span>
+                {!posts ? <span id="number-1">0</span> : <span id="number-1">{Object?.keys(posts)?.length}</span>}
+                {/* <span id="number-1">{Object?.keys(posts)?.length}</span> */}
                 <span>posts</span>
               </div>
               <div id="follower-agg">
-                <span id="number-2">{Object?.keys(followers)?.length}</span>
+                {!followers ? <span id="number-1">0</span> : <span id="number-2">{Object?.keys(followers)?.length}</span>}
+                {/* <span id="number-2">{Object?.keys(followers)?.length}</span> */}
                 <span>followers</span>
               </div>
               <div id="following-agg">
-                <span id="number-3">{Object?.keys(following)?.length}</span>
+                {!following ? <span id="number-1">0</span> : <span id="number-2">{Object?.keys(following)?.length}</span>}
+                {/* <span id="number-3">{Object?.keys(following)?.length}</span> */}
                 <span>following</span>
               </div>
             </div>
             <p id="profile-names">
               {sessionUser?.first_name} {sessionUser?.last_name}
             </p>
-            <p id="biograph">{sessionUser?.biography}</p>
+            {!sessionUser?.biography ? <p id="biograph">Please Complete Profile...</p> : <p id="biograph">{sessionUser?.biography}</p>}
+            {/* <p id="biograph">{sessionUser?.biography}</p> */}
           </div>
         </div>
         <hr id="long-hr" />
@@ -61,17 +65,21 @@ const ProfilePage = () => {
         <i class="fa-solid fa-table-cells" id="grid-icon"></i>
         <span id="post-tab">POSTS</span>
         <div id="post-previews">
-          {posts?.map((post) => {
-            return <AccountProfilePost key={post.id} post={post} />;
-          })}
+          {posts?.length === 0 ? <div className="account-no-posts"> No Posts Created </div> :
+            <>
+              {posts?.map((post) => {
+                return <AccountProfilePost key={post?.id} post={post} />;
+              })}
+            </>
+          }
         </div>
-        <a
+        {/* <a
           href="https://github.com/karenhuang925/Instagram-Candid"
           target={"_blank"}
           id="about-link"
         >
           <p id="about-paragraph">About</p>
-        </a>
+        </a> */}
       </div>
     </>
   );
