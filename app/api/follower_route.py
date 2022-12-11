@@ -34,7 +34,7 @@ def following_detail(userId):
     following = Follower.query.filter(Follower.user_id == userId).filter(Follower.following_status == True).options(joinedload(User.current_user).options(load_only('id','first_name', 'last_name', 'username', 'preview_image'))).all()
     
     return {
-        'followers': [
+        'following': [
             {
                 'id': follows.id,
                 'user_id': follows.user_id,
