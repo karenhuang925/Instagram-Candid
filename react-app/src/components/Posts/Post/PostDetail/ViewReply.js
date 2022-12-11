@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
-
-import {loadRepliesByCommentId} from '../../../../store/reply'
+import { loadPostById } from '../../../../store/singlepost'
+import { loadRepliesByCommentId } from '../../../../store/reply'
 import './ViewReply.css'
 
 
@@ -21,6 +21,10 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
             }, 1000);
         }, [showReply]);
 
+    // useEffect(() => {
+    //     dispatch(loadRepliesByCommentId(comment.id))
+    // }, [comment]);
+
     function onClickHandler(){
         setShowReply(!showReply)
         dispatch(loadRepliesByCommentId(comment.id))
@@ -32,7 +36,11 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
         setReplyTo(value.Owner.username)
     }
 
-    let replies = useSelector((state) => state.replies.reply)
+    let replies = useSelector((state) => state.replies[comment.id])
+
+    // useEffect(()=>{
+    //     dispatch(loadRepliesByCommentId(comment.id))
+    // }, [replies])
 
     return (
         <>
@@ -48,7 +56,6 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
                         </div>
                     ) : (
                         replies && Object.values(replies).map((value) => {
-                            console.log(value)
                             let today = Date.parse(new Date())
                             let unixTimeZero = Date.parse(value.created_at)
 
@@ -58,7 +65,7 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
                             let diffinhours = Math.floor(diff / (3600 * 1000))
 
                                 return (
-                                    <div className='caption-card'>
+                                    <div className='caption-card' key={value.id}>
                                         <img alt='preview' src={value.Owner.previewImage} className='detail-profile-pic'></img>
                                         <div>
                                             <div className='usernameAndCaption'>
@@ -70,7 +77,7 @@ function ViewReply({ comment, setContentType, setItemId, setReplyTo }) {
                                                     ? <div className='post-time' id='bold'>{diffindays > 1 ? `${diffindays}d` : `1d`}</div>
                                                     : <div className='post-time' id='bold'>{diffinhours > 1 ? `${diffinhours}h` : `1h`}</div>
                                                 }</div>
-                                                <div className='post-time' id='bold' onClick={()=>CreateReply(value)}>Reply</div>
+                                                <Link className='post-time' id='bold' onClick={()=>CreateReply(value)}>Reply</Link>
                                             </div>
                                         </div>
                                     </div>
