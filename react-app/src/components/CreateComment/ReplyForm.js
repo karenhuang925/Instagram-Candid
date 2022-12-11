@@ -55,6 +55,7 @@ const ReplyForm = ({ itemId, formType, postId, replyTo}) => {
           onChange={(e) => setReplyContent(e.target.value)}
           required
           ref={replyReference}
+          placeholder='Add a comment'
         />
       <input
         className="post-comment-button"
