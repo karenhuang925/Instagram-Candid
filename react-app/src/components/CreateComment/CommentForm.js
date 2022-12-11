@@ -7,7 +7,7 @@ import { loadAllPostsOfUsersFollowed } from "../../store/posts";
 const CommentForm = ({ comment, itemId, formType, setActionType, commentReference }) => {
 
   const dispatch = useDispatch();
-
+  const [commentLength, setCommentLength] = useState(0)
   const [frontendErrors, setFrontendErrors] = useState([]);
 
   const [redirect, setRedirect] = useState(false);
@@ -18,7 +18,7 @@ const CommentForm = ({ comment, itemId, formType, setActionType, commentReferenc
   // if(redirect){return ( <Redirect to={`/spots`} />)}
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(frontendErrors.length > 0) return
+    if(frontendErrors.length > 0 || commentLength > 50) return
     // setErrors([]);
     // let newComment = { ...comment, comment:commentContent, postId};
     setLoading(true);
@@ -56,6 +56,7 @@ const CommentForm = ({ comment, itemId, formType, setActionType, commentReferenc
     const errors = [];
     if(!commentContent.trim().length) errors.push("Invalid comment")
     setFrontendErrors(errors);
+    setCommentLength(commentContent.length)
   }, [commentContent]);
 
 
@@ -70,12 +71,18 @@ const CommentForm = ({ comment, itemId, formType, setActionType, commentReferenc
         required
         ref={commentReference}
       />
-      <input
-        className="post-comment-button"
-        type="submit"
-        value={formType}
-        onClick={handleSubmit}
-      />
+      <span style={{fontWeight:"bold", fontSize:"small", margin:"5px", marginTop:"10px"}}>{`${commentLength}/50`}</span>
+      {
+        commentLength <= 50 && (
+          <input
+            className="post-comment-button"
+            type="submit"
+            value={formType}
+            onClick={handleSubmit}
+          />
+        )
+      }
+      
       {loading && (
         <div className="loader-container">
           <div className="spinner"></div>
