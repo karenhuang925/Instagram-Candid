@@ -108,7 +108,7 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li >
-            <NavLink to='/not-found-search'  className='disabled' style={itemStyle} >
+            <NavLink to='/not-found-search' className='disabled' style={itemStyle} >
               <i style={iconStyle} className="fa-solid fa-magnifying-glass fa-lg"></i>
               <div>Search (coming)</div>
             </NavLink>
@@ -131,7 +131,7 @@ const NavBar = () => {
               <div>Notifications (coming)</div>
             </NavLink>
           </li>
-          <li >
+          <li id='pointer-cursor'>
             <div activeclassname='active' style={itemStyle} onClick={() => setModal(true)}>
               <i style={iconStyle} className="fa-regular fa-square-plus fa-lg" />
               <div>Create</div>
@@ -149,6 +149,15 @@ const NavBar = () => {
               <img alt='preview' src={user.preview_image} style={profilePic}></img>
               Profile
             </NavLink>
+          </li>
+          <li>
+            <a
+              href="https://github.com/karenhuang925/Instagram-Candid"
+              target={"_blank"}
+              style={itemStyle}
+            >
+              About
+            </a>
           </li>
           <li >
             <Link onClick={onLogout} to='/' style={itemStyle}>
