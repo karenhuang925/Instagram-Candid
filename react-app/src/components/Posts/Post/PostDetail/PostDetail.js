@@ -32,6 +32,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
   let [actionType, setActionType] = useState("post");
   let [itemId, setItemId] = useState(0);
   let [replyTo, setReplyTo] = useState("");
+  // let [showAction, setShowAction] = useState(true)
 
   // let post = useSelector((state) => state.singlePost.post)
   let allComments = useSelector((state) => state?.comments?.comment) || "";
@@ -55,6 +56,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
     setContentType("reply");
     setItemId(item?.id);
     setReplyTo(item?.Owner?.username);
+    // setShowAction(false)
   }
 
   return (
@@ -167,6 +169,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
                             item={comment}
                             setActionType={setActionType}
                             setItemId={setItemId}
+                            setContentType={setContentType}
                           />
                         )}
                       </div>
@@ -231,6 +234,7 @@ function PostDetail({ post, user, wasLiked, setWasLiked }) {
               replyTo={replyTo}
               className="addComment"
               postId={post.id}
+              setContentType={setContentType}
             ></CreateReplyForm>
           )}
         </div>

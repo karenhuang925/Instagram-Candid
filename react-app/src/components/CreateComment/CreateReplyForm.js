@@ -1,7 +1,7 @@
 import ReplyForm from './ReplyForm';
 import { useEffect, useState } from 'react';
 
-const CreateReplyForm = ({item, replyTo, postId}) => {
+const CreateReplyForm = ({item, replyTo, postId, setContentType}) => {
 
     // let reply = {
     //     reply: `@${replyTo} `
@@ -11,7 +11,7 @@ const CreateReplyForm = ({item, replyTo, postId}) => {
     // },[replyTo])
 
     return (
-        <ReplyForm itemId={item.id} formType="Post" replyTo={replyTo} postId={postId} />
+        <ReplyForm itemId={item.id} formType="Post" replyTo={replyTo} postId={postId} setContentType={setContentType}/>
     );
 }
 

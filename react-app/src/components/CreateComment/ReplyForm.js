@@ -5,7 +5,7 @@ import { loadAllPostsOfUsersFollowed } from "../../store/posts";
 import { createReply, loadRepliesByCommentId } from "../../store/reply";
 import { loadCommentsByPostId } from "../../store/comments";
 
-const ReplyForm = ({ itemId, formType, postId, replyTo}) => {
+const ReplyForm = ({ itemId, formType, postId, replyTo, setContentType}) => {
   const dispatch = useDispatch();
   const replyReference = useRef(null);
 
@@ -36,6 +36,7 @@ const ReplyForm = ({ itemId, formType, postId, replyTo}) => {
     //     setActionType('post')
     // }
     setReplyContent("");
+    setContentType('comment')
   };
 
 
