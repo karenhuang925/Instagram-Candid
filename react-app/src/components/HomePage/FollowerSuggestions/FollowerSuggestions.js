@@ -6,6 +6,7 @@ import { fetchFollowing, fetchSuggestion } from '../../../store/followers';
 import "./FollowerSuggestion.css"
 import { Link, NavLink, useHistory } from 'react-router-dom';
 import { logOutFunction } from '../../../store/user';
+// import { NavLink } from 'react-router-dom';
 import FollowButton from './followButton';
 
 function FollowerSuggestion() {
@@ -59,7 +60,7 @@ function FollowerSuggestion() {
                     return (
                         <div key={suggestion.id}>
                             <div className='user-profile'>
-                                    <img alt='preview_image' src={suggestion.preview_image} className='suggestion-profile-pic'></img>
+                                <img alt='preview_image' src={suggestion.preview_image} className='suggestion-profile-pic'></img>
                                 <div className='username'>
                                     <p className='title-username'>{suggestion.username}</p>
                                     <p className='sub-username'> Suggested for you</p>
@@ -70,9 +71,15 @@ function FollowerSuggestion() {
                     )
                 })}
                 <div className='more-info'>
-                    <p>About • Help • Press • API - Jobs • Privacy • Terms</p>
+                    <p>Kelly Artola: • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://github.com/KellyAnneSantos")}>Github</NavLink> • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://www.linkedin.com/in/kelly-a-296a23b6/")}>LinkedIn</NavLink></p>
+                    <p>Karen Huang: • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://github.com/karenhuang925")}>Github</NavLink> • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://www.linkedin.com/in/karen-huang-274b5b10b/")}>LinkedIn</NavLink></p>
+                    <p>George Merida: • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://github.com/gmerida92")}>Github</NavLink> • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://www.linkedin.com/in/george-merida-441988140/")}>LinkedIn</NavLink></p>
+                    <p>Alonso Vazquez: • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://github.com/alonsoVQZ")}>Github</NavLink> • <NavLink style={{ textDecoration: 'none', color: 'rgb(181, 180, 180)' }} to="/" onClick={() => (window.location.href = "https://www.linkedin.com/in/vqzmata/")}>LinkedIn</NavLink></p>
+                    {/* <NavLink id="external_link" to="/" onClick={() => (window.location.href = "https://github.com/gmerida92")}>Github</NavLink>
+                    <NavLink id="external_link" to="/" onClick={() => (window.location.href = "https://www.linkedin.com/in/george-merida-441988140/")}>LinkedIn</NavLink> */}
+                    {/* <p>About • Help • Press • API - Jobs • Privacy • Terms</p>
                     <p>Locations • Language</p>
-                    <p>@2022 App Academy Candid</p>
+                    <p>@2022 App Academy Candid</p> */}
                 </div>
             </div>
         </div>
