@@ -7,7 +7,7 @@ import './CommentReplyActionModal.css'
 import {deleteComment} from '../../store/comments'
 import {loadAllPostsOfUsersFollowed} from '../../store/posts'
 
-function CommentReplyActionModal({ item, aciontType, setActionType, setItemId }) {
+function CommentReplyActionModal({ item, aciontType, setActionType, setItemId, setContentType }) {
     const dispatch = useDispatch()
     const [showActionModal, setActionModal] = useState(false)
 
@@ -15,6 +15,7 @@ function CommentReplyActionModal({ item, aciontType, setActionType, setItemId })
         setActionModal(false)
         setActionType('edit')
         setItemId(item.id)
+        setContentType('comment')
     }
     const deleteOnclick =()=> {
         setActionModal(false)
